@@ -1,5 +1,5 @@
 export default function Home () {
   return (
-    <p>Hello React!</p>
+    <h1>Hello React!</h1>
   )
 }
