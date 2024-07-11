@@ -85,12 +85,12 @@ Feature: Minesweeper
       | * | o |
       """
     When the player uncovers the cell ("1","1")
-    Then the cell ("1","1") should show a highlighted mine
+    Then the cell ("1","1") should show "a highlighted mine"
 
   Scenario Outline: Uncovering a cell with no mine - Displaying the number of adjacent mines
-    Given the player loads the following mock data <boardData>
+    Given the player loads the following mock data "<boardData>"
     When the player uncovers the cell ("2","2")
-    Then the cell ("2","2") should show <number>
+    Then the cell ("2","2") should show "<number>"
 
     Examples:
       | boardData   | number |
@@ -111,8 +111,8 @@ Feature: Minesweeper
       | o | o | o |
       | * | * | * |
       """
-    When the player uncovers the cell (<row>,<column>)
-    Then the cell ("2","2") should show empty
+    When the player uncovers the cell ("<row>","<column>")
+    Then the cell ("2","2") should show "empty"
 
     Examples:
       | row | column |
@@ -139,22 +139,22 @@ Feature: Minesweeper
 
   Scenario: Suspecting that a cell is hiding a mine - Tagging as mined
     When the player tags as "mined" the cell ("1","1")
-    Then the cell ("1","1") should show mined
+    Then the cell ("1","1") should show "mined"
 
   Scenario: Untagging the mined tag - Removing the mined symbol
-    Given When the player tags as "mined" the cell ("1","1")
+    Given the player tags as "mined" the cell ("1","1")
     When the player untags the cell ("1","1")
-    Then the cell ("1","1") should not show mined
+    Then the cell ("1","1") should not show "mined"
 
   Scenario: Tagging a cell as mined using the mouse - Using mouse right click
     When the player right clicks on the cell ("1","1")
-    Then the cell ("1","1") should show mined
+    Then the cell ("1","1") should show "mined"
 
   Scenario: Untagging a mined cell using the mouse - Using mouse right click twice
     Given the player tags as "mined" the cell ("1","1")
     When the player right clicks on the cell ("1","1")
     And the player right clicks on the cell ("1","1")
-    Then the cell ("1","1") should not show mined
+    Then the cell ("1","1") should not show "mined"
 
   Scenario: Discovering all the cells without mines - Winning the game
     Given the player loads the following mock data
@@ -169,7 +169,7 @@ Feature: Minesweeper
       """
       | * | o |
       """
-    When the player uncovers the cell (<row>,<col>)
+    When the player uncovers the cell ("<row>","<col>")
     Then all the cells should be disabled
 
     Examples:
