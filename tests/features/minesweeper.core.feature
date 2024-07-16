@@ -52,8 +52,7 @@ Feature: Minesweeper
     Given the player opens the game
 
   Scenario: Starting game - Minefield default sizing 9x9
-    Then the minefield should have "9" rows
-    And the minefield should have "9" columns
+    Then the minefield should have "9" rows and "9" columns
 
   Scenario: Starting game - All the cells should be covered
     Then all the cells should be covered
