@@ -1,10 +1,11 @@
 import { loadFeatures, autoBindSteps } from 'jest-cucumber'
+import * as steps from './steps/minesweeper.steps'
 
 const features = loadFeatures('./tests/features/**/*.feature')
 
 const stepsRef = ({ given, when, then, pending }) => {
   given('the player opens the game', () => {
-    pending()
+    steps.openTheGame()
   })
   given('the player loads the following mock data', (docString) => {
     pending()

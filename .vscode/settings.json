@@ -21,5 +21,9 @@
   "peacock.color": "#ff5e6f",
   "standard.options": {
     "env" : ["jest"]
-  }
+  },
+  "cucumberautocomplete.syncfeatures": "tests/**/*.feature",
+  "cucumberautocomplete.steps": [
+    "tests/**/*.js"
+  ],
 }
