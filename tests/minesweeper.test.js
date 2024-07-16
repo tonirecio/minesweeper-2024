@@ -3,7 +3,7 @@ import * as steps from './steps/minesweeper.steps'
 
 const features = loadFeatures('./tests/features/**/*.feature')
 
-const stepsRef = ({ given, when, then, pending }) => {
+const stepsRef = ({ given, when, then, and, pending }) => {
   given('the player opens the game', () => {
     steps.openTheGame()
   })
@@ -55,6 +55,12 @@ const stepsRef = ({ given, when, then, pending }) => {
   then('all the cells should be disabled', () => {
     pending()
   })
+  then(/^the minefield should have "(.*)" rows$/, (arg0) => {
+    pending()
+  });
+  and(/^the minefield should have "(.*)" columns$/, (arg0) => {
+    pending()
+  });
 }
 
 autoBindSteps(features, [stepsRef])

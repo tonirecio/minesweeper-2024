@@ -2,7 +2,8 @@ Feature: Minesweeper
 
       As a player:
       - I want to play to the classic minesweeper game
-      - So I want to detect all the mines in the board
+      - So I want to detect all the mines in the board,
+      - and I want to uncover all the cells without mines
 
       How to refer to a cell:
       - Using the (row,column) nomenclature
@@ -27,7 +28,7 @@ Feature: Minesweeper
 
   To define the board display will use:
   COVERED CELLS
-  "." Hidden cell
+  "." Covered cell
   "!" Cell tagged has mined cell by the user
   "?" Cell tagged has inconclusive cell by the user
   "x" Cell wrongly tagged has no mined cell by the user
@@ -43,13 +44,18 @@ Feature: Minesweeper
   "8" Clean cell with 8 adjacent mines
   "9" Clean cell with 9 adjacent mines
   "@" highlighted mine
+  "*" Mine
 
   Game example: http://birrell.org/andrew/minesweeper/
 
   Background:
     Given the player opens the game
 
-  Scenario: Starting game - All the cells should be hidden
+  Scenario: Starting game - Minefield default sizing 9x9
+    Then the minefield should have "9" rows
+    And the minefield should have "9" columns
+
+  Scenario: Starting game - All the cells should be covered
     Then all the cells should be covered
 
   Scenario: Starting game - All the cells should be enabled
