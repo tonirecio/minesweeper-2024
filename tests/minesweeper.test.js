@@ -55,11 +55,8 @@ const stepsRef = ({ given, when, then, and, pending }) => {
   then('all the cells should be disabled', () => {
     pending()
   })
-  then(/^the minefield should have "(.*)" rows$/, (arg0) => {
-    pending()
-  });
-  and(/^the minefield should have "(.*)" columns$/, (arg0) => {
-    pending()
+  then(/^the minefield should have "(.*)" rows and "(.*)" columns$/, (numberOfRows, numberOfCols) => {
+    expect(steps.mineFieldDimensionsValidation(numberOfRows, numberOfCols), tobeTruthy)
   });
 }
 
