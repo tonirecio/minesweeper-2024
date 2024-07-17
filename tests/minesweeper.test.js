@@ -29,7 +29,7 @@ const stepsRef = ({ given, when, then, and, pending }) => {
     pending()
   })
   then('all the cells should be covered', () => {
-    pending()
+    steps.areAllCellsCovered()
   })
   then('all the cells should be enabled', () => {
     pending()
