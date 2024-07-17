@@ -60,20 +60,20 @@ Feature: Minesweeper
   Scenario: Starting game - All the cells should be enabled
     Then all the cells should be enabled
 
-  Scenario: Uncovering a cell - Disabling the cell
-    Given the player loads the following mock data
-      """
-      | * | o |
-      """
-    When the player uncovers the cell ("1","2")
-    Then the cell ("1","2") should be disabled
-
   Scenario: Uncovering a cell with the mouse - Using mouse left click
     Given the player loads the following mock data
       """
       | * | o |
       """
     When the player left clicks on the cell ("1","2")
+    Then the cell ("1","2") should be uncovered
+
+  Scenario: Uncovering a cell - Disabling the cell
+    Given the player loads the following mock data
+      """
+      | * | o |
+      """
+    When the player uncovers the cell ("1","2")
     Then the cell ("1","2") should be disabled
 
   Scenario: Uncovering a cell with a mine - Losing the game

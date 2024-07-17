@@ -8,7 +8,7 @@ const stepsRef = ({ given, when, then, and, pending }) => {
     steps.openTheGame()
   })
   given('the player loads the following mock data', (docString) => {
-    pending()
+    steps.setMockData(docString)
   })
   given(/^the player loads the following mock data (.*)$/, (arg0) => {
     pending()
@@ -16,8 +16,8 @@ const stepsRef = ({ given, when, then, and, pending }) => {
   when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
     pending()
   })
-  when(/^the player left clicks on the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-    pending()
+  when(/^the player left clicks on the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+    steps.uncoverCell(rowPosition, colPosition)
   })
   when(/^the player untags the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
     pending()
@@ -57,6 +57,9 @@ const stepsRef = ({ given, when, then, and, pending }) => {
   })
   then(/^the minefield should have "(.*)" rows and "(.*)" columns$/, (numberOfRows, numberOfCols) => {
     expect(steps.mineFieldDimensionsValidation(numberOfRows, numberOfCols)).toBe(true)
+  })
+  then(/^the cell \("(.*)","(.*)"\) should be uncovered$/, (rowPosition, colPosition) => {
+    expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(true)
   })
 }
 
