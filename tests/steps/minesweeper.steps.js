@@ -32,6 +32,11 @@ export function mineFieldDimensionsValidation (rows, columns) {
 
 export function areAllCellsCovered () {
   const cells = document.querySelectorAll('[data-testid = "minefield-cell"]')
+  cells.forEach(cell => {
+    if (!cell.classList.contains('covered')) {
+      return false
+    }
+  })
 
-  return cells.getElementsByClassName('covered').length === cells.length
+  return true
 }
