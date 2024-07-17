@@ -32,7 +32,7 @@ const stepsRef = ({ given, when, then, and, pending }) => {
     expect(steps.areAllCellsCovered()).toBe(true)
   })
   then('all the cells should be enabled', () => {
-    pending()
+    expect(steps.areAllCellsEnabled()).toBe(true)
   })
   then(/^the cell \("(.*)","(.*)"\) should be disabled$/, (arg0, arg1) => {
     pending()

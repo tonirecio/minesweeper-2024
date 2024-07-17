@@ -13,7 +13,7 @@ export default function Minefield ({ numberOfRows, numberOfColumns }) {
     }
   }
   return (
-    <>
+    <div data-testid='minefield'>
       {minefieldData.map((row, rowIndex) => (
         <div className='minefield-row' data-testid='minefield-row' key={rowIndex}>
           {row.map((cell, cellIndex) => (
@@ -21,6 +21,6 @@ export default function Minefield ({ numberOfRows, numberOfColumns }) {
           ))}
         </div>
       ))}
-    </>
+    </div>
   )
 }

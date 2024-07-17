@@ -1,4 +1,5 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+
 // import userEvent from '@testing-library/user-event'
 import Game from '../../src/components/game'
 
@@ -21,8 +22,6 @@ export function mineFieldDimensionsValidation (rows, columns) {
   let validFormat = (rowsNumber === Number(rows))
   if (!validFormat) return validFormat
   for (let r = 0; r < rowsNumber; r++) {
-    console.log('getNumberOfMineFieldColumns(r)', getNumberOfMineFieldColumns(r))
-    console.log('columns', Number(columns))
     if (getNumberOfMineFieldColumns(r) !== Number(columns)) {
       validFormat = false
     }
@@ -31,12 +30,24 @@ export function mineFieldDimensionsValidation (rows, columns) {
 }
 
 export function areAllCellsCovered () {
-  const cells = document.querySelectorAll('[data-testid = "minefield-cell"]')
+  let result = true
+  const cells = screen.getAllByTestId('minefield-cell')
   cells.forEach(cell => {
     if (!cell.classList.contains('covered')) {
-      return false
+      result = false
     }
   })
+  return result
+}
 
-  return true
+export function areAllCellsEnabled () {
+  let result = true
+  const minefield = screen.getByTestId('minefield')
+  const cells = minefield.querySelectorAll('.minefield-cell')
+  cells.forEach((cell) => {
+    if (cell.disabled === true) {
+      result = false
+    }
+  })
+  return result
 }
