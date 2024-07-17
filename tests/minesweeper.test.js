@@ -57,7 +57,7 @@ const stepsRef = ({ given, when, then, and, pending }) => {
   })
   then(/^the minefield should have "(.*)" rows and "(.*)" columns$/, (numberOfRows, numberOfCols) => {
     expect(steps.mineFieldDimensionsValidation(numberOfRows, numberOfCols)).toBe(true)
-  });
+  })
 }
 
 autoBindSteps(features, [stepsRef])
