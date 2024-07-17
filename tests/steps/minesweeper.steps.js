@@ -42,8 +42,7 @@ export function areAllCellsCovered () {
 
 export function areAllCellsEnabled () {
   let result = true
-  const minefield = screen.getByTestId('minefield')
-  const cells = minefield.querySelectorAll('.minefield-cell')
+  const cells = screen.getAllByTestId('minefield-cell')
   cells.forEach((cell) => {
     if (cell.disabled === true) {
       result = false
