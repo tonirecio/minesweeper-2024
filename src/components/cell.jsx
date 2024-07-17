@@ -1,5 +1,5 @@
 export default function Cell () {
   return (
-    <button className='minefield-cell' data-testid='minefield-cell'>.</button>
+    <button className='minefield-cell covered' data-testid='minefield-cell'>.</button>
   )
 }
