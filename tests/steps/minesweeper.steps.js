@@ -8,11 +8,11 @@ export function openTheGame () {
 }
 
 export function getNumberOfMineFieldRows () {
-  return document.querySelectorAll('[data-testid = "minefield-row"]').length
+  return screen.getAllByTestId('minefield-row').length
 }
 
 export function getNumberOfMineFieldColumns (row) {
-  const rows = document.querySelectorAll('[data-testid = "minefield-row"]')[row]
+  const rows = screen.getAllByTestId('minefield-row')[row]
   const cols = rows.querySelectorAll('[data-testid = "minefield-cell"]')
   return cols.length
 }
