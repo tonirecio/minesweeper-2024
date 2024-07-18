@@ -13,8 +13,8 @@ const stepsRef = ({ given, when, then, and, pending }) => {
   given(/^the player loads the following mock data (.*)$/, (arg0) => {
     pending()
   })
-  when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-    pending()
+  when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+    steps.uncoverCell(rowPosition, colPosition)
   })
   when(/^the player left clicks on the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
     steps.uncoverCell(rowPosition, colPosition)
@@ -34,8 +34,8 @@ const stepsRef = ({ given, when, then, and, pending }) => {
   then('all the cells should be enabled', () => {
     expect(steps.areAllCellsEnabled()).toBe(true)
   })
-  then(/^the cell \("(.*)","(.*)"\) should be disabled$/, (arg0, arg1) => {
-    pending()
+  then(/^the cell \("(.*)","(.*)"\) should be disabled$/, (rowPosition, colPosition) => {
+    expect(steps.isCellDisabled(rowPosition, colPosition)).toBe(true)
   })
   then('the player should lose the game', () => {
     pending()

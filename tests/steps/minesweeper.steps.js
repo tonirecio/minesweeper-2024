@@ -65,3 +65,8 @@ export function isCellUncovered (rowPosition, colPosition) {
   }
   return true
 }
+
+export function isCellDisabled(rowPosition, colPosition) {
+  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  return cell.tagName === 'DIV'
+}
