@@ -38,7 +38,7 @@ const stepsRef = ({ given, when, then, and, pending }) => {
     expect(steps.isCellDisabled(rowPosition, colPosition)).toBe(true)
   })
   then('the player should lose the game', () => {
-    pending()
+    expect(steps.isGameLost()).toBe(true)
   })
   then('the minefield should look like this', (docString) => {
     pending()

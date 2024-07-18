@@ -70,3 +70,14 @@ export function isCellDisabled(rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   return cell.tagName === 'DIV'
 }
+
+export function isGameLost() {
+  let result = false
+  const cells = screen.getAllByTestId('minefield-cell', { exact: false })
+  cells.forEach(cell => {
+    if (cell.classList.contains('highlighted') && cell.tagName === 'DIV') {
+      result = true
+    }
+  })
+  return result
+}
