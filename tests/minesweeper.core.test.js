@@ -183,7 +183,7 @@ defineFeature(feature, (test) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
-    given(/^the player loads the following mock data (.*)$/, (arg0) => {
+    given(/^the player loads the following mock data (.*)$/, (docString) => {
       steps.setMockData(docString)
     })
     when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {

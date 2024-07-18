@@ -3,7 +3,7 @@ import './styles/minefield.css'
 
 import Cell from './cell'
 
-export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, mockData }) {
+export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData }) {
   const [minefieldData, setMinefieldData] = useState([])
 
   function parseMockDataToString (data) {
@@ -49,7 +49,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, mock
     return isValidData
   }
 
-  function getBlankMinefield () {
+  function getMinefield () {
     const minefieldData = []
     for (let row = 0; row < numberOfRows; row += 1) {
       minefieldData.push([])
@@ -84,15 +84,54 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, mock
     return board
   }
 
+  function minefieldMining (board, amount) {
+    const NUMBER_OF_ROWS = board.length
+    const NUMBER_OF_COLUMNS = board[0].length
+    let mines = 0
+    while (mines < amount && mines < NUMBER_OF_ROWS * NUMBER_OF_COLUMNS) {
+      const randomRow = Math.floor(Math.random() * NUMBER_OF_ROWS)
+      const randomColumn = Math.floor(Math.random() * NUMBER_OF_COLUMNS)
+      if (!board[randomRow][randomColumn].isMine) {
+        board[randomRow][randomColumn].isMine = true
+        mines += 1
+      }
+    }
+  }
+
+  function minefieldNumbering (board) {
+    const NUMBER_OF_ROWS = board.length
+    const NUMBER_OF_COLUMNS = board[0].length
+    for (let row = 0; row < NUMBER_OF_ROWS; row += 1) {
+      for (let column = 0; column < NUMBER_OF_COLUMNS; column += 1) {
+        if (!board[row][column].isMine) {
+          let mines = 0
+          if (row > 0 && column > 0 && board[row - 1][column - 1].isMine) mines += 1
+          if (row > 0 && board[row - 1][column].isMine) mines += 1
+          if (row > 0 && column < NUMBER_OF_COLUMNS - 1 && board[row - 1][column + 1].isMine) mines += 1
+          if (column > 0 && board[row][column - 1].isMine) mines += 1
+          if (column < NUMBER_OF_COLUMNS - 1 && board[row][column + 1].isMine) mines += 1
+          if (row < NUMBER_OF_ROWS - 1 && column > 0 && board[row + 1][column - 1].isMine) mines += 1
+          if (row < NUMBER_OF_ROWS - 1 && board[row + 1][column].isMine) mines += 1
+          if (row < NUMBER_OF_ROWS - 1 && column < NUMBER_OF_COLUMNS - 1 && board[row + 1][column + 1].isMine) mines += 1
+          board[row][column].numberOfMinesAround = mines
+        }
+      }
+    }
+  }
+
   useEffect(() => {
+    let preData
     if (mockData.includes('|')) {
       mockData = parseMockDataToString(mockData)
     }
     if (mockData !== '' && validateMockData(mockData)) {
-      setMinefieldData(getMinefieldFromMockData(mockData))
+      preData = getMinefieldFromMockData(mockData)
     } else {
-      setMinefieldData(getBlankMinefield)
-    }
+      preData = getMinefield()
+      minefieldMining(preData, numberOfMines)
+    }    
+    minefieldNumbering(preData)
+    setMinefieldData(preData)
   }, [mockData])
 
   // {mockData !== '' ? <div datatest-id='mockdata-title'>Mock data: {mockData}</div> : <></>}
@@ -106,7 +145,8 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, mock
             <Cell key={cellIndex} 
             rowPosition={rowIndex + 1} 
             colPosition={cellIndex + 1} 
-            hasMine={cell.isMine}/>
+            hasMine={cell.isMine}
+            numberOfMinesAround={cell.numberOfMinesAround}/>
           ))}
         </div>
       ))}

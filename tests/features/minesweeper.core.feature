@@ -93,7 +93,7 @@ Feature: Minesweeper
     Then the cell ("1","1") should show a highlighted mine
 
   Scenario Outline: Uncovering a cell with no mine - Displaying the number of adjacent mines
-    Given the player loads the following mock data "<boardData>"
+    Given the player loads the following mock data <boardData>
     When the player uncovers the cell ("2","2")
     Then the cell ("2","2") should show the number <number>
 

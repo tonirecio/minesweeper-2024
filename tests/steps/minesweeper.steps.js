@@ -34,6 +34,8 @@ export function areAllCellsEnabled () {
 }
 
 export function setMockData (data) {
+  data = data.trim()
+  
   // userEvent.keyboard('ctrl+m') TO DO try to explain why userEvent doesn't work
   fireEvent.keyDown(screen.getByTestId('minefield'), {
     key: 'm',
@@ -88,6 +90,11 @@ export function isHighlightedMine(rowPosition, colPosition) {
 }
 
 export function isNumber(rowPosition, colPosition, number) {
+  console.log('rowPosition ', rowPosition)
+  console.log('colPosition ', colPosition)
+  console.log('number ', number)
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
-  return cell.textContent === number
+  console.log('cell.textContent ',cell.textContent)
+  console.log('cell.innerHTML ',cell.innerHTML)
+  return Number(cell.textContent) === Number(number)
 }
