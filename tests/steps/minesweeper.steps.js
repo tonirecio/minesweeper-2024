@@ -50,10 +50,7 @@ export function setMockData (data) {
 
   const textInput = screen.getByTestId('mock-data-input')
   const submitButton = screen.getByTestId('mock-data-submit')
-  userEvent.clear(textInput)
-  userEvent.type(textInput, data)
   fireEvent.change(textInput, { target: { value: data } })
-  userEvent.click(submitButton)
   fireEvent.click(submitButton)
 }
 
