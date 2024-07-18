@@ -95,7 +95,7 @@ Feature: Minesweeper
   Scenario Outline: Uncovering a cell with no mine - Displaying the number of adjacent mines
     Given the player loads the following mock data "<boardData>"
     When the player uncovers the cell ("2","2")
-    Then the cell ("2","2") should show "<number>"
+    Then the hide ("2","2") should hide the number: <number>
 
     Examples:
       | boardData   | number |
@@ -117,7 +117,7 @@ Feature: Minesweeper
       | * | * | * |
       """
     When the player uncovers the cell ("<row>","<column>")
-    Then the cell ("2","2") should show "empty"
+    Then the cell ("2","2") should show empty
 
     Examples:
       | row | column |
@@ -144,7 +144,7 @@ Feature: Minesweeper
 
   Scenario: Suspecting that a cell is hiding a mine - Tagging as mined
     When the player tags as "mined" the cell ("1","1")
-    Then the cell ("1","1") should show "mined"
+    Then the cell ("1","1") should show mined
 
   Scenario: Untagging the mined tag - Removing the mined symbol
     Given the player tags as "mined" the cell ("1","1")
@@ -153,7 +153,7 @@ Feature: Minesweeper
 
   Scenario: Tagging a cell as mined using the mouse - Using mouse right click
     When the player right clicks on the cell ("1","1")
-    Then the cell ("1","1") should show "mined"
+    Then the cell ("1","1") should show mined
 
   Scenario: Untagging a mined cell using the mouse - Using mouse right click twice
     Given the player tags as "mined" the cell ("1","1")

@@ -81,3 +81,8 @@ export function hasHighlightedMine() {
   })
   return result
 }
+
+export function isHighlightedMine(rowPosition, colPosition) {
+  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  return cell.classList.contains('highlighted')
+}
