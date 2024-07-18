@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
-export default function Cell ( { rowPosition, colPosition }) {
-  
+export default function Cell ( { rowPosition, colPosition, hasMine } ) {
   const [isCovered, setIsCovered] = useState(true)
   function handleClick (e) {
     e.preventDefault()
@@ -18,7 +17,7 @@ export default function Cell ( { rowPosition, colPosition }) {
   } else {
     return (<div
       data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
-      className='minefield-cell'
+      className={`minefield-cell ${hasMine ? 'highlighted' : 'jar'}`}
     ></div>)
   }
 }

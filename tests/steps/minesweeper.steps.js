@@ -75,7 +75,7 @@ export function isGameLost() {
   let result = false
   const cells = screen.getAllByTestId('minefield-cell', { exact: false })
   cells.forEach(cell => {
-    if (cell.classList.contains('highlighted') && cell.tagName === 'DIV') {
+    if (cell.classList.contains('highlighted')) {
       result = true
     }
   })

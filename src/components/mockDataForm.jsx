@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 export default function MockDataForm ({ setData }) {
-  const [mockData, setMockData] = useState('**-oo')
+  const [mockData, setMockData] = useState('| * | o |')
   function handleSubmit (e) {
     e.preventDefault()
     setData(mockData)

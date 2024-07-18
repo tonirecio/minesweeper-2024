@@ -65,9 +65,8 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, mock
 
   function getMinefieldFromMockData (mockData) {
     const board = []
-    if (mockData.includes('|')) {
-      mockData = parseMockDataToString(mockData)
-    }
+    console.log('**** MOCK DATA ****', mockData)
+
     if (validateMockData(mockData)) {
       let mockBoard = mockData.split('-')
       mockBoard = mockBoard.map((row) => { return row.split('') })
@@ -86,6 +85,9 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, mock
   }
 
   useEffect(() => {
+    if (mockData.includes('|')) {
+      mockData = parseMockDataToString(mockData)
+    }
     if (mockData !== '' && validateMockData(mockData)) {
       setMinefieldData(getMinefieldFromMockData(mockData))
     } else {
@@ -101,7 +103,10 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, mock
       {minefieldData.map((row, rowIndex) => (
         <div className='minefield-row' data-testid='minefield-row' key={rowIndex}>
           {row.map((cell, cellIndex) => (
-            <Cell key={cellIndex} rowPosition={rowIndex} colPosition={cellIndex} />
+            <Cell key={cellIndex} 
+            rowPosition={rowIndex + 1} 
+            colPosition={cellIndex + 1} 
+            hasMine={cell.isMine}/>
           ))}
         </div>
       ))}
