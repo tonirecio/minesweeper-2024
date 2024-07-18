@@ -95,7 +95,7 @@ Feature: Minesweeper
   Scenario Outline: Uncovering a cell with no mine - Displaying the number of adjacent mines
     Given the player loads the following mock data "<boardData>"
     When the player uncovers the cell ("2","2")
-    Then the hide ("2","2") should hide the number: <number>
+    Then the cell ("2","2") should show the number <number>
 
     Examples:
       | boardData   | number |

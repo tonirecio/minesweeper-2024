@@ -86,3 +86,8 @@ export function isHighlightedMine(rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   return cell.classList.contains('highlighted')
 }
+
+export function isNumber(rowPosition, colPosition, number) {
+  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  return cell.textContent === number
+}
