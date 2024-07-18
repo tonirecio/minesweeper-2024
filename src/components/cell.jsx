@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './styles/cell.css'
 
 export default function Cell ( { rowPosition, colPosition, hasMine } ) {
   const [isCovered, setIsCovered] = useState(true)
@@ -17,7 +18,7 @@ export default function Cell ( { rowPosition, colPosition, hasMine } ) {
   } else {
     return (<div
       data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
-      className={`minefield-cell ${hasMine ? 'highlighted' : 'jar'}`}
-    ></div>)
+      className={`minefield-cell ${hasMine && 'highlighted'}`}
+    >{hasMine && <img src='/resources/explosion.svg' alt="explosion"/>}</div>)
   }
 }

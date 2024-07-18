@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import './styles/minefield.css'
 
 import Cell from './cell'
 
