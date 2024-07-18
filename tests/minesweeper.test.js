@@ -38,7 +38,7 @@ const stepsRef = ({ given, when, then, and, pending }) => {
     expect(steps.isCellDisabled(rowPosition, colPosition)).toBe(true)
   })
   then('the player should lose the game', () => {
-    expect(steps.isGameLost()).toBe(true)
+    expect(steps.hasHighlightedMine()).toBe(true)
   })
   then('the minefield should look like this', (docString) => {
     pending()
@@ -46,9 +46,12 @@ const stepsRef = ({ given, when, then, and, pending }) => {
   then('the player should win the game', () => {
     pending()
   })
-  then(/^the cell \("(.*)","(.*)"\) should show "(.*)"$/, (arg0, arg1, arg2) => {
-    pending()
+  then(/^the cell \("(.*)","(.*)"\) should show "(.*)"$/, (rowPosition, colPosition, c) => {
+      pending()
   })
+  then(/^the cell \("(.*)","(.*)"\) should show a highlighted mine$/, (rowPosition, colPosition) => {
+    expect(steps.hasHighlightedMine()).toBe(true)
+  });
   then(/^the cell \("(.*)","(.*)"\) should not show "(.*)"$/, (arg0, arg1, arg2) => {
     pending()
   })

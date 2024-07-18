@@ -66,7 +66,6 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, mock
 
   function getMinefieldFromMockData (mockData) {
     const board = []
-    console.log('**** MOCK DATA ****', mockData)
 
     if (validateMockData(mockData)) {
       let mockBoard = mockData.split('-')

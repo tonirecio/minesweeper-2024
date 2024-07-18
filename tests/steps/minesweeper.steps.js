@@ -71,7 +71,7 @@ export function isCellDisabled(rowPosition, colPosition) {
   return cell.tagName === 'DIV'
 }
 
-export function isGameLost() {
+export function hasHighlightedMine() {
   let result = false
   const cells = screen.getAllByTestId('minefield-cell', { exact: false })
   cells.forEach(cell => {

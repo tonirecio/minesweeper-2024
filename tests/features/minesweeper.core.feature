@@ -90,7 +90,7 @@ Feature: Minesweeper
       | * | o |
       """
     When the player uncovers the cell ("1","1")
-    Then the cell ("1","1") should show "a highlighted mine"
+    Then the cell ("1","1") should show a highlighted mine
 
   Scenario Outline: Uncovering a cell with no mine - Displaying the number of adjacent mines
     Given the player loads the following mock data "<boardData>"
