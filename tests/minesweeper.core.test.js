@@ -190,13 +190,14 @@ defineFeature(feature, (test) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
     then(/^the cell \("(.*)","(.*)"\) should show the number (.*)$/, (rowPosition, colPosition, number) => {
+
       expect(steps.isNumber(rowPosition, colPosition, number)).toBe(true)
     })
   })
 
   test('Uncovering a cell with no mine or mines around it - Displaying an empty cell', ({ given, when, then, pending }) => { 
     given('the player opens the game', () => {
-      psteps.openTheGame()
+      steps.openTheGame()
     })
     given('the player loads the following mock data', (docString) => {
       pending()
