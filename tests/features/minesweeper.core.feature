@@ -119,11 +119,11 @@ Feature: Minesweeper
     When the player uncovers the cell ("2","2")
     Then the cell ("2","2") should show empty
 
-  @current
   Scenario: Suspecting that a cell is hiding a mine, mouse right click, tagging a cell as mined
     When the player right clicks on the cell ("1","1")
     Then the cell ("1","1") should show mined
 
+@current
   Scenario: The user does not have enough information to predict the content of a cell, mouse right click over a tagged cell, tagging a cell as inconclusive
     Given the player tags as mined the cell ("1","1")
     When the player right clicks on the cell ("1","1")

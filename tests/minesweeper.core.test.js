@@ -167,7 +167,6 @@ defineFeature(feature, (test) => {
     })
   })
 
-  // current
   test('Suspecting that a cell is hiding a mine, mouse right click, tagging a cell as mined', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
@@ -180,18 +179,19 @@ defineFeature(feature, (test) => {
     })
   })
 
+  // current
   test('The user does not have enough information to predict the content of a cell, mouse right click over a tagged cell, tagging a cell as inconclusive', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
-    given(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    given(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.tagCellAsMined(rowPosition, colPosition)
     })
-    when(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    when(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.tagCell(rowPosition, colPosition)
     })
-    then(/^the cell \("(.*)","(.*)"\) should show inconclusive$/, (arg0, arg1) => {
-      pending()
+    then(/^the cell \("(.*)","(.*)"\) should show inconclusive$/, (rowPosition, colPosition) => {
+      expect(steps.isTaggedAsInconclusive(rowPosition, colPosition)).toBe(true)
     })
   })
 

@@ -64,6 +64,24 @@ export function tagCell (rowPosition, colPosition) {
   fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
 }
 
+export function tagCellAsMined (rowPosition, colPosition) {
+  if (isNotTagged(rowPosition, colPosition)) {
+    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+  } else if (isTaggedAsInconclusive(rowPosition, colPosition)) {
+    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+  }
+}
+
+export function tagCellAsInconclusive (rowPosition, colPosition) {
+  if (isNotTagged(rowPosition, colPosition)) {
+    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+  } else if (isTaggedAsMined(rowPosition, colPosition)) {
+    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+  }
+}
+
 export function isCellUncovered (rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   if (cell.classList.contains('covered')) {
@@ -108,4 +126,21 @@ export function isTaggedAsMined(rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   const imgSource = cell.getElementsByTagName('img')[0].src
   return imgSource.includes('/flagCell.png')
+}
+
+export function isTaggedAsInconclusive(rowPosition, colPosition) {
+  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  const imgSource = cell.getElementsByTagName('img')[0].src
+  return imgSource.includes('/inconclusiveCell.png')
+}
+
+export function isNotTagged(rowPosition, colPosition) {
+  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  const imgSource = cell.getElementsByTagName('img')[0].src
+  if (imgSource) {
+    return !imgSource.includes('/inconclusiveCell.png') && 
+    !imgSource.includes('/flagCell.png') 
+  } else {
+    return true
+  }
 }
