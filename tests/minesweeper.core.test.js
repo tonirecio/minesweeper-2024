@@ -190,7 +190,6 @@ defineFeature(feature, (test) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
     then(/^the cell \("(.*)","(.*)"\) should show the number (.*)$/, (rowPosition, colPosition, number) => {
-
       expect(steps.isNumber(rowPosition, colPosition, number)).toBe(true)
     })
   })
@@ -200,13 +199,13 @@ defineFeature(feature, (test) => {
       steps.openTheGame()
     })
     given('the player loads the following mock data', (docString) => {
-      pending()
+      steps.setMockData(docString)
     })
-    when(/^the player uncovers the cell \((.*),(.*)\)$/, (arg0, arg1) => {
-      pending()
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
     })
-    then(/^the cell \("(.*)","(.*)"\) should show empty$/, (arg0, arg1) => {
-      pending()
+    then(/^the cell \("(.*)","(.*)"\) should show empty$/, (rowPosition, colPosition) => {
+      expect(steps.isEmpty(rowPosition, colPosition, number)).toBe(true)
     })
   })
 

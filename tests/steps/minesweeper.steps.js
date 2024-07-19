@@ -95,6 +95,11 @@ export function isNumber(rowPosition, colPosition, number) {
   console.log('number ', number)
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   console.log('cell.textContent ',cell.textContent)
-  console.log('cell.innerHTML ',cell.innerHTML)
-  return Number(cell.textContent) === Number(number)
+  const imgSource = cell.getElementsByTagName('img')[0].src
+  return cell.getElementsByTagName('img')[0].src.includes('/cell' +number + '.png')
+}
+
+export function isCellEmpty(rowPosition, colPosition) {
+  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  return cell.innerHTML === '' && cell.tagName === 'DIV'
 }

@@ -108,6 +108,7 @@ Feature: Minesweeper
       | ***-oo*-*** | 7      |
       | ***-*o*-*** | 8      |
 
+@current
   Scenario Outline: Uncovering a cell with no mine or mines around it - Displaying an empty cell
     Given the player loads the following mock data
       """
