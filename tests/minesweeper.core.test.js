@@ -107,63 +107,6 @@ defineFeature(feature, (test) => {
     })
   });
 
-  test('Suspecting that a cell is hiding a mine - Tagging as mined', ({ given, when, then, pending }) => {
-    given('the player opens the game', () => {
-      steps.openTheGame()
-    })
-    when(/^the player tags as "(.*)" the cell \("(.*)","(.*)"\)$/, (arg0, arg1, arg2) => {
-      pending()
-    })
-    then(/^the cell \("(.*)","(.*)"\) should show mined$/, (arg0, arg1) => {
-      pending()
-    })
-  });
-
-  test('Untagging the mined tag - Removing the mined symbol', ({ given, when, then, pending }) => {
-    given('the player opens the game', () => {
-      steps.openTheGame()
-    })
-    given(/^the player tags as "(.*)" the cell \("(.*)","(.*)"\)$/, (arg0, arg1, arg2) => {
-      pending()
-    })
-    when(/^the player untags the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
-    })
-    then(/^the cell \("(.*)","(.*)"\) should not show "(.*)"$/, (arg0, arg1, arg2) => {
-      pending()
-    })
-  })
-
-  test('Tagging a cell as mined using the mouse - Using mouse right click', ({ given, when, then, pending }) => {
-    given('the player opens the game', () => {
-      steps.openTheGame()
-    })
-    when(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
-    })
-    then(/^the cell \("(.*)","(.*)"\) should show mined$/, (arg0, arg1) => {
-      pending()
-    })
-  })
-
-  test('Untagging a mined cell using the mouse - Using mouse right click twice', ({ given, when, and, then, pending }) => {  
-    given('the player opens the game', () => {
-      steps.openTheGame()
-    })
-    given(/^the player tags as "(.*)" the cell \("(.*)","(.*)"\)$/, (arg0, arg1, arg2) => {
-      pending()
-    })
-    when(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
-    })
-    and(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
-    })
-    then(/^the cell \("(.*)","(.*)"\) should not show "(.*)"$/, (arg0, arg1, arg2) => {
-      pending()
-    })
-  })
-
   test('Discovering all the cells without mines - Winning the game', ({ given, when, then, pending }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
@@ -220,6 +163,51 @@ defineFeature(feature, (test) => {
       pending()
     })
     then('all the cells should be disabled', () => {   
+      pending()
+    })
+  })
+
+  test('Suspecting that a cell is hiding a mine, mouse right click, tagging a cell as mined', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    when(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+    then(/^the cell \("(.*)","(.*)"\) should show mined$/, (arg0, arg1) => {
+      pending()
+    })
+  })
+
+  test('The user does not have enough information to predict the content of a cell, mouse right click over a tagged cell, tagging a cell as inconclusive', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+    when(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+    then(/^the cell \("(.*)","(.*)"\) should show inconclusive$/, (arg0, arg1) => {
+      pending()
+    })
+  })
+
+  test('Untagging an cell, mouse right click over an inconclusive cell, removing the cell tag', ({ given, when, then, and }) => {     
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given(/^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+    when(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+    then(/^the cell \("(.*)","(.*)"\) should not show mined$/, (arg0, arg1) => {
+      pending()
+    })
+    and(/^the cell \("(.*)","(.*)"\) should not show inconclusive$/, (arg0, arg1) => {
       pending()
     })
   })
