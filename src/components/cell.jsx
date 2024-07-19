@@ -9,17 +9,20 @@ export default function Cell ( { rowPosition, colPosition, hasMine, numberOfMine
   }
 
   if (isCovered) {
-  return (<button
-    onClick={handleClick}
-    data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
-    className='minefield-cell covered'
-  >{numberOfMinesAround}
-  </button>)
+    return (
+      <button
+        onClick={handleClick}
+        data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
+        className='minefield-cell covered'
+      />
+    )
   } else {
-    return (<div
-      data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
-      className={`minefield-cell ${hasMine && 'highlighted'}`}
-    >{hasMine && <img src='/resources/explosion.svg' alt="explosion"/>}
-    {numberOfMinesAround > 0 && numberOfMinesAround}</div>)
+    return (
+      <div
+        data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
+        className={`minefield-cell ${hasMine && 'highlighted'}`}
+      >{hasMine ? <img src='/tiles/detonateBombCell.png' alt='explosion' /> : <img src={`/tiles/cell${numberOfMinesAround}.png`} />}
+      </div>
+    )
   }
 }
