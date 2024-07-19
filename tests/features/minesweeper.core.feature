@@ -108,7 +108,6 @@ Feature: Minesweeper
       | ***-oo*-*** | 7      |
       | ***-*o*-*** | 8      |
 
-  @current
   Scenario: Uncovering a cell with no mine or mines around it - Displaying an empty cell
     Given the player loads the following mock data
       """
@@ -120,24 +119,21 @@ Feature: Minesweeper
     When the player uncovers the cell ("2","2")
     Then the cell ("2","2") should show empty
 
-  Scenario: Suspecting that a cell is hiding a mine - Tagging as mined
-    When the player tags as "mined" the cell ("1","1")
-    Then the cell ("1","1") should show mined
-
-  Scenario: Untagging the mined tag - Removing the mined symbol
-    Given the player tags as "mined" the cell ("1","1")
-    When the player untags the cell ("1","1")
-    Then the cell ("1","1") should not show "mined"
-
-  Scenario: Tagging a cell as mined using the mouse - Using mouse right click
+  @current
+  Scenario: Suspecting that a cell is hiding a mine, mouse right click, tagging a cell as mined
     When the player right clicks on the cell ("1","1")
     Then the cell ("1","1") should show mined
 
-  Scenario: Untagging a mined cell using the mouse - Using mouse right click twice
-    Given the player tags as "mined" the cell ("1","1")
+  Scenario: The user does not have enough information to predict the content of a cell, mouse right click over a tagged cell, tagging a cell as inconclusive
+    Given the player tags as mined the cell ("1","1")
     When the player right clicks on the cell ("1","1")
-    And the player right clicks on the cell ("1","1")
-    Then the cell ("1","1") should not show "mined"
+    Then the cell ("1","1") should show inconclusive
+
+  Scenario: Untagging an cell, mouse right click over an inconclusive cell, removing the cell tag
+    Given the player tags as inconclusive the cell ("1","1")
+    When the player right clicks on the cell ("1","1")
+    Then the cell ("1","1") should not show mined
+    And the cell ("1","1") should not show inconclusive
 
   Scenario: Discovering all the cells without mines - Winning the game
     Given the player loads the following mock data
