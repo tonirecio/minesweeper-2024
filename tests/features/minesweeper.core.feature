@@ -108,25 +108,8 @@ Feature: Minesweeper
       | ***-oo*-*** | 7      |
       | ***-*o*-*** | 8      |
 
-@current
-  Scenario Outline: Uncovering a cell with no mine or mines around it - Displaying an empty cell
-    Given the player loads the following mock data
-      """
-      | o | o | o |
-      | o | o | o |
-      | o | o | o |
-      | * | * | * |
-      """
-    When the player uncovers the cell ("<row>","<column>")
-    Then the cell ("2","2") should show empty
-
-    Examples:
-      | row | column |
-      | 1   | 1      |
-      | 1   | 3      |
-      | 2   | 2      |
-
-  Scenario: Uncovering an empty cell - Uncovering neighbor cells
+  @current
+  Scenario: Uncovering a cell with no mine or mines around it - Displaying an empty cell
     Given the player loads the following mock data
       """
       | o | o | o |
@@ -135,13 +118,7 @@ Feature: Minesweeper
       | * | * | * |
       """
     When the player uncovers the cell ("2","2")
-    Then the minefield should look like this
-      """
-      | 0 | 0 | 0 |
-      | 0 | 0 | 0 |
-      | 2 | 3 | 2 |
-      | . | . | . |
-      """
+    Then the cell ("2","2") should show empty
 
   Scenario: Suspecting that a cell is hiding a mine - Tagging as mined
     When the player tags as "mined" the cell ("1","1")
@@ -182,3 +159,20 @@ Feature: Minesweeper
       | row | col |
       | 1   | 1   |
       | 1   | 2   |
+
+  Scenario: Uncovering an empty cell - Uncovering neighbor cells
+    Given the player loads the following mock data
+      """
+      | o | o | o |
+      | o | o | o |
+      | o | o | o |
+      | * | * | * |
+      """
+    When the player uncovers the cell ("2","2")
+    Then the minefield should look like this
+      """
+      | 0 | 0 | 0 |
+      | 0 | 0 | 0 |
+      | 2 | 3 | 2 |
+      | . | . | . |
+      """

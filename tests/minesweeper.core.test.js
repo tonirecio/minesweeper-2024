@@ -205,7 +205,7 @@ defineFeature(feature, (test) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
     then(/^the cell \("(.*)","(.*)"\) should show empty$/, (rowPosition, colPosition) => {
-      expect(steps.isEmpty(rowPosition, colPosition, number)).toBe(true)
+      expect(steps.isCellEmpty(rowPosition, colPosition)).toBe(true)
     })
   })
 

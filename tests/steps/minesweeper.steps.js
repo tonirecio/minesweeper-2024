@@ -90,16 +90,13 @@ export function isHighlightedMine(rowPosition, colPosition) {
 }
 
 export function isNumber(rowPosition, colPosition, number) {
-  console.log('rowPosition ', rowPosition)
-  console.log('colPosition ', colPosition)
-  console.log('number ', number)
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
-  console.log('cell.textContent ',cell.textContent)
   const imgSource = cell.getElementsByTagName('img')[0].src
-  return cell.getElementsByTagName('img')[0].src.includes('/cell' +number + '.png')
+  return imgSource.includes('/cell' +number + '.png')
 }
 
 export function isCellEmpty(rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
-  return cell.innerHTML === '' && cell.tagName === 'DIV'
+  const imgSource = cell.getElementsByTagName('img')[0].src
+  return imgSource.includes('/cell0.png')
 }
