@@ -179,7 +179,6 @@ defineFeature(feature, (test) => {
     })
   })
 
-  // current
   test('The user does not have enough information to predict the content of a cell, mouse right click over a tagged cell, tagging a cell as inconclusive', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
@@ -195,21 +194,19 @@ defineFeature(feature, (test) => {
     })
   })
 
+  // current
   test('Untagging an cell, mouse right click over an inconclusive cell, removing the cell tag', ({ given, when, then, and }) => {     
     given('the player opens the game', () => {
       steps.openTheGame()
     })
-    given(/^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    given(/^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.tagCellAsInconclusive(rowPosition, colPosition)
     })
-    when(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    when(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.tagCell(rowPosition, colPosition)
     })
-    then(/^the cell \("(.*)","(.*)"\) should not show mined$/, (arg0, arg1) => {
-      pending()
-    })
-    and(/^the cell \("(.*)","(.*)"\) should not show inconclusive$/, (arg0, arg1) => {
-      pending()
+    then(/^the cell \("(.*)","(.*)"\) should not be tagged$/, (rowPosition, colPosition) => {
+      expect(steps.isNotTagged(rowPosition, colPosition)).toBe(true)
     })
   })
 

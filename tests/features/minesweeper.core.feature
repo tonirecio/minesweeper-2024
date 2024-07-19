@@ -123,17 +123,16 @@ Feature: Minesweeper
     When the player right clicks on the cell ("1","1")
     Then the cell ("1","1") should show mined
 
-@current
   Scenario: The user does not have enough information to predict the content of a cell, mouse right click over a tagged cell, tagging a cell as inconclusive
     Given the player tags as mined the cell ("1","1")
     When the player right clicks on the cell ("1","1")
     Then the cell ("1","1") should show inconclusive
 
+  @current
   Scenario: Untagging an cell, mouse right click over an inconclusive cell, removing the cell tag
     Given the player tags as inconclusive the cell ("1","1")
     When the player right clicks on the cell ("1","1")
-    Then the cell ("1","1") should not show mined
-    And the cell ("1","1") should not show inconclusive
+    Then the cell ("1","1") should not be tagged
 
   Scenario: Discovering all the cells without mines - Winning the game
     Given the player loads the following mock data
