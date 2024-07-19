@@ -60,6 +60,10 @@ export function uncoverCell (rowPosition, colPosition) {
   fireEvent.click(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
 }
 
+export function tagCell (rowPosition, colPosition) {
+  fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+}
+
 export function isCellUncovered (rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   if (cell.classList.contains('covered')) {
@@ -99,4 +103,9 @@ export function isCellEmpty(rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   const imgSource = cell.getElementsByTagName('img')[0].src
   return imgSource.includes('/cell0.png')
+}
+export function isTaggedAsMined(rowPosition, colPosition) {
+  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  const imgSource = cell.getElementsByTagName('img')[0].src
+  return imgSource.includes('/flagCell.png')
 }

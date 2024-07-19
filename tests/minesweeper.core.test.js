@@ -167,15 +167,16 @@ defineFeature(feature, (test) => {
     })
   })
 
+  // current
   test('Suspecting that a cell is hiding a mine, mouse right click, tagging a cell as mined', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
-    when(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    when(/^the player right clicks on the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.tagCell(rowPosition, colPosition)
     })
-    then(/^the cell \("(.*)","(.*)"\) should show mined$/, (arg0, arg1) => {
-      pending()
+    then(/^the cell \("(.*)","(.*)"\) should show mined$/, (rowPosition, colPosition) => {
+      expect(steps.isTaggedAsMined(rowPosition, colPosition)).toBe(true)
     })
   })
 
