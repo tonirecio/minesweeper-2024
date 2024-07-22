@@ -1,10 +1,9 @@
-import { loadFeature, defineFeature } from 'jest-cucumber';
+import { loadFeature, defineFeature } from 'jest-cucumber'
 import * as steps from './steps/minesweeper.steps'
 
 const feature = loadFeature('./tests/features/minesweeper.core.feature')
 
 defineFeature(feature, (test) => {
-  
   test('Starting game - Minefield default sizing 9x9', ({ given, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
@@ -18,7 +17,7 @@ defineFeature(feature, (test) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
-    then('all the cells should be covered', () => {    
+    then('all the cells should be covered', () => {
       expect(steps.areAllCellsCovered()).toBe(true)
     })
   })
@@ -27,7 +26,7 @@ defineFeature(feature, (test) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
-    then('all the cells should be enabled', () => {    
+    then('all the cells should be enabled', () => {
       expect(steps.areAllCellsEnabled()).toBe(true)
     })
   })
@@ -72,7 +71,7 @@ defineFeature(feature, (test) => {
     when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
-    then('the player should lose the game', () => {    
+    then('the player should lose the game', () => {
       expect(steps.hasHighlightedMine()).toBe(true)
     })
   })
@@ -117,12 +116,12 @@ defineFeature(feature, (test) => {
     when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
-    then('the player should win the game', () => {     
+    then('the player should win the game', () => {
       pending()
     })
   })
 
-  test('Uncovering a cell with no mine - Displaying the number of adjacent mines', ({ given, when, then }) => {     
+  test('Uncovering a cell with no mine - Displaying the number of adjacent mines', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -137,7 +136,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Uncovering a cell with no mine or mines around it - Displaying an empty cell', ({ given, when, then }) => { 
+  test('Uncovering a cell with no mine or mines around it - Displaying an empty cell', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -162,7 +161,7 @@ defineFeature(feature, (test) => {
     when(/^the player uncovers the cell \((.*),(.*)\)$/, (rowPosition, colPosition) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
-    then('all the cells should be disabled', () => {   
+    then('all the cells should be disabled', () => {
       pending()
     })
   })
@@ -194,7 +193,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Untagging an cell, mouse right click over an inconclusive cell, removing the cell tag', ({ given, when, then, and }) => {     
+  test('Untagging an cell, mouse right click over an inconclusive cell, removing the cell tag', ({ given, when, then, and }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -209,7 +208,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Uncovering a tagged cell as mined, the cell should remain covered', ({ given, when, then, pending}) => {
+  test('Uncovering a tagged cell as mined, the cell should remain covered', ({ given, when, then, pending }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -223,7 +222,7 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
-    
+
   test('Uncovering a tagged cell as inconclusive, the cell should remain covered', ({ given, when, then, pending }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
@@ -250,7 +249,7 @@ defineFeature(feature, (test) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
     then(/^the cell \("(.*)","(.*)"\) should show mined$/, (rowPosition, colPosition) => {
-      pending()
+      expect(steps.isTaggedAsMined(rowPosition, colPosition)).toBe(true)
     })
   })
 
@@ -275,25 +274,24 @@ defineFeature(feature, (test) => {
   test('Losing the game, showing cells incorrectly tagged as mined', ({ given, and, when, then, pending }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
-    })    
+    })
     given('the player loads the following mock data', (docString) => {
       steps.setMockData(docString)
-    })    
+    })
     and(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
       steps.tagCellAsMined(rowPosition, colPosition)
-    })    
+    })
     and(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
       steps.tagCellAsMined(rowPosition, colPosition)
-    })    
+    })
     when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
       steps.uncoverCell(rowPosition, colPosition)
-    })    
+    })
     then(/^the cell \("(.*)","(.*)"\) should show a wrongly tagged cell$/, (rowPosition, colPosition) => {
       pending()
-    })    
+    })
     and(/^the cell \("(.*)","(.*)"\) should show a mine$/, (rowPosition, colPosition) => {
       pending()
     })
   })
-
 })

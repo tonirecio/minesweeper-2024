@@ -35,7 +35,7 @@ export function areAllCellsEnabled () {
 
 export function setMockData (data) {
   data = data.trim()
-  
+
   // userEvent.keyboard('ctrl+m') TO DO try to explain why userEvent doesn't work
   fireEvent.keyDown(screen.getByTestId('minefield'), {
     key: 'm',
@@ -90,12 +90,12 @@ export function isCellUncovered (rowPosition, colPosition) {
   return true
 }
 
-export function isCellDisabled(rowPosition, colPosition) {
+export function isCellDisabled (rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   return cell.tagName === 'DIV'
 }
 
-export function hasHighlightedMine() {
+export function hasHighlightedMine () {
   let result = false
   const cells = screen.getAllByTestId('minefield-cell', { exact: false })
   cells.forEach(cell => {
@@ -106,24 +106,24 @@ export function hasHighlightedMine() {
   return result
 }
 
-export function isHighlightedMine(rowPosition, colPosition) {
+export function isHighlightedMine (rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   return cell.classList.contains('highlighted')
 }
 
-export function isNumber(rowPosition, colPosition, number) {
+export function isNumber (rowPosition, colPosition, number) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   const imgSource = cell.getElementsByTagName('img')[0].src
-  return imgSource.includes('/cell' +number + '.png')
+  return imgSource.includes('/cell' + number + '.png')
 }
 
-export function isCellEmpty(rowPosition, colPosition) {
+export function isCellEmpty (rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   const imgSource = cell.getElementsByTagName('img')[0].src
   return imgSource.includes('/cell0.png')
 }
 
-export function isTaggedAsMined(rowPosition, colPosition) {
+export function isTaggedAsMined (rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   const image = cell.getElementsByTagName('img')
   if (image.length > 0) {
@@ -134,7 +134,7 @@ export function isTaggedAsMined(rowPosition, colPosition) {
   }
 }
 
-export function isTaggedAsInconclusive(rowPosition, colPosition) {
+export function isTaggedAsInconclusive (rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   const image = cell.getElementsByTagName('img')
   if (image.length > 0) {
@@ -145,13 +145,13 @@ export function isTaggedAsInconclusive(rowPosition, colPosition) {
   }
 }
 
-export function isNotTagged(rowPosition, colPosition) {
+export function isNotTagged (rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   const image = cell.getElementsByTagName('img')
   if (image.length > 0) {
     const imgSource = image[0].src
-    return !imgSource.includes('/inconclusiveCell.png') && 
-    !imgSource.includes('/flagCell.png') 
+    return !imgSource.includes('/inconclusiveCell.png') &&
+    !imgSource.includes('/flagCell.png')
   } else {
     return true
   }

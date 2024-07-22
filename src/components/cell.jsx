@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import './styles/cell.css'
 
-export default function Cell ( { rowPosition, colPosition, hasMine, numberOfMinesAround } ) {
+export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround }) {
   const [isCovered, setIsCovered] = useState(true)
-  const [isTagged, setIsTagged] = useState("")
+  const [isTagged, setIsTagged] = useState('')
   function handleClick (e) {
     e.preventDefault()
     setIsCovered(false)
@@ -28,8 +28,9 @@ export default function Cell ( { rowPosition, colPosition, hasMine, numberOfMine
         onContextMenu={handleContextMenu}
         data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
         className='minefield-cell covered'
-      >{ isTagged === 'mined' && <img src='/tiles/flagCell.png'/>}
-       { isTagged === 'inconclusive' && <img src='/tiles/inconclusiveCell.png'/>}</button>
+      >{isTagged === 'mined' && <img src='/tiles/flagCell.png' />}
+        {isTagged === 'inconclusive' && <img src='/tiles/inconclusiveCell.png' />}
+      </button>
     )
   } else {
     return (

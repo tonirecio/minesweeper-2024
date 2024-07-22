@@ -129,7 +129,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
     } else {
       preData = getMinefield()
       minefieldMining(preData, numberOfMines)
-    }    
+    }
     minefieldNumbering(preData)
     setMinefieldData(preData)
   }, [mockData])
@@ -142,11 +142,13 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
       {minefieldData.map((row, rowIndex) => (
         <div className='minefield-row' data-testid='minefield-row' key={rowIndex}>
           {row.map((cell, cellIndex) => (
-            <Cell key={cellIndex} 
-            rowPosition={rowIndex + 1} 
-            colPosition={cellIndex + 1} 
-            hasMine={cell.isMine}
-            numberOfMinesAround={cell.numberOfMinesAround}/>
+            <Cell
+              key={cellIndex}
+              rowPosition={rowIndex + 1}
+              colPosition={cellIndex + 1}
+              hasMine={cell.isMine}
+              numberOfMinesAround={cell.numberOfMinesAround}
+            />
           ))}
         </div>
       ))}
