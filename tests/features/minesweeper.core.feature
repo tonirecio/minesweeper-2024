@@ -108,17 +108,6 @@ Feature: Minesweeper
       | ***-oo*-*** | 7      |
       | ***-*o*-*** | 8      |
 
-  Scenario: Uncovering a cell with no mine or mines around it - Displaying an empty cell
-    Given the player loads the following mock data
-      """
-      | o | o | o |
-      | o | o | o |
-      | o | o | o |
-      | * | * | * |
-      """
-    When the player uncovers the cell ("2","2")
-    Then the cell ("2","2") should show empty
-
   Scenario: Suspecting that a cell is hiding a mine, mouse right click, tagging a cell as mined
     When the player right clicks on the cell ("1","1")
     Then the cell ("1","1") should show mined
@@ -128,11 +117,20 @@ Feature: Minesweeper
     When the player right clicks on the cell ("1","1")
     Then the cell ("1","1") should show inconclusive
 
-  @current
   Scenario: Untagging an cell, mouse right click over an inconclusive cell, removing the cell tag
     Given the player tags as inconclusive the cell ("1","1")
     When the player right clicks on the cell ("1","1")
     Then the cell ("1","1") should not be tagged
+
+  Scenario: Uncovering a tagged cell as mined, the cell should remain covered
+    Given the player tags as mined the cell ("1","1")
+    When the player uncovers the cell ("1","1")
+    Then the cell ("1","1") should be covered
+
+  Scenario: Uncovering a tagged cell as inconclusive, the cell should remain covered
+    Given the player tags as inconclusive the cell ("1","1")
+    When the player uncovers the cell ("1", "1")
+    Then the cell ("1","1") should be covered
 
   Scenario: Discovering all the cells without mines - Winning the game
     Given the player loads the following mock data
@@ -154,6 +152,47 @@ Feature: Minesweeper
       | row | col |
       | 1   | 1   |
       | 1   | 2   |
+
+  Scenario: Winning the game, marking as mined all the mined cells
+    Given the player loads the following mock data
+      """
+      | * | o |
+      """
+    When the player uncovers the cell ("1","2")
+    Then the cell ("1","1") should show mined
+
+  Scenario: Losing the game, showing all the mines in the minefield
+    Given the player loads the following mock data
+      """
+      | * | * |
+      | o | * |
+      """
+    When the player uncovers the cell ("1","1")
+    Then the cell (1,2) should show a mine
+    And the cell (2,2) should show a mine
+
+  Scenario: Losing the game, showing cells incorrectly tagged as mined
+    Given the player loads the following mock data
+      """
+      | * | o |
+      | * | o |
+      """
+    And the player tags as mined the cell ("1","1")
+    And the player tags as mined the cell ("1","2")
+    When the player uncovers the cell ("2","1")
+    Then the cell ("1","2") should show a wrongly tagged cell
+    And the cell ("1","1") should show a mine
+
+  Scenario: Uncovering a cell with no mine or mines around it - Displaying an empty cell
+    Given the player loads the following mock data
+      """
+      | o | o | o |
+      | o | o | o |
+      | o | o | o |
+      | * | * | * |
+      """
+    When the player uncovers the cell ("2","2")
+    Then the cell ("2","2") should be empty
 
   Scenario: Uncovering an empty cell - Uncovering neighbor cells
     Given the player loads the following mock data

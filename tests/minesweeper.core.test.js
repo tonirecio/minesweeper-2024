@@ -97,32 +97,32 @@ defineFeature(feature, (test) => {
       steps.openTheGame()
     })
     given('the player loads the following mock data', (docString) => {
-      pending()
+      steps.setMockData(docString)
     })
-    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
     })
     then('the minefield should look like this', (docString) => {
       pending()
     })
-  });
+  })
 
   test('Discovering all the cells without mines - Winning the game', ({ given, when, then, pending }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
     given('the player loads the following mock data', (docString) => {
-      pending()
+      steps.setMockData(docString)
     })
-    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
     })
     then('the player should win the game', () => {     
       pending()
     })
   })
 
-  test('Uncovering a cell with no mine - Displaying the number of adjacent mines', ({ given, when, then, pending }) => {     
+  test('Uncovering a cell with no mine - Displaying the number of adjacent mines', ({ given, when, then }) => {     
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -137,7 +137,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Uncovering a cell with no mine or mines around it - Displaying an empty cell', ({ given, when, then, pending }) => { 
+  test('Uncovering a cell with no mine or mines around it - Displaying an empty cell', ({ given, when, then }) => { 
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -147,7 +147,7 @@ defineFeature(feature, (test) => {
     when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
-    then(/^the cell \("(.*)","(.*)"\) should show empty$/, (rowPosition, colPosition) => {
+    then(/^the cell \("(.*)","(.*)"\) should be empty$/, (rowPosition, colPosition) => {
       expect(steps.isCellEmpty(rowPosition, colPosition)).toBe(true)
     })
   })
@@ -157,10 +157,10 @@ defineFeature(feature, (test) => {
       steps.openTheGame()
     })
     given('the player loads the following mock data', (docString) => {
-      pending()
+      steps.setMockData(docString)
     })
-    when(/^the player uncovers the cell \((.*),(.*)\)$/, (arg0, arg1) => {
-      pending()
+    when(/^the player uncovers the cell \((.*),(.*)\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
     })
     then('all the cells should be disabled', () => {   
       pending()
@@ -194,7 +194,6 @@ defineFeature(feature, (test) => {
     })
   })
 
-  // current
   test('Untagging an cell, mouse right click over an inconclusive cell, removing the cell tag', ({ given, when, then, and }) => {     
     given('the player opens the game', () => {
       steps.openTheGame()
@@ -210,5 +209,91 @@ defineFeature(feature, (test) => {
     })
   })
 
-})
+  test('Uncovering a tagged cell as mined, the cell should remain covered', ({ given, when, then, pending}) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.tagCellAsMined(rowPosition, colPosition)
+    })
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
+    })
+    then(/^the cell \("(.*)","(.*)"\) should be covered$/, (rowPosition, colPosition) => {
+      pending()
+    })
+  })
+    
+  test('Uncovering a tagged cell as inconclusive, the cell should remain covered', ({ given, when, then, pending }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given(/^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.tagCellAsInconclusive(rowPosition, colPosition)
+    })
+    when(/^the player uncovers the cell \("(.*)", "(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
+    })
+    then(/^the cell \("(.*)","(.*)"\) should be covered$/, (rowPosition, colPosition) => {
+      pending()
+    })
+  })
 
+  test('Winning the game, marking as mined all the mined cells', ({ given, when, then, pending }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data', (docString) => {
+      steps.setMockData(docString)
+    })
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
+    })
+    then(/^the cell \("(.*)","(.*)"\) should show mined$/, (rowPosition, colPosition) => {
+      pending()
+    })
+  })
+
+  test('Losing the game, showing all the mines in the minefield', ({ given, when, then, and, pending }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data', (docString) => {
+      steps.setMockData(docString)
+    })
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
+    })
+    then(/^the cell \((\d+),(\d+)\) should show a mine$/, (rowPosition, colPosition) => {
+      pending()
+    })
+    and(/^the cell \((\d+),(\d+)\) should show a mine$/, (rowPosition, colPosition) => {
+      pending()
+    })
+  })
+
+  test('Losing the game, showing cells incorrectly tagged as mined', ({ given, and, when, then, pending }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })    
+    given('the player loads the following mock data', (docString) => {
+      steps.setMockData(docString)
+    })    
+    and(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.tagCellAsMined(rowPosition, colPosition)
+    })    
+    and(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.tagCellAsMined(rowPosition, colPosition)
+    })    
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
+    })    
+    then(/^the cell \("(.*)","(.*)"\) should show a wrongly tagged cell$/, (rowPosition, colPosition) => {
+      pending()
+    })    
+    and(/^the cell \("(.*)","(.*)"\) should show a mine$/, (rowPosition, colPosition) => {
+      pending()
+    })
+  })
+
+})
