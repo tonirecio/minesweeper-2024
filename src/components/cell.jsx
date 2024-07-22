@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import './styles/cell.css'
 
-export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround }) {
+export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, onUncover }) {
   const [isCovered, setIsCovered] = useState(true)
   const [isTagged, setIsTagged] = useState('')
   function handleClick (e) {
     e.preventDefault()
     setIsCovered(false)
+    onUncover(rowPosition, colPosition)
   }
   function handleContextMenu (e) {
     e.preventDefault()

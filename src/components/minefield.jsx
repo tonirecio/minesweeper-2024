@@ -6,6 +6,10 @@ import Cell from './cell'
 export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData }) {
   const [minefieldData, setMinefieldData] = useState([])
 
+  function onUncover (row, column) {
+    alert(`Uncover cell at row ${row} and column ${column}`)
+  }
+
   function parseMockDataToString (data) {
     let strData = data.split(/\r?\n/).join('-')
     strData = strData.replaceAll(' ', '')
@@ -148,6 +152,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
               colPosition={cellIndex + 1}
               hasMine={cell.isMine}
               numberOfMinesAround={cell.numberOfMinesAround}
+              onUncover={onUncover}
             />
           ))}
         </div>
