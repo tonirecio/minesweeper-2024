@@ -264,10 +264,10 @@ defineFeature(feature, (test) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
     then(/^the cell \("(.*)","(.*)"\) should show a mine$/, (rowPosition, colPosition) => {
-      expect(steps.isMine(rowPosition, colPosition), true)
+      expect(steps.isMine(rowPosition, colPosition)).toBe(true)
     })
     and(/^the cell \("(.*)","(.*)"\) should show a mine$/, (rowPosition, colPosition) => {
-      expect(steps.isMine(rowPosition, colPosition), true)
+      expect(steps.isMine(rowPosition, colPosition)).toBe(true)
     })
   })
 

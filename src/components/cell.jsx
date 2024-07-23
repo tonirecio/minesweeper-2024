@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import './styles/cell.css'
 
-export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, onUncover, gameStatus }) {
+export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, onUncover, gameStatus, gameOver }) {
   const [isCovered, setIsCovered] = useState(true)
   const [isTagged, setIsTagged] = useState('')
   function handleClick (e) {
     e.preventDefault()
     setIsCovered(false)
+    if (hasMine) {
+      gameOver()
+    }
     onUncover(rowPosition, colPosition)
   }
   function handleContextMenu (e) {
@@ -22,7 +25,17 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
     setIsTagged(newState)
   }
 
-  if (isCovered) {
+  if (!isCovered || (gameStatus === 'lost' && hasMine)) {
+    return (
+      <div
+        data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
+        className={`minefield-cell ${hasMine && 'highlighted'}`}
+      >
+        {hasMine && (isCovered ? <img src='/tiles/bombCell.png' alt='explosion' /> : <img src='/tiles/detonateBombCell.png' alt='mine' />)}
+        {!hasMine && <img src={`/tiles/cell${numberOfMinesAround}.png`} />}
+      </div>
+    )    
+  } else {
     return (
       <button
         onClick={handleClick}
@@ -34,14 +47,6 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         {isTagged === 'mined' && <img src='/tiles/flagCell.png' />}
         {isTagged === 'inconclusive' && <img src='/tiles/inconclusiveCell.png' />}
       </button>
-    )
-  } else {
-    return (
-      <div
-        data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
-        className={`minefield-cell ${hasMine && 'highlighted'}`}
-      >{hasMine ? <img src='/tiles/detonateBombCell.png' alt='explosion' /> : <img src={`/tiles/cell${numberOfMinesAround}.png`} />}
-      </div>
     )
   }
 }

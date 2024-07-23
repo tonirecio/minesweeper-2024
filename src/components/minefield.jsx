@@ -6,14 +6,16 @@ import Cell from './cell'
 export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData }) {
   const [minefieldData, setMinefieldData] = useState([])
   const [cellsToUncover, setCellsToUncover] = useState(-1)
+  const [gameStatus, setGameStatus] = useState('playing')
 
   function onUncover (row, column) {
-    console.log('cellsToUncover:', cellsToUncover)
-    // alert(`Uncover cell at row ${row} and column ${column}`)
     let newMinefieldData = [...minefieldData]
     newMinefieldData[row - 1][column - 1].isUncovered = true
     setMinefieldData(newMinefieldData)
     if (!newMinefieldData[row - 1][column - 1].isMine) {
+      if (cellsToUncover === 1) {
+        setGameStatus('won')
+      }
       setCellsToUncover(cellsToUncover - 1)
     }
   }
@@ -141,6 +143,10 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
     return cells  
   }
 
+  function theGameIsOver () {
+    setGameStatus('lost')
+  }
+
   useEffect(() => {
     let preData
     if (mockData.includes('|')) {
@@ -148,13 +154,10 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
     }
     if (mockData !== '' && validateMockData(mockData)) {
       preData = getMinefieldFromMockData(mockData)
-      console.log('1. getNumberOfCellsToUncover:', getNumberOfCellsToUncover(preData))
       setCellsToUncover(getNumberOfCellsToUncover(preData))
     } else {
       preData = getMinefield()
       minefieldMining(preData, numberOfMines)
-      console.log('2. numberOfMines:', numberOfMines)
-
       setCellsToUncover(numberOfColumns * numberOfRows - numberOfMines)
     }
     minefieldNumbering(preData)
@@ -177,7 +180,8 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
               hasMine={cell.isMine}
               numberOfMinesAround={cell.numberOfMinesAround}
               onUncover={onUncover}
-              gameStatus={cellsToUncover === 0 ? 'won' : 'playing'}
+              gameStatus={gameStatus}
+              gameOver={theGameIsOver}
             />
           ))}
         </div>
