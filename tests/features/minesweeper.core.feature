@@ -168,8 +168,8 @@ Feature: Minesweeper
       | o | * |
       """
     When the player uncovers the cell ("1","1")
-    Then the cell (1,2) should show a mine
-    And the cell (2,2) should show a mine
+    Then the cell ("1","2") should show a mine
+    And the cell ("2","2") should show a mine
 
   Scenario: Losing the game, showing cells incorrectly tagged as mined
     Given the player loads the following mock data

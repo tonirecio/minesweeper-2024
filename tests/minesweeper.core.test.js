@@ -253,7 +253,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Losing the game, showing all the mines in the minefield', ({ given, when, then, and, pending }) => {
+  test('Losing the game, showing all the mines in the minefield', ({ given, when, then, and }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -263,11 +263,11 @@ defineFeature(feature, (test) => {
     when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
-    then(/^the cell \((\d+),(\d+)\) should show a mine$/, (rowPosition, colPosition) => {
-      pending()
+    then(/^the cell \("(.*)","(.*)"\) should show a mine$/, (rowPosition, colPosition) => {
+      expect(steps.isMine(rowPosition, colPosition), true)
     })
-    and(/^the cell \((\d+),(\d+)\) should show a mine$/, (rowPosition, colPosition) => {
-      pending()
+    and(/^the cell \("(.*)","(.*)"\) should show a mine$/, (rowPosition, colPosition) => {
+      expect(steps.isMine(rowPosition, colPosition), true)
     })
   })
 

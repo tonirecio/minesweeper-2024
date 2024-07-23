@@ -123,6 +123,17 @@ export function isCellEmpty (rowPosition, colPosition) {
   return imgSource.includes('/cell0.png')
 }
 
+export function isMine (rowPosition, colPosition) {
+  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  const image = cell.getElementsByTagName('img')
+  if (image.length > 0) {
+    const imgSource = image[0].src
+    return imgSource.includes('/bombCell.png')
+  } else {
+    return false
+  }
+}
+
 export function isTaggedAsMined (rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   const image = cell.getElementsByTagName('img')
