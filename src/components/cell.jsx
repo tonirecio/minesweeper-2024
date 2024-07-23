@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './styles/cell.css'
 
-export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, onUncover }) {
+export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, onUncover, gameStatus }) {
   const [isCovered, setIsCovered] = useState(true)
   const [isTagged, setIsTagged] = useState('')
   function handleClick (e) {
@@ -29,7 +29,9 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         onContextMenu={handleContextMenu}
         data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
         className='minefield-cell covered'
-      >{isTagged === 'mined' && <img src='/tiles/flagCell.png' />}
+      >
+        {hasMine && gameStatus==='won' && <img src='/tiles/flagCell.png' />}
+        {isTagged === 'mined' && <img src='/tiles/flagCell.png' />}
         {isTagged === 'inconclusive' && <img src='/tiles/inconclusiveCell.png' />}
       </button>
     )

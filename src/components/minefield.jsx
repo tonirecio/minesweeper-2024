@@ -5,9 +5,17 @@ import Cell from './cell'
 
 export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData }) {
   const [minefieldData, setMinefieldData] = useState([])
+  const [cellsToUncover, setCellsToUncover] = useState(-1)
 
   function onUncover (row, column) {
-    alert(`Uncover cell at row ${row} and column ${column}`)
+    console.log('cellsToUncover:', cellsToUncover)
+    // alert(`Uncover cell at row ${row} and column ${column}`)
+    let newMinefieldData = [...minefieldData]
+    newMinefieldData[row - 1][column - 1].isUncovered = true
+    setMinefieldData(newMinefieldData)
+    if (!newMinefieldData[row - 1][column - 1].isMine) {
+      setCellsToUncover(cellsToUncover - 1)
+    }
   }
 
   function parseMockDataToString (data) {
@@ -123,18 +131,34 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
     }
   }
 
+  function getNumberOfCellsToUncover (data) {
+    let cells = 0
+    for (let row = 0; row < data.length; row += 1) {
+      for (let column = 0; column < data[0].length; column += 1) {
+        if (!data[row][column].isMine) cells += 1
+      }
+    }
+    return cells  
+  }
+
   useEffect(() => {
     let preData
     if (mockData.includes('|')) {
-      mockData = parseMockDataToString(mockData)
+      mockData = parseMockDataToString(mockData)      
     }
     if (mockData !== '' && validateMockData(mockData)) {
       preData = getMinefieldFromMockData(mockData)
+      console.log('1. getNumberOfCellsToUncover:', getNumberOfCellsToUncover(preData))
+      setCellsToUncover(getNumberOfCellsToUncover(preData))
     } else {
       preData = getMinefield()
       minefieldMining(preData, numberOfMines)
+      console.log('2. numberOfMines:', numberOfMines)
+
+      setCellsToUncover(numberOfColumns * numberOfRows - numberOfMines)
     }
     minefieldNumbering(preData)
+    let numsOfCellsWithoutMine = numberOfRows * numberOfColumns - numberOfMines
     setMinefieldData(preData)
   }, [mockData])
 
@@ -153,6 +177,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
               hasMine={cell.isMine}
               numberOfMinesAround={cell.numberOfMinesAround}
               onUncover={onUncover}
+              gameStatus={cellsToUncover === 0 ? 'won' : 'playing'}
             />
           ))}
         </div>
