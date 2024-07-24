@@ -91,21 +91,6 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Uncovering an empty cell - Uncovering neighbor cells', ({ given, when, then, pending }) => {
-    given('the player opens the game', () => {
-      steps.openTheGame()
-    })
-    given('the player loads the following mock data', (docString) => {
-      steps.setMockData(docString)
-    })
-    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
-      steps.uncoverCell(rowPosition, colPosition)
-    })
-    then('the minefield should look like this', (docString) => {
-      pending()
-    })
-  })
-
   test('Uncovering a cell with no mine - Displaying the number of adjacent mines', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
@@ -298,6 +283,42 @@ defineFeature(feature, (test) => {
     })
     then(/^the cell \("(.*)","(.*)"\) should show mined$/, (rowPosition, colPosition) => {
       expect(steps.isTaggedAsMined(rowPosition, colPosition)).toBe(true)
+    })
+  })
+
+  test('Uncovering an empty cell - Uncovering neighbor cells', ({ given, when, then, and, pending }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data', (docString) => {
+      steps.setMockData(docString)
+    })
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
+    })
+    then('the minefield should have all the cells without mines uncovered', () => {
+      pending()
+    })
+    and('the minefield should have all the cells with mine tagged as mined', () => {
+      pending()
+    })
+  })
+
+  test('An empty cell uncovered by a neighbor cell - Uncovering its neighbor cells', ({ given, when, then, and, pending }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data', (docString) => {
+      steps.setMockData(docString)
+    })
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
+    })
+    then('the minefield should have all the cells without mines uncovered', () => {
+      pending()
+    })
+    and('the minefield should have all the cells with mine tagged as mined', () => {
+      pending()
     })
   })
 })

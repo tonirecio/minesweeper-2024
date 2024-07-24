@@ -26,27 +26,7 @@ Feature: Minesweeper
       | o | o | o |
       | * | o | o |
 
-  To define the board display will use:
-  COVERED CELLS
-  "." Covered cell
-  "!" Cell tagged has mined cell by the user
-  "?" Cell tagged has inconclusive cell by the user
-  "x" Cell wrongly tagged has no mined cell by the user
-  UNCOVERED CELLS
-  "0" Empty cell
-  "1" Clean cell with 1 adjacent mine
-  "2" Clean cell with 2 adjacent mines
-  "3" Clean cell with 3 adjacent mines
-  "4" Clean cell with 4 adjacent mines
-  "5" Clean cell with 5 adjacent mines
-  "6" Clean cell with 6 adjacent mines
-  "7" Clean cell with 7 adjacent mines
-  "8" Clean cell with 8 adjacent mines
-  "9" Clean cell with 9 adjacent mines
-  "@" highlighted mine
-  "*" Mine
-
-  Game example: http://birrell.org/andrew/minesweeper/
+  Game example: https://minesweeper.online/es/game/3584089869
 
   Background:
     Given the player opens the game
@@ -205,10 +185,17 @@ Feature: Minesweeper
       | * | * | * |
       """
     When the player uncovers the cell ("2","2")
-    Then the minefield should look like this
+    Then the minefield should have all the cells without mines uncovered
+    And the minefield should have all the cells with mine tagged as mined
+
+  Scenario: An empty cell uncovered by a neighbor cell - Uncovering its neighbor cells
+    Given the player loads the following mock data
       """
-      | 0 | 0 | 0 |
-      | 0 | 0 | 0 |
-      | 2 | 3 | 2 |
-      | . | . | . |
+      | o | o | o |
+      | o | o | o |
+      | o | o | o |
+      | * | * | * |
       """
+    When the player uncovers the cell ("1","1")
+    Then the minefield should have all the cells without mines uncovered
+    And the minefield should have all the cells with mine tagged as mined
