@@ -22,6 +22,17 @@ export function areAllCellsCovered () {
   return result
 }
 
+export function areAllCellsDisabled () {
+  let result = true
+  const cells = screen.getAllByTestId('minefield-cell', { exact: false })
+  cells.forEach((cell) => { // TO DO: Every
+    if (cell.disabled === false) {
+      result = false
+    }
+  })
+  return result
+}
+
 export function areAllCellsEnabled () {
   let result = true
   const cells = screen.getAllByTestId('minefield-cell', { exact: false })

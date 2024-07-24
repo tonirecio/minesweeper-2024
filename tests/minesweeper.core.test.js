@@ -158,11 +158,11 @@ defineFeature(feature, (test) => {
     given('the player loads the following mock data', (docString) => {
       steps.setMockData(docString)
     })
-    when(/^the player uncovers the cell \((.*),(.*)\)$/, (rowPosition, colPosition) => {
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
     then('all the cells should be disabled', () => {
-      pending()
+      expect(steps.areAllCellsDisabled()).toBe(true)
     })
   })
 
