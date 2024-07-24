@@ -8,7 +8,38 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
   const [cellsToUncover, setCellsToUncover] = useState(-1)
   const [gameStatus, setGameStatus] = useState('playing')
 
-  function onUncover (row, column) {
+  const directions = [
+    { offsetX: 0, offsetY: -1 },
+    { offsetX: 0, offsetY: 1 },
+    { offsetX: -1, offsetY: 0 },
+    { offsetX: 1, offsetY: 0 },
+    { offsetX: -1, offsetY: -1 },
+    { offsetX: -1, offsetY: 1 },
+    { offsetX: 1, offsetY: -1 },
+    { offsetX: 1, offsetY: 1 }
+  ]
+
+  function setNeightborsCells (row, column) {
+    console.log('-----------')
+    const neighbours = []
+    for (let i = 0; i < directions.length; i += 1) {
+      console.log('* row:' + row + 'column:' + column)
+      const newRow = row + directions[i].offsetY
+      const newColumn = column + directions[i].offsetX
+      if (newRow >= 1 && newRow <= numberOfRows && newColumn >= 1 && newColumn <= numberOfColumns) {
+        console.log('newRow:' + newRow + 'newColumn:' + newColumn)
+        const newMinefieldData = [...minefieldData]
+        if (newMinefieldData[newRow - 1][newColumn - 1]) {
+          newMinefieldData[newRow - 1][newColumn - 1].isNeighborUncovered = true
+        }
+        setMinefieldData(newMinefieldData)
+      }
+    }
+
+    return neighbours
+  }
+
+  function onUncover (row, column, isEmptyCell) {
     const newMinefieldData = [...minefieldData]
     newMinefieldData[row - 1][column - 1].isUncovered = true
     setMinefieldData(newMinefieldData)
@@ -17,6 +48,11 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
         setGameStatus('won')
       }
       setCellsToUncover(cellsToUncover - 1)
+      if (isEmptyCell) {
+        setNeightborsCells(row, column)
+      } else {
+        // setNeighborsCell(() => [])
+      }
     }
   }
 
@@ -128,6 +164,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
           if (row < NUMBER_OF_ROWS - 1 && board[row + 1][column].isMine) mines += 1
           if (row < NUMBER_OF_ROWS - 1 && column < NUMBER_OF_COLUMNS - 1 && board[row + 1][column + 1].isMine) mines += 1
           board[row][column].numberOfMinesAround = mines
+          board[row][column].isNeighborUncovered = false
         }
       }
     }
@@ -181,6 +218,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
               onUncover={onUncover}
               gameStatus={gameStatus}
               gameOver={theGameIsOver}
+              emptyNeighborUncovered={minefieldData[rowIndex][cellIndex].isNeighborUncovered}
             />
           ))}
         </div>
