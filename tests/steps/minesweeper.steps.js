@@ -170,6 +170,16 @@ export function isTaggedAsInconclusive (rowPosition, colPosition) {
   }
 }
 
+export function isWronglyTaggedMine (rowPosition, colPosition) {
+  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  const image = cell.getElementsByTagName('img')
+  if (image.length > 0) {
+    const imgSource = image[0].src
+    return imgSource.includes('/notBombCell.png')
+  } else {
+    return false
+  }
+}
 export function isNotTagged (rowPosition, colPosition) {
   const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
   const image = cell.getElementsByTagName('img')

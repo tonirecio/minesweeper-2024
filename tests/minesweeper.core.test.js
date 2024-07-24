@@ -288,10 +288,10 @@ defineFeature(feature, (test) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
     then(/^the cell \("(.*)","(.*)"\) should show a wrongly tagged cell$/, (rowPosition, colPosition) => {
-      pending()
+      expect(steps.isWronglyTaggedMine(rowPosition, colPosition)).toBe(true)
     })
     and(/^the cell \("(.*)","(.*)"\) should show a mine$/, (rowPosition, colPosition) => {
-      pending()
+      expect(steps.isMine(rowPosition, colPosition)).toBe(true)
     })
   })
 
