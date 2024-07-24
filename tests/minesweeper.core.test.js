@@ -333,10 +333,14 @@ defineFeature(feature, (test) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
     then('the first three rows should be uncovered', () => {
-      pending()
+      let result = true
+      result = result && steps.areCellsInARowUncovered(1)
+      result = result && steps.areCellsInARowUncovered(2)
+      result = result && steps.areCellsInARowUncovered(3)
+      expect(result).toBe(true)
     })
     and('the fourth row should be covered', () => {
-      pending()
+      expect(steps.areCellsInARowCovered(4)).toBe(true)
     })
   })
 })

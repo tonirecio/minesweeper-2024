@@ -202,6 +202,17 @@ export function isNotTagged (rowPosition, colPosition) {
   }
 }
 
+export function areCellsInARowUncovered (rowNumber) {
+  let result = true
+  const cells = screen.getAllByTestId('minefield-cell cell-row' + rowNumber + '-col', { exact: false })
+  cells.forEach(cell => {
+    if (cell.classList.contains('covered')) {
+      result = false
+    }
+  })
+  return result
+}
+
 export function areCellsInARowCovered (rowNumber) {
   let result = true
   const cells = screen.getAllByTestId('minefield-cell cell-row' + rowNumber + '-col', { exact: false })
