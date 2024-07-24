@@ -106,21 +106,6 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Discovering all the cells without mines - Winning the game', ({ given, when, then, pending }) => {
-    given('the player opens the game', () => {
-      steps.openTheGame()
-    })
-    given('the player loads the following mock data', (docString) => {
-      steps.setMockData(docString)
-    })
-    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
-      steps.uncoverCell(rowPosition, colPosition)
-    })
-    then('the player should win the game', () => {
-      pending()
-    })
-  })
-
   test('Uncovering a cell with no mine - Displaying the number of adjacent mines', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
@@ -151,7 +136,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Finishing game, disabling all the cells', ({ given, when, then, pending }) => {
+  test('Finishing game, disabling all the cells', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -208,7 +193,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Uncovering a tagged cell as mined, the cell should remain covered', ({ given, when, then, pending }) => {
+  test('Uncovering a tagged cell as mined, the cell should remain covered', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -223,7 +208,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Uncovering a tagged cell as inconclusive, the cell should remain covered', ({ given, when, then, pending }) => {
+  test('Uncovering a tagged cell as inconclusive, the cell should remain covered', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -238,7 +223,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Winning the game, marking as mined all the mined cells', ({ given, when, then, pending }) => {
+  test('Winning the game, marking as mined all the mined cells', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -271,7 +256,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Losing the game, showing cells incorrectly tagged as mined', ({ given, and, when, then, pending }) => {
+  test('Losing the game, showing cells incorrectly tagged as mined', ({ given, and, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })

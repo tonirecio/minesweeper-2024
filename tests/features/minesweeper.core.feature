@@ -132,14 +132,6 @@ Feature: Minesweeper
     When the player uncovers the cell ("1", "1")
     Then the cell ("1","1") should be covered
 
-  Scenario: Discovering all the cells without mines - Winning the game
-    Given the player loads the following mock data
-      """
-      | * | o |
-      """
-    When the player uncovers the cell ("1","2")
-    Then the player should win the game
-
   Scenario Outline: Finishing game, disabling all the cells
     Given the player loads the following mock data
       """
