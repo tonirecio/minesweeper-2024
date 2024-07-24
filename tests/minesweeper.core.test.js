@@ -294,4 +294,25 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
+
+  test('Finishing games - The cells don\'t allow changing tags', ({ given, when, then, and }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data', (docString) => {
+      steps.setMockData(docString)
+    })
+    when(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.tagCellAsMined(rowPosition, colPosition)
+    })
+    and(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
+    })
+    and(/^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.tagCellAsInconclusive(rowPosition, colPosition)
+    })
+    then(/^the cell \("(.*)","(.*)"\) should show mined$/, (rowPosition, colPosition) => {
+      expect(steps.isTaggedAsMined(rowPosition, colPosition)).toBe(true)
+    })
+  })
 })

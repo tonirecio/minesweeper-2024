@@ -12,6 +12,7 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
     }
     onUncover(rowPosition, colPosition)
   }
+
   function handleContextMenu (e) {
     e.preventDefault()
     let newState = ''
@@ -44,8 +45,7 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         className='minefield-cell covered'
         disabled={gameStatus !== 'playing'}
       >
-        {hasMine && gameStatus === 'won' && <img src='/tiles/flagCell.png' />}
-        {isTagged === 'mined' && <img src='/tiles/flagCell.png' />}
+        {((hasMine && gameStatus === 'won') || isTagged === 'mined') && <img src='/tiles/flagCell.png' />}
         {isTagged === 'inconclusive' && <img src='/tiles/inconclusiveCell.png' />}
       </button>
     )

@@ -85,10 +85,13 @@ export function tagCellAsMined (rowPosition, colPosition) {
 }
 
 export function tagCellAsInconclusive (rowPosition, colPosition) {
+  console.log('tagCellAsInconclusive')
   if (isNotTagged(rowPosition, colPosition)) {
+    console.log('tagCellAsInconclusive 1')
     fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
     fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
   } else if (isTaggedAsMined(rowPosition, colPosition)) {
+    console.log('tagCellAsInconclusive 2')
     fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
   }
 }

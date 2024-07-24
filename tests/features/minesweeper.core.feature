@@ -153,6 +153,16 @@ Feature: Minesweeper
       | 1   | 1   |
       | 1   | 2   |
 
+  Scenario: Finishing games - The cells don't allow changing tags
+    Given the player loads the following mock data
+      """
+      | * | o |
+      """
+    When the player tags as mined the cell ("1","1")
+    And the player uncovers the cell ("1","2")
+    And the player tags as inconclusive the cell ("1","1")
+    Then the cell ("1","1") should show mined
+
   Scenario: Winning the game, marking as mined all the mined cells
     Given the player loads the following mock data
       """
