@@ -6,11 +6,13 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
   const [isTagged, setIsTagged] = useState('')
   function handleClick (e) {
     e.preventDefault()
-    setIsCovered(false)
-    if (hasMine) {
-      gameOver()
+    if (!isTagged) {
+      setIsCovered(false)
+      if (hasMine) {
+        gameOver()
+      }
+      onUncover(rowPosition, colPosition)
     }
-    onUncover(rowPosition, colPosition)
   }
 
   function handleContextMenu (e) {
