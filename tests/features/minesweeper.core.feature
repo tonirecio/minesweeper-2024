@@ -182,11 +182,23 @@ Feature: Minesweeper
       | o | o | o |
       | o | o | o |
       | o | o | o |
-      | * | * | * |
+      | * | o | * |      
       """
     When the player uncovers the cell ("2","2")
-    Then the minefield should have all the cells without mines uncovered
-    And the minefield should have all the cells with mine tagged as mined
+    Then the cells around the cell ("2","2") should be uncovered
+    And the fourth row should be covered
+
+  Scenario: A non empty cell uncovered by a neighbor cell - Not uncovering its neighbor cells
+    Given the player loads the following mock data
+      """
+      | o | o | o |
+      | o | o | o |
+      | o | o | o |
+      | * | o | * |
+      """
+    When the player uncovers the cell ("2","2")
+    Then the cell ("3","2") should be uncovered
+    And the cell ("4","2") should be covered
 
   Scenario: An empty cell uncovered by a neighbor cell - Uncovering its neighbor cells
     Given the player loads the following mock data
@@ -194,8 +206,8 @@ Feature: Minesweeper
       | o | o | o |
       | o | o | o |
       | o | o | o |
-      | * | * | * |
+      | * | o | * |
       """
     When the player uncovers the cell ("1","1")
-    Then the minefield should have all the cells without mines uncovered
-    And the minefield should have all the cells with mine tagged as mined
+    Then the first three rows should be uncovered
+    And the fourth row should be covered

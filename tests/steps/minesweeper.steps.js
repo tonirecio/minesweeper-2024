@@ -191,3 +191,16 @@ export function isNotTagged (rowPosition, colPosition) {
     return true
   }
 }
+
+export function allUnminedCellsAreUncovered () {
+  let result = true
+  const cells = screen.getAllByTestId('minefield-cell', { exact: false })
+  cells.forEach(cell => {
+    if (!cell.classList.contains('covered') && cell.getElementsByTagName('img').length === 0) {
+      result = false
+    }
+  })
+  return result
+}
+
+  

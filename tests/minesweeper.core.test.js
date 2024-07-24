@@ -296,10 +296,28 @@ defineFeature(feature, (test) => {
     when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
-    then('the minefield should have all the cells without mines uncovered', () => {
+    then(/^the cells around the cell \("(.*)","(.*)"\) should be uncovered$/, (rowPosition, colPosition) => {
       pending()
     })
-    and('the minefield should have all the cells with mine tagged as mined', () => {
+    and('the fourth row should be covered', () => {
+      pending()
+    })
+  })
+
+  test('A non empty cell uncovered by a neighbor cell - Not uncovering its neighbor cells', ({ given, when, then, and, pending }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data', (docString) => {
+      steps.setMockData(docString)
+    })
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      steps.uncoverCell(rowPosition, colPosition)
+    })
+    then(/^the cell \("(.*)","(.*)"\) should be uncovered$/, (rowPosition, colPosition) => {
+      pending()
+    })
+    and(/^the cell \("(.*)","(.*)"\) should be covered$/, (rowPosition, colPosition) => {
       pending()
     })
   })
@@ -314,10 +332,10 @@ defineFeature(feature, (test) => {
     when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
-    then('the minefield should have all the cells without mines uncovered', () => {
+    then('the first three rows should be uncovered', () => {
       pending()
     })
-    and('the minefield should have all the cells with mine tagged as mined', () => {
+    and('the fourth row should be covered', () => {
       pending()
     })
   })

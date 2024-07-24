@@ -172,7 +172,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
       {minefieldData.map((row, rowIndex) => (
         <div className='minefield-row' data-testid='minefield-row' key={rowIndex}>
           {row.map((cell, cellIndex) => (
-            <Cell 
+            <Cell
               key={cellIndex}
               rowPosition={rowIndex + 1}
               colPosition={cellIndex + 1}
