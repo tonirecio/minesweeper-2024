@@ -49,7 +49,8 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         className='minefield-cell covered'
         disabled={gameStatus !== 'playing'}
       >
-        {((hasMine && gameStatus === 'won') || isTagged === 'mined') && <img src='/tiles/flagCell.png' />}
+        {((hasMine && gameStatus === 'won') || (isTagged === 'mined' && gameStatus === 'playing')) && <img src='/tiles/flagCell.png' />}
+        {(isTagged === 'mined' && !hasMine && gameStatus === 'lost') && <img src='/tiles/notBombCell.png' />}
         {isTagged === 'inconclusive' && <img src='/tiles/inconclusiveCell.png' />}
       </button>
     )
