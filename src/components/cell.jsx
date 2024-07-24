@@ -34,7 +34,7 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         {hasMine && (isCovered ? <img src='/tiles/bombCell.png' alt='explosion' /> : <img src='/tiles/detonateBombCell.png' alt='mine' />)}
         {!hasMine && <img src={`/tiles/cell${numberOfMinesAround}.png`} />}
       </div>
-    )    
+    )
   } else {
     return (
       <button
@@ -43,7 +43,7 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
         className='minefield-cell covered'
       >
-        {hasMine && gameStatus==='won' && <img src='/tiles/flagCell.png' />}
+        {hasMine && gameStatus === 'won' && <img src='/tiles/flagCell.png' />}
         {isTagged === 'mined' && <img src='/tiles/flagCell.png' />}
         {isTagged === 'inconclusive' && <img src='/tiles/inconclusiveCell.png' />}
       </button>

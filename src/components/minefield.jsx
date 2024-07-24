@@ -9,7 +9,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
   const [gameStatus, setGameStatus] = useState('playing')
 
   function onUncover (row, column) {
-    let newMinefieldData = [...minefieldData]
+    const newMinefieldData = [...minefieldData]
     newMinefieldData[row - 1][column - 1].isUncovered = true
     setMinefieldData(newMinefieldData)
     if (!newMinefieldData[row - 1][column - 1].isMine) {
@@ -140,7 +140,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
         if (!data[row][column].isMine) cells += 1
       }
     }
-    return cells  
+    return cells
   }
 
   function theGameIsOver () {
@@ -150,7 +150,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
   useEffect(() => {
     let preData
     if (mockData.includes('|')) {
-      mockData = parseMockDataToString(mockData)      
+      mockData = parseMockDataToString(mockData)
     }
     if (mockData !== '' && validateMockData(mockData)) {
       preData = getMinefieldFromMockData(mockData)
@@ -161,7 +161,6 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
       setCellsToUncover(numberOfColumns * numberOfRows - numberOfMines)
     }
     minefieldNumbering(preData)
-    let numsOfCellsWithoutMine = numberOfRows * numberOfColumns - numberOfMines
     setMinefieldData(preData)
   }, [mockData])
 
@@ -173,7 +172,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
       {minefieldData.map((row, rowIndex) => (
         <div className='minefield-row' data-testid='minefield-row' key={rowIndex}>
           {row.map((cell, cellIndex) => (
-            <Cell
+            <Cell 
               key={cellIndex}
               rowPosition={rowIndex + 1}
               colPosition={cellIndex + 1}

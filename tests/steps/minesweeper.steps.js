@@ -26,7 +26,7 @@ export function areAllCellsDisabled () {
   let result = true
   const cells = screen.getAllByTestId('minefield-cell', { exact: false })
   cells.forEach((cell) => { // TO DO: Every
-    if (cell.disabled === false) {
+    if (cell.tagName === 'BUTTON' && !cell.disabled) {
       result = false
     }
   })
@@ -37,7 +37,7 @@ export function areAllCellsEnabled () {
   let result = true
   const cells = screen.getAllByTestId('minefield-cell', { exact: false })
   cells.forEach((cell) => {
-    if (cell.disabled === true) {
+    if (cell.tagName === 'DIV' || cell.disabled) {
       result = false
     }
   })
