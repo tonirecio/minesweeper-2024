@@ -12,6 +12,3 @@
   background-image: url('../../../public/tiles/hiddenCell.png');
   border: none;
 }
-.covered:active {
-  background-image: url('../../../public/tiles/cell0.png');
-}

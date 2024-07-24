@@ -42,6 +42,7 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         onContextMenu={handleContextMenu}
         data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
         className='minefield-cell covered'
+        disabled={gameStatus !== 'playing'}
       >
         {hasMine && gameStatus === 'won' && <img src='/tiles/flagCell.png' />}
         {isTagged === 'mined' && <img src='/tiles/flagCell.png' />}
