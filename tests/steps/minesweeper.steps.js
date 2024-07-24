@@ -1,6 +1,16 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import Game from '../../src/components/game'
+
+const directions = [
+  { offsetX: 0, offsetY: -1 },
+  { offsetX: 0, offsetY: 1 },
+  { offsetX: -1, offsetY: 0 },
+  { offsetX: 1, offsetY: 0 },
+  { offsetX: -1, offsetY: -1 },
+  { offsetX: -1, offsetY: +1 },
+  { offsetX: +1, offsetY: -1 },
+  { offsetX: +1, offsetY: +1 }
+]
 
 export function openTheGame () {
   render(<Game />)
@@ -192,15 +202,28 @@ export function isNotTagged (rowPosition, colPosition) {
   }
 }
 
-export function allUnminedCellsAreUncovered () {
+export function areCellsInARowCovered (rowNumber) {
   let result = true
-  const cells = screen.getAllByTestId('minefield-cell', { exact: false })
+  const cells = screen.getAllByTestId('minefield-cell cell-row' + rowNumber + '-col', { exact: false })
   cells.forEach(cell => {
-    if (!cell.classList.contains('covered') && cell.getElementsByTagName('img').length === 0) {
+    if (!cell.classList.contains('covered')) {
       result = false
     }
   })
   return result
 }
 
-  
+export function areCellsAroundACellUncovered (rowPosition, colPosition) {
+  let result = true
+  for (const direction of directions) {
+    const newRowPosition = Number(rowPosition) + direction.offsetY
+    const newColPosition = Number(colPosition) + direction.offsetX
+    const cell = screen.getByTestId('minefield-cell cell-row' + newRowPosition + '-col' + newColPosition, { exact: true })
+    if (cell) {
+      if (cell.classList.contains('covered')) {
+        result = false
+      }
+    }
+  }
+  return result
+}

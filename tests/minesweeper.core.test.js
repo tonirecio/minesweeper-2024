@@ -286,7 +286,7 @@ defineFeature(feature, (test) => {
     })
   })
 
-  test('Uncovering an empty cell - Uncovering neighbor cells', ({ given, when, then, and, pending }) => {
+  test('Uncovering an empty cell - Uncovering neighbor cells', ({ given, when, then, and }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -297,10 +297,10 @@ defineFeature(feature, (test) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
     then(/^the cells around the cell \("(.*)","(.*)"\) should be uncovered$/, (rowPosition, colPosition) => {
-      pending()
+      expect(steps.areCellsAroundACellUncovered(rowPosition, colPosition)).toBe(true)
     })
     and('the fourth row should be covered', () => {
-      pending()
+      expect(steps.areCellsInARowCovered(4)).toBe(true)
     })
   })
 
