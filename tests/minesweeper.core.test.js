@@ -219,7 +219,7 @@ defineFeature(feature, (test) => {
       steps.uncoverCell(rowPosition, colPosition)
     })
     then(/^the cell \("(.*)","(.*)"\) should be covered$/, (rowPosition, colPosition) => {
-      pending()
+      expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(false)
     })
   })
 
