@@ -15,15 +15,17 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
 
   function handleContextMenu (e) {
     e.preventDefault()
-    let newState = ''
-    if (isTagged === '') {
-      newState = 'mined'
-    } else if (isTagged === 'mined') {
-      newState = 'inconclusive'
-    } else {
-      newState = ''
+    if (gameStatus === 'playing') {
+      let newState = ''
+      if (isTagged === '') {
+        newState = 'mined'
+      } else if (isTagged === 'mined') {
+        newState = 'inconclusive'
+      } else {
+        newState = ''
+      }
+      setIsTagged(newState)
     }
-    setIsTagged(newState)
   }
 
   if (!isCovered || (gameStatus === 'lost' && hasMine)) {
