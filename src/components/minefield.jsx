@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './styles/minefield.css'
 
 import Cell from './cell'
+import { uncoverCell } from '../../tests/steps/minesweeper.steps'
 
 export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData }) {
   const [minefieldData, setMinefieldData] = useState([])
@@ -19,42 +20,51 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
     { offsetX: 1, offsetY: 1 }
   ]
 
-  function setNeightborsCells (row, column) {
-    console.log('-----------')
-    const neighbours = []
+  function uncoverNeighborCells (row, column, newMinefieldData) {
+    let counter = 0
     for (let i = 0; i < directions.length; i += 1) {
-      console.log('* row:' + row + 'column:' + column)
       const newRow = row + directions[i].offsetY
       const newColumn = column + directions[i].offsetX
       if (newRow >= 1 && newRow <= numberOfRows && newColumn >= 1 && newColumn <= numberOfColumns) {
-        console.log('newRow:' + newRow + 'newColumn:' + newColumn)
-        const newMinefieldData = [...minefieldData]
-        if (newMinefieldData[newRow - 1][newColumn - 1]) {
-          newMinefieldData[newRow - 1][newColumn - 1].isNeighborUncovered = true
+        const cell = newMinefieldData[newRow - 1][newColumn - 1]
+        if (cell) {
+          if (cell.isCovered) {
+            cell.isCovered = false
+            counter++
+            if (cell.numberOfMinesAround === 0) {
+              counter += uncoverNeighborCells(newRow, newColumn, newMinefieldData)
+            }
+          }
         }
-        setMinefieldData(newMinefieldData)
       }
+      // newMinefieldData[newRow - 1][newColumn - 1] = cell
     }
 
-    return neighbours
+    return counter
   }
 
-  function onUncover (row, column, isEmptyCell) {
+  function onClick (row, column) {
     const newMinefieldData = [...minefieldData]
-    newMinefieldData[row - 1][column - 1].isUncovered = true
-    setMinefieldData(newMinefieldData)
-    if (!newMinefieldData[row - 1][column - 1].isMine) {
-      if (cellsToUncover === 1) {
+    let uncoveredCells
+    if(newMinefieldData[row - 1][column - 1].isCovered === true) {
+      newMinefieldData[row - 1][column - 1].isCovered = false
+    }
+    if(newMinefieldData[row - 1][column - 1].isMine) {
+      setGameStatus('lost')
+    } else {
+      if (newMinefieldData[row - 1][column - 1].numberOfMinesAround === 0) {
+        uncoveredCells = uncoverNeighborCells(row, column, newMinefieldData) + 1
+      } else {
+        uncoveredCells = 1
+      }
+      if (cellsToUncover - uncoveredCells === 0) {
         setGameStatus('won')
       }
-      setCellsToUncover(cellsToUncover - 1)
-      if (isEmptyCell) {
-        setNeightborsCells(row, column)
-      } else {
-        // setNeighborsCell(() => [])
-      }
+      setCellsToUncover(cellsToUncover - uncoveredCells)
     }
-  }
+    setMinefieldData(newMinefieldData)
+    
+    }
 
   function parseMockDataToString (data) {
     let strData = data.split(/\r?\n/).join('-')
@@ -107,7 +117,9 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
         minefieldData[row].push({
           y: row,
           x: column,
-          isMine: false
+          isMine: false,
+          isCovered: true,
+          numberOfMinesAround: 0
         })
       }
     }
@@ -116,7 +128,6 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
 
   function getMinefieldFromMockData (mockData) {
     const board = []
-
     if (validateMockData(mockData)) {
       let mockBoard = mockData.split('-')
       mockBoard = mockBoard.map((row) => { return row.split('') })
@@ -126,7 +137,9 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
           board[row].push({
             y: row,
             x: column,
-            isMine: mockBoard[row][column] === '*'
+            isMine: mockBoard[row][column] === '*',
+            isCovered: true,
+            numberOfMinesAround: 0
           })
         }
       }
@@ -164,7 +177,6 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
           if (row < NUMBER_OF_ROWS - 1 && board[row + 1][column].isMine) mines += 1
           if (row < NUMBER_OF_ROWS - 1 && column < NUMBER_OF_COLUMNS - 1 && board[row + 1][column + 1].isMine) mines += 1
           board[row][column].numberOfMinesAround = mines
-          board[row][column].isNeighborUncovered = false
         }
       }
     }
@@ -215,10 +227,10 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
               colPosition={cellIndex + 1}
               hasMine={cell.isMine}
               numberOfMinesAround={cell.numberOfMinesAround}
-              onUncover={onUncover}
+              onClick={onClick}
               gameStatus={gameStatus}
               gameOver={theGameIsOver}
-              emptyNeighborUncovered={minefieldData[rowIndex][cellIndex].isNeighborUncovered}
+              isCovered={cell.isCovered}
             />
           ))}
         </div>

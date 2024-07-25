@@ -1,28 +1,13 @@
 import { useState, useEffect } from 'react'
 import './styles/cell.css'
 
-export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, onUncover, gameStatus, gameOver, emptyNeighborUncovered }) {
-  const [isCovered, setIsCovered] = useState(true)
+export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, onClick, gameStatus, gameOver, isCovered }) {
   const [isTagged, setIsTagged] = useState('')
-
-  useEffect(() => {
-    if (emptyNeighborUncovered) {
-      if (!isCovered) {
-        return
-      }
-      setIsCovered(false)
-      onUncover(rowPosition, colPosition, numberOfMinesAround === 0 && !hasMine)
-    }
-  }, [emptyNeighborUncovered])
 
   function handleClick (e) {
     e.preventDefault()
     if (!isTagged) {
-      setIsCovered(false)
-      if (hasMine) {
-        gameOver()
-      }
-      onUncover(rowPosition, colPosition, numberOfMinesAround === 0 && !hasMine)
+      onClick(rowPosition, colPosition)
     }
   }
 
