@@ -5,11 +5,13 @@ import StatusButton from './statusButton'
 import Timer from './timer'
 import MockDataForm from './mockDataForm'
 import './styles/game.css'
+import MinesCounter from './minesCounter'
 
 export default function Game () {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
   const [mockData, setMockData] = useState('')
   const [gameStatus, setGameStatus] = useState('waiting')
+  const [minesLeft, setMinesLeft] = useState(0)
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)
@@ -38,16 +40,26 @@ export default function Game () {
 
   }
 
+  function setMinesLeftToFlag (mines) {
+    setMinesLeft(mines)
+  }
+
   return (
     <>
       <h1>Minesweeper</h1>
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
       <div className='gameBoard'>
         <header>
-          <Timer gameStatus={gameStatus} />
+          <MinesCounter minesLeft={minesLeft} />
           <StatusButton gameStatus={gameStatus} onButtonPressed={onGameStatusButtonPressed} />
+          <Timer gameStatus={gameStatus} />
         </header>
-        <Minefield mockData={mockData} gameStatus={gameStatus} setGameStatus={onGameStatusChange} />
+        <Minefield
+          mockData={mockData}
+          gameStatus={gameStatus}
+          setGameStatus={onGameStatusChange}
+          setMinesLeft={setMinesLeftToFlag}
+        />
       </div>
     </>
   )

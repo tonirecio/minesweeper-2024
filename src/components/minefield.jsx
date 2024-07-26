@@ -4,7 +4,7 @@ import './styles/minefield.css'
 
 import Cell from './cell'
 
-export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData, gameStatus, setGameStatus }) {
+export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData, gameStatus, setGameStatus, setMinesLeft, onCellTagged }) {
   const [minefieldData, setMinefieldData] = useState([])
   const [cellsToUncover, setCellsToUncover] = useState(-1)
 
@@ -77,6 +77,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
       preData = dataHelper.getMinefield(numberOfRows, numberOfColumns)
       dataHelper.minefieldMining(preData, numberOfMines)
       setCellsToUncover(numberOfColumns * numberOfRows - numberOfMines)
+      setMinesLeft(numberOfMines)
     }
     dataHelper.minefieldNumbering(preData)
     setMinefieldData(preData)

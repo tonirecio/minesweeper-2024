@@ -20,3 +20,8 @@ export function checkTimerValueIsZero () {
   const timer = screen.getByTestId('minesweeper-timer')
   return Number(timer.innerHTML) === 0
 }
+
+export function checkMinesCounterValue (value) {
+  const timer = screen.getByTestId('mines-counter')
+  return Number(timer.innerHTML) === Number(value)
+}

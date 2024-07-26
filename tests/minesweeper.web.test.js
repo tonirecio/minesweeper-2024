@@ -21,10 +21,10 @@ defineFeature(feature, (test) => {
   })
   test('Waiting status, the remaining mines counter show the number of hidden mines, by default, 10', ({ given, then, pending }) => {
     given('the player opens the game', () => {
-      pending()
+      steps.openTheGame()
     })
-    then(/^the remaining mines counter should be (\d+)$/, (arg0) => {
-      pending()
+    then(/^the remaining mines counter should be (\d+)$/, (minesNum) => {
+      expect(steps.checkMinesCounterValue(minesNum)).toBe(true)
     })
   })
   test('Waiting status, the minefield has all the cells covered', ({ given, then, pending }) => {

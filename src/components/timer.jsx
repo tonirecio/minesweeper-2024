@@ -7,7 +7,7 @@ export default function Timer ({ gameStatus }) {
   return (
     <div
       data-testid='minesweeper-timer'
-      className='minesweeper-timer'
+      className='digital-screen'
     >
       {timePassed}
     </div>
