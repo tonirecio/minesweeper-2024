@@ -74,4 +74,21 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
+  test('Playing status, the timer starts', ({ given, when, and, then, pending }) => {
+    given('the player opens the game', () => {
+      pending()
+    })
+    given('the player loads the following mock data', (docString) => {
+      pending()
+    })
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+    and(/^the user waits "(.*)" second$/, (arg0) => {
+      pending()
+    })
+    then(/^the timer should show a number greater than "(.*)"$/, (arg0) => {
+      pending()
+    })
+  })
 })
