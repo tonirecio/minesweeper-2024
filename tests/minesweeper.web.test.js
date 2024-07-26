@@ -178,4 +178,18 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
+  test('Tagging a cell as inconclusive, the remaining mines counter remains equal', ({ given, when, then, pending }) => {
+    given('the player opens the game', () => {
+      pending()
+    })
+    given('the player loads the following mock data', (docString) => {
+      pending()
+    })
+    when(/^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+    then(/^the remaining mines counter should be "(.*)"$/, (arg0) => {
+      pending()
+    })
+  })
 })
