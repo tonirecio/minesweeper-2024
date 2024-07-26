@@ -98,7 +98,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
               onClick={onClick}
               gameStatus={gameStatus}
               isCovered={cell.isCovered}
-              setGAmeStatus={setGameStatus}
+              setGameStatus={setGameStatus}
             />
           ))}
         </div>
