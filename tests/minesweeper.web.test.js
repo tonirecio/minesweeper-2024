@@ -35,4 +35,19 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
+  test('Waiting status, remaining clicking a cell, the game status should be playing, the button status show a happy face', ({ given, when, then, pending }) => {
+    given('the player opens the game', () => {
+      pending()
+    })
+    given('the player loads the following mock data', (docString) => {
+      pending()
+    })
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+
+    then('the button status should show a happy face', () => {
+
+    })
+  })
 })
