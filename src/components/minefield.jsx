@@ -43,6 +43,9 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
   }
 
   function onClick (row, column) {
+    if (gameStatus === 'waiting') {
+      setGameStatus('playing')
+    }
     const newMinefieldData = [...minefieldData]
     let uncoveredCells
     if (newMinefieldData[row - 1][column - 1].isCovered === true) {
@@ -229,6 +232,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
               gameStatus={gameStatus}
               gameOver={theGameIsOver}
               isCovered={cell.isCovered}
+              setGAmeStatus={setGameStatus}
             />
           ))}
         </div>

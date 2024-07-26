@@ -16,7 +16,7 @@ defineFeature(feature, (test) => {
       steps.openTheGame()
     })
     then('the timer should be 0', () => {
-      pending()
+      expect(steps.checkTimerValueIsZero()).toBe(true)
     })
   })
   test('Waiting status, the remaining mines counter show the number of hidden mines, by default, 10', ({ given, then, pending }) => {

@@ -10,7 +10,7 @@ export default function StatusButton ({ gameStatus, onButtonPressed }) {
       className='status-button'
       onClick={onStatusButtonPressed}
     >
-      {gameStatus === 'playing' && <img src='/faces/normalFace.png' alt='happy face' />}
+      {(gameStatus === 'waiting' || gameStatus === 'playing') && <img src='/faces/normalFace.png' alt='happy face' />}
       {gameStatus === 'won' && <img src='/faces/winFace.png' alt='sunglasses face' />}
       {gameStatus === 'lost' && <img src='/faces/deadFace.png' alt='sad face' />}
     </button>

@@ -15,3 +15,8 @@ export function checkStatusButton (status) {
     return false
   }
 }
+
+export function checkTimerValueIsZero () {
+  const timer = screen.getByTestId('minesweeper-timer')
+  return Number(timer.innerHTML) === 0
+}
