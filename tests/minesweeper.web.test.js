@@ -14,7 +14,7 @@ defineFeature(feature, test => {
     })
   })
 
-  test('Waiting status, the timer should be 0', ({ given, then, pending }) => {
+  test('Waiting status, the timer should be 0', ({ given, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -24,13 +24,13 @@ defineFeature(feature, test => {
     })
   })
 
-  test('Waiting status, the remaining mines counter show the number of hidden mines, by default, 10', ({ given, then, pending }) => {
+  test('Waiting status, the remaining mines counter show the number of hidden mines, by default, 10', ({ given, then }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
-    then(/^the remaining mines counter should be (\d+)$/, (arg0) => {
-      pending()
+    then(/^the remaining mines counter should be (\d+)$/, (mines) => {
+      expect(steps.isRemainingMinesCounterShowing(mines)).toBe(true)
     })
   })
 
