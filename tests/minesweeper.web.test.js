@@ -60,4 +60,18 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
+  test('Playing status, the remaining mines counter show the number of hidden mines', ({ given, when, then, pending }) => {
+    given('the player opens the game', () => {
+      pending()
+    })
+    given('the player loads the following mock data', (docString) => {
+      pending()
+    })
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+    then(/^the remaining mines counter should show "(.*)"$/, (arg0) => {
+      pending()
+    })
+  })
 })
