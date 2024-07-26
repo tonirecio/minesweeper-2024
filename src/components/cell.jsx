@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './styles/cell.css'
 
-export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, onClick, gameStatus, gameOver, isCovered, setGAmeStatus }) {
+export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, onClick, gameStatus, gameOver, isCovered, setGameStatus }) {
   const [isTagged, setIsTagged] = useState('')
 
   function handleClick (e) {
@@ -23,19 +23,51 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         newState = ''
       }
       setIsTagged(newState)
-      setGAmeStatus('playing')
+      setGameStatus('playing')
     }
   }
 
-  if (!isCovered || (gameStatus === 'lost' && hasMine)) {
+  function getUncoveredCell () {
     return (
       <div
         data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
         className={`minefield-cell ${hasMine && 'highlighted'}`}
       >
-        {hasMine && (isCovered ? <img src='/tiles/bombCell.png' alt='explosion' /> : <img src='/tiles/detonateBombCell.png' alt='mine' />)}
-        {!hasMine && <img src={`/tiles/cell${numberOfMinesAround}.png`} />}
+        {getUncoveredCellImage()}
       </div>
+    )
+  }
+
+  function getUncoveredCellImage () {
+    let imgSource
+    let altText
+    if (hasMine) {
+      if (isCovered) {
+        imgSource = '/tiles/bombCell.png'
+        altText = 'Mine'
+      } else {
+        imgSource = '/tiles/detonateBombCell.png'
+        altText = 'Explosion'
+      }
+    } else {
+      imgSource = `/tiles/cell${numberOfMinesAround}.png`
+      if (numberOfMinesAround === 0) {
+        altText = 'Empty cell'
+      } else {
+        altText = 'Number of adjacent mines: ' + numberOfMinesAround
+      }
+    }
+    return (
+      <img
+        src={imgSource}
+        alt={altText}
+      />
+    )
+  }
+
+  if (!isCovered || (gameStatus === 'lost' && hasMine)) {
+    return (
+      getUncoveredCell()
     )
   } else {
     return (
@@ -46,9 +78,9 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         className='minefield-cell covered'
         disabled={gameStatus !== 'playing' && gameStatus !== 'waiting'}
       >
-        {((hasMine && gameStatus === 'won') || (isTagged === 'mined' && (gameStatus === 'playing'))) && <img src='/tiles/flagCell.png' />}
-        {(isTagged === 'mined' && !hasMine && gameStatus === 'lost') && <img src='/tiles/notBombCell.png' />}
-        {isTagged === 'inconclusive' && <img src='/tiles/inconclusiveCell.png' />}
+        {((hasMine && gameStatus === 'won') || (isTagged === 'mined' && gameStatus === 'playing')) && <img src='/tiles/flagCell.png' alt='Flaged cell' />}
+        {(isTagged === 'mined' && !hasMine && gameStatus === 'lost') && <img src='/tiles/notBombCell.png' alt='Wrongly tagged mine' />}
+        {isTagged === 'inconclusive' && <img src='/tiles/inconclusiveCell.png' alt='Inconclusive cell' />}
       </button>
     )
   }
