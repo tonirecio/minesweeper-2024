@@ -27,4 +27,12 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
+  test('Waiting status, the minefield has all the cells covered', ({ given, then, pending }) => {
+    given('the player opens the game', () => {
+      pending()
+    })
+    then('all the minefield cells should be covered', () => {
+      pending()
+    })
+  })
 })
