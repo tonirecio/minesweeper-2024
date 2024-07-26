@@ -19,4 +19,12 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
+  test('Waiting status, the remaining mines counter show the number of hidden mines, by default, 10', ({ given, then, pending }) => {
+    given('the player opens the game', () => {
+      pending()
+    })
+    then(/^the remaining mines counter should be (\d+)$/, (arg0) => {
+      pending()
+    })
+  })
 })
