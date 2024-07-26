@@ -130,4 +130,18 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
+  test('Tagging a cell as mine, the remaining mines counter decrease', ({ given, when, then, pending }) => {
+    given('the player opens the game', () => {
+      pending()
+    })
+    given('the player loads the following mock data', (docString) => {
+      pending()
+    })
+    when(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+    then(/^the remaining mines counter should be "(.*)"$/, (arg0) => {
+      pending()
+    })
+  })
 })
