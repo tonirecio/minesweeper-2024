@@ -45,9 +45,8 @@ defineFeature(feature, (test) => {
     when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
       pending()
     })
-
     then('the button status should show a happy face', () => {
-
+      pending()
     })
   })
 })
