@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './styles/cell.css'
 
 export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, onClick, gameStatus, gameOver, isCovered }) {
