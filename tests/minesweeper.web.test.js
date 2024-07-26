@@ -161,4 +161,21 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
+  test('Tagging as mined more cells than the number of mines, the remaining mines counter is negative', ({ given, and, when, then, pending }) => {
+    given('the player opens the game', () => {
+      pending()
+    })
+    given('the player loads the following mock data', (docString) => {
+      pending()
+    })
+    and(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+    when(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
+      pending()
+    })
+    then(/^the remaining mines counter should be "(.*)"$/, (arg0) => {
+      pending()
+    })
+  })
 })
