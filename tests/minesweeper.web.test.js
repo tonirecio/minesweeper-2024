@@ -119,4 +119,15 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
+  test('the user clicks on the button status, the game is waiting', ({ given, when, then, pending }) => {
+    given('the player opens the game', () => {
+      pending()
+    })
+    when('the player clicks on the button status', () => {
+      pending()
+    })
+    then('the button status should show a happy face', () => {
+      pending()
+    })
+  })
 })
