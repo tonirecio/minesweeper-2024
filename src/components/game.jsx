@@ -1,4 +1,4 @@
-'use client'
+'use client' // TO-DO Why do we need this here?
 import { useState, useEffect } from 'react'
 import Minefield from './minefield'
 import MockDataForm from './mockDataForm'

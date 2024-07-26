@@ -17,13 +17,21 @@ export function openTheGame () {
 }
 
 export function mineFieldDimensionsValidation (rows, columns) {
-  const cells = screen.getAllByTestId('minefield-cell', { exact: false })
+  const cells = getMinefieldCells()
   return cells.length === rows * columns
+}
+
+function getMinefieldCells () {
+  return screen.getAllByTestId('minefield-cell', { exact: false })
+}
+
+function getMinefieldCell (rowPosition, colPosition) {
+  return (screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
 }
 
 export function areAllCellsCovered () {
   let result = true
-  const cells = screen.getAllByTestId('minefield-cell', { exact: false })
+  const cells = getMinefieldCells()
   cells.forEach(cell => {
     if (!cell.classList.contains('covered')) {
       result = false
@@ -33,44 +41,23 @@ export function areAllCellsCovered () {
 }
 
 export function areAllCellsDisabled () {
-  let result = true
-  const cells = screen.getAllByTestId('minefield-cell', { exact: false })
-  cells.forEach((cell) => { // TO DO: Every
-    if (cell.tagName === 'BUTTON' && !cell.disabled) {
-      result = false
-    }
-  })
-  return result
+  const cells = getMinefieldCells()
+  return cells.every((cell) => cell.tagName === 'DIV' || cell.disabled)
 }
 
 export function areAllCellsEnabled () {
-  let result = true
-  const cells = screen.getAllByTestId('minefield-cell', { exact: false })
-  cells.forEach((cell) => {
-    if (cell.tagName === 'DIV' || cell.disabled) {
-      result = false
-    }
-  })
-  return result
+  const cells = getMinefieldCells()
+  return cells.every((cell) => cell.tagName === 'BUTTON' && !cell.disabled)
 }
 
 export function setMockData (data) {
   data = data.trim()
-
-  // userEvent.keyboard('ctrl+m') TO DO try to explain why userEvent doesn't work
+  // userEvent.keyboard('ctrl+m') TO-DO try to explain why userEvent doesn't work
   fireEvent.keyDown(screen.getByTestId('minefield'), {
     key: 'm',
-    keyCode: 77,
-    which: 77,
-    code: 'KeyM',
-    location: 0,
-    altKey: false,
     ctrlKey: true,
-    metaKey: false,
-    shiftKey: false,
     repeat: false
   })
-
   const textInput = screen.getByTestId('mock-data-input')
   const submitButton = screen.getByTestId('mock-data-submit')
   fireEvent.change(textInput, { target: { value: data } })
@@ -78,36 +65,33 @@ export function setMockData (data) {
 }
 
 export function uncoverCell (rowPosition, colPosition) {
-  fireEvent.click(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+  fireEvent.click(getMinefieldCell(rowPosition, colPosition))
 }
 
 export function tagCell (rowPosition, colPosition) {
-  fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+  fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
 }
 
 export function tagCellAsMined (rowPosition, colPosition) {
   if (isNotTagged(rowPosition, colPosition)) {
-    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
   } else if (isTaggedAsInconclusive(rowPosition, colPosition)) {
-    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
-    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
   }
 }
 
 export function tagCellAsInconclusive (rowPosition, colPosition) {
-  console.log('tagCellAsInconclusive')
   if (isNotTagged(rowPosition, colPosition)) {
-    console.log('tagCellAsInconclusive 1')
-    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
-    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
   } else if (isTaggedAsMined(rowPosition, colPosition)) {
-    console.log('tagCellAsInconclusive 2')
-    fireEvent.contextMenu(screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
   }
 }
 
 export function isCellUncovered (rowPosition, colPosition) {
-  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  const cell = getMinefieldCell(rowPosition, colPosition)
   if (cell.classList.contains('covered')) {
     return false
   }
@@ -115,13 +99,13 @@ export function isCellUncovered (rowPosition, colPosition) {
 }
 
 export function isCellDisabled (rowPosition, colPosition) {
-  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  const cell = getMinefieldCell(rowPosition, colPosition)
   return cell.tagName === 'DIV'
 }
 
 export function hasHighlightedMine () {
   let result = false
-  const cells = screen.getAllByTestId('minefield-cell', { exact: false })
+  const cells = getMinefieldCells()
   cells.forEach(cell => {
     if (cell.classList.contains('highlighted')) {
       result = true
@@ -131,75 +115,47 @@ export function hasHighlightedMine () {
 }
 
 export function isHighlightedMine (rowPosition, colPosition) {
-  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
+  const cell = getMinefieldCell(rowPosition, colPosition)
   return cell.classList.contains('highlighted')
 }
 
+function isAltTextInCell (rowPosition, colPosition, altText) {
+  const cell = getMinefieldCell(rowPosition, colPosition)
+  const images = cell.getElementsByTagName('img')
+  if (images.length !== 1) {
+    return false
+  } else {
+    const imgAltText = images[0].alt
+    return imgAltText === altText
+  }
+}
+
 export function isNumber (rowPosition, colPosition, number) {
-  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
-  const imgSource = cell.getElementsByTagName('img')[0].src
-  return imgSource.includes('/cell' + number + '.png')
+  return isAltTextInCell(rowPosition, colPosition, 'Number of adjacent mines: ' + number)
 }
 
 export function isCellEmpty (rowPosition, colPosition) {
-  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
-  const imgSource = cell.getElementsByTagName('img')[0].src
-  return imgSource.includes('/cell0.png')
+  return isAltTextInCell(rowPosition, colPosition, 'Empty cell')
 }
 
 export function isMine (rowPosition, colPosition) {
-  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
-  const image = cell.getElementsByTagName('img')
-  if (image.length > 0) {
-    const imgSource = image[0].src
-    return imgSource.includes('/bombCell.png')
-  } else {
-    return false
-  }
+  return isAltTextInCell(rowPosition, colPosition, 'Mine')
 }
 
 export function isTaggedAsMined (rowPosition, colPosition) {
-  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
-  const image = cell.getElementsByTagName('img')
-  if (image.length > 0) {
-    const imgSource = image[0].src
-    return imgSource.includes('/flagCell.png')
-  } else {
-    return false
-  }
+  return isAltTextInCell(rowPosition, colPosition, 'Flaged cell')
 }
 
 export function isTaggedAsInconclusive (rowPosition, colPosition) {
-  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
-  const image = cell.getElementsByTagName('img')
-  if (image.length > 0) {
-    const imgSource = image[0].src
-    return imgSource.includes('/inconclusiveCell.png')
-  } else {
-    return false
-  }
+  return isAltTextInCell(rowPosition, colPosition, 'Inconclusive cell')
 }
 
 export function isWronglyTaggedMine (rowPosition, colPosition) {
-  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
-  const image = cell.getElementsByTagName('img')
-  if (image.length > 0) {
-    const imgSource = image[0].src
-    return imgSource.includes('/notBombCell.png')
-  } else {
-    return false
-  }
+  return isAltTextInCell(rowPosition, colPosition, 'Wrongly tagged mine')
 }
 export function isNotTagged (rowPosition, colPosition) {
-  const cell = screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true })
-  const image = cell.getElementsByTagName('img')
-  if (image.length > 0) {
-    const imgSource = image[0].src
-    return !imgSource.includes('/inconclusiveCell.png') &&
-    !imgSource.includes('/flagCell.png')
-  } else {
-    return true
-  }
+  return !isAltTextInCell(rowPosition, colPosition, 'Flaged cell') &&
+  !isAltTextInCell(rowPosition, colPosition, 'Inconclusive cell')
 }
 
 export function areCellsInARowUncovered (rowNumber) {
