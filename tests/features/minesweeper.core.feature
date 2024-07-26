@@ -1,9 +1,11 @@
-Feature: Minesweeper
+Feature: Core Minesweeper
 
       As a player:
       - I want to play to the classic minesweeper game
-      - So I want to detect all the mines in the board,
-      - and I want to uncover all the cells without mines
+      - So I want to uncover all the cells without mines
+
+      Scope:
+      - This feature file covers the scenarios related only with the minefield
 
       How to refer to a cell:
       - Using the (row,column) nomenclature
