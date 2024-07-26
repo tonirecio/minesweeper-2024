@@ -10,3 +10,9 @@ export function isStatusButtonShowing (status) {
   const imgSource = faceImg.src
   return imgSource.includes(status + '.png')
 }
+
+export function isTimerShowing (number) {
+  const timer = screen.getByTestId('timer', { exact: true })
+  const divsWithNumbers = timer.children
+  return Array.from(divsWithNumbers).every(div => div.className.includes('number-' + number))
+}

@@ -16,11 +16,11 @@ defineFeature(feature, test => {
 
   test('Waiting status, the timer should be 0', ({ given, then, pending }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
-    then(/^the timer should be (\d+)$/, (arg0) => {
-      pending()
+    then(/^the timer should be (\d+)$/, (number) => {
+      expect(steps.isTimerShowing(number)).toBe(true)
     })
   })
 
