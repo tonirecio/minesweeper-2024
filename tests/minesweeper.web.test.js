@@ -11,4 +11,12 @@ defineFeature(feature, (test) => {
       pending()
     })
   })
+  test('Waiting status, the timer should be 0', ({ given, then, pending }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    then('the timer should be 0', () => {
+      pending()
+    })
+  })
 })
