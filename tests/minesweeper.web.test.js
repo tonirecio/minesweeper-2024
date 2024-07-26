@@ -10,7 +10,7 @@ defineFeature(feature, test => {
     })
 
     then('the button status should show a happy face', () => {
-      expect(steps.isStatusButtonShowing('happy face')).toBe(true)
+      expect(steps.isStatusButtonShowing('happy-face')).toBe(true)
     })
   })
 

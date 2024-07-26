@@ -6,7 +6,7 @@ export function openTheGame () {
 }
 // TODO refactor to use alt instead of src
 export function isStatusButtonShowing (status) {
-  const faceButton = screen.getByTestId('face-button', { exact: true })
-  const imgSource = faceButton.getElementsByTagName('img')[0].src
+  const faceImg = screen.getByTestId('face-img', { exact: true })
+  const imgSource = faceImg.src
   return imgSource.includes(status + '.png')
 }
