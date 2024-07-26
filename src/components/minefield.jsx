@@ -4,10 +4,9 @@ import './styles/minefield.css'
 import Cell from './cell'
 import { uncoverCell } from '../../tests/steps/minesweeper.steps'
 
-export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData }) {
+export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData, gameStatus, setGameStatus }) {
   const [minefieldData, setMinefieldData] = useState([])
   const [cellsToUncover, setCellsToUncover] = useState(-1)
-  const [gameStatus, setGameStatus] = useState('playing')
 
   const directions = [
     { offsetX: 0, offsetY: -1 },
@@ -46,10 +45,10 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
   function onClick (row, column) {
     const newMinefieldData = [...minefieldData]
     let uncoveredCells
-    if(newMinefieldData[row - 1][column - 1].isCovered === true) {
+    if (newMinefieldData[row - 1][column - 1].isCovered === true) {
       newMinefieldData[row - 1][column - 1].isCovered = false
     }
-    if(newMinefieldData[row - 1][column - 1].isMine) {
+    if (newMinefieldData[row - 1][column - 1].isMine) {
       setGameStatus('lost')
     } else {
       if (newMinefieldData[row - 1][column - 1].numberOfMinesAround === 0) {
@@ -63,8 +62,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
       setCellsToUncover(cellsToUncover - uncoveredCells)
     }
     setMinefieldData(newMinefieldData)
-    
-    }
+  }
 
   function parseMockDataToString (data) {
     let strData = data.split(/\r?\n/).join('-')

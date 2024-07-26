@@ -1,11 +1,14 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Minefield from './minefield'
+import StatusButton from './statusButton'
 import MockDataForm from './mockDataForm'
+import './styles/game.css'
 
 export default function Game () {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
   const [mockData, setMockData] = useState('')
+  const [gameStatus, setGameStatus] = useState('playing')
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)
@@ -25,11 +28,23 @@ export default function Game () {
       setMockDataFormVisible(!mockDataFormVisible)
     }
   }
+
+  function onGameStatusChange (newStatus) {
+    setGameStatus(newStatus)
+  }
+
+  function onGameStatusButtonPressed () {
+
+  }
+
   return (
     <>
       <h1>Minesweeper</h1>
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
-      <Minefield mockData={mockData} />
+      <div className='gameBoard'>
+        <StatusButton gameStatus={gameStatus} onButtonPressed={onGameStatusButtonPressed} />
+        <Minefield mockData={mockData} gameStatus={gameStatus} setGameStatus={onGameStatusChange} />
+      </div>
     </>
   )
 }
