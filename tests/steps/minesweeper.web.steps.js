@@ -1,9 +1,4 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import Game from '../../src/components/game'
-
-export function openTheGame () {
-  render(<Game />)
-}
 
 export function checkStatusButton (status) {
   const statusButton = screen.getByTestId('status-button')

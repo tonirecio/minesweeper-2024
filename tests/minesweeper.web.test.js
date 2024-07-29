@@ -1,11 +1,12 @@
 import { loadFeature, defineFeature } from 'jest-cucumber'
 import * as steps from './steps/minesweeper.web.steps'
+import * as coreSteps from './steps/minesweeper.steps'
 
 const feature = loadFeature('./tests/features/minesweeper.web.feature')
 defineFeature(feature, (test) => {
   test('Starting game, default game status is waiting, the button status show a happy face', ({ given, then, pending }) => {
     given('the player opens the game', () => {
-      steps.openTheGame()
+      coreSteps.openTheGame()
     })
     then('the button status should show a happy face', () => {
       expect(steps.checkStatusButton('happy face')).toBe(true)
@@ -13,7 +14,7 @@ defineFeature(feature, (test) => {
   })
   test('Waiting status, the timer should be 0', ({ given, then, pending }) => {
     given('the player opens the game', () => {
-      steps.openTheGame()
+      coreSteps.openTheGame()
     })
     then('the timer should be 0', () => {
       expect(steps.checkTimerValueIsZero()).toBe(true)
@@ -21,7 +22,7 @@ defineFeature(feature, (test) => {
   })
   test('Waiting status, the remaining mines counter show the number of hidden mines, by default, 10', ({ given, then, pending }) => {
     given('the player opens the game', () => {
-      steps.openTheGame()
+      coreSteps.openTheGame()
     })
     then(/^the remaining mines counter should be (\d+)$/, (minesNum) => {
       expect(steps.checkMinesCounterValue(minesNum)).toBe(true)
@@ -29,7 +30,7 @@ defineFeature(feature, (test) => {
   })
   test('Waiting status, the minefield has all the cells covered', ({ given, then, pending }) => {
     given('the player opens the game', () => {
-      steps.openTheGame()
+      coreSteps.openTheGame()
     })
     then('all the minefield cells should be covered', () => {
       expect(steps.checkAllCellsCovered()).toBe(true)
@@ -37,7 +38,7 @@ defineFeature(feature, (test) => {
   })
   test('Waiting status, remaining clicking a cell, the game status should be playing, the button status show a happy face', ({ given, when, then, pending }) => {
     given('the player opens the game', () => {
-      pending()
+      coreSteps.openTheGame()
     })
     given('the player loads the following mock data', (docString) => {
       pending()
