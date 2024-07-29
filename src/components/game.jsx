@@ -1,4 +1,4 @@
-'use client' // TO-DO Why do we need this here?
+'use client' // TODO Why do we need this here?
 import { useState, useEffect } from 'react'
 import Minefield from './minefield'
 import MockDataForm from './mockDataForm'
@@ -8,12 +8,13 @@ export default function Game () {
   const [mockData, setMockData] = useState('')
 
   useEffect(() => {
+    console.log('useEffect')
     document.addEventListener('keydown', handleKeyPress)
 
     return () => {
       document.removeEventListener('keydown', handleKeyPress)
     }
-  }, [handleKeyPress]) // TO-DO: Find an explanation for this
+  }, [])
 
   function setMockDataForm (data) {
     setMockData(data)
