@@ -1,8 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './styles/cell.css'
 
-export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, onClick, gameStatus, gameOver, isCovered, setGameStatus }) {
+export default function Cell ({
+  rowPosition, colPosition, hasMine, numberOfMinesAround,
+  onClick, gameStatus, gameOver, isCovered,
+  onCellTaggedAsMined, onCellUntaggedAsMined
+}) {
   const [isTagged, setIsTagged] = useState('')
+
+  useEffect(() => {
+    if (gameStatus === 'waiting') {
+      setIsTagged('')
+    }
+  }, [gameStatus])
 
   function handleClick (e) {
     e.preventDefault()
@@ -17,13 +27,14 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
       let newState = ''
       if (isTagged === '') {
         newState = 'mined'
+        onCellTaggedAsMined()
       } else if (isTagged === 'mined') {
+        onCellUntaggedAsMined()
         newState = 'inconclusive'
       } else {
         newState = ''
       }
       setIsTagged(newState)
-      setGameStatus('playing')
     }
   }
 

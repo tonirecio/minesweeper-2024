@@ -4,7 +4,12 @@ import './styles/minefield.css'
 
 import Cell from './cell'
 
-export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData, gameStatus, setGameStatus, setMinesLeft, onCellTagged }) {
+export default function Minefield ({
+  numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10,
+  mockData,
+  gameStatus, setGameStatus,
+  setMinesLeft, onCellTagged, onCellUntagged
+}) {
   const [minefieldData, setMinefieldData] = useState([])
   const [cellsToUncover, setCellsToUncover] = useState(-1)
 
@@ -41,9 +46,6 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
   }
 
   function onClick (row, column) {
-    if (gameStatus === 'waiting') {
-      setGameStatus('playing')
-    }
     const newMinefieldData = [...minefieldData]
     let uncoveredCells
     if (newMinefieldData[row - 1][column - 1].isCovered === true) {
@@ -59,6 +61,8 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
       }
       if (cellsToUncover - uncoveredCells === 0) {
         setGameStatus('won')
+      } else if (gameStatus === 'waiting') {
+        setGameStatus('playing')
       }
       setCellsToUncover(cellsToUncover - uncoveredCells)
     }
@@ -66,24 +70,27 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
   }
 
   useEffect(() => {
-    let preData
-    if (mockData.includes('|')) {
-      mockData = dataHelper.parseMockDataToString(mockData)
+    if (gameStatus === 'waiting'/* || mockData !== '' */) {
+      console.log('GENERATING BOARD')
+      let preData
+      if (mockData.includes('|')) {
+        mockData = dataHelper.parseMockDataToString(mockData)
+      }
+      if (dataHelper.validateMockData(mockData)) {
+        preData = dataHelper.getMinefieldFromMockData(mockData)
+        setCellsToUncover(dataHelper.getNumberOfCellsToUncover(preData))
+        const minesNumber = (dataHelper.getNumberOfMines(preData))
+        setMinesLeft(minesNumber)
+      } else {
+        preData = dataHelper.getMinefield(numberOfRows, numberOfColumns)
+        dataHelper.minefieldMining(preData, numberOfMines)
+        setCellsToUncover(numberOfColumns * numberOfRows - numberOfMines)
+        setMinesLeft(numberOfMines)
+      }
+      dataHelper.minefieldNumbering(preData)
+      setMinefieldData(preData)
     }
-    if (dataHelper.validateMockData(mockData)) {
-      preData = dataHelper.getMinefieldFromMockData(mockData)
-      setCellsToUncover(dataHelper.getNumberOfCellsToUncover(preData))
-      const minesNumber = (dataHelper.getNumberOfMines(preData))
-      setMinesLeft(minesNumber)
-    } else {
-      preData = dataHelper.getMinefield(numberOfRows, numberOfColumns)
-      dataHelper.minefieldMining(preData, numberOfMines)
-      setCellsToUncover(numberOfColumns * numberOfRows - numberOfMines)
-      setMinesLeft(numberOfMines)
-    }
-    dataHelper.minefieldNumbering(preData)
-    setMinefieldData(preData)
-  }, [mockData])
+  }, [mockData, gameStatus])
 
   return (
     <div data-testid='minefield'>
@@ -99,7 +106,8 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
               onClick={onClick}
               gameStatus={gameStatus}
               isCovered={cell.isCovered}
-              setGameStatus={setGameStatus}
+              onCellTaggedAsMined={onCellTagged}
+              onCellUntaggedAsMined={onCellUntagged}
             />
           ))}
         </div>

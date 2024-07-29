@@ -24,7 +24,6 @@ export default function Game () {
   function setMockDataForm (data) {
     setMockData(data)
     setMockDataFormVisible(false)
-    setGameStatus('waiting')
   }
 
   function handleKeyPress (e) {
@@ -38,13 +37,22 @@ export default function Game () {
   }
 
   function onGameStatusButtonPressed () {
-    setGameStatus('playing')
-    window.location.reload()
-    // setMockData(() => mockData + ' ')
+    setGameStatus('waiting')
   }
 
   function setMinesLeftToFlag (mines) {
     setMinesLeft(mines)
+  }
+
+  function handleCellTaggedAsMined () {
+    if (gameStatus === 'waiting') {
+      setGameStatus('playing')
+    }
+    setMinesLeft(() => minesLeft - 1)
+  }
+
+  function handleCellUntaggedAsMined () {
+    setMinesLeft(() => minesLeft + 1)
   }
 
   return (
@@ -62,6 +70,8 @@ export default function Game () {
           gameStatus={gameStatus}
           setGameStatus={onGameStatusChange}
           setMinesLeft={setMinesLeftToFlag}
+          onCellTagged={handleCellTaggedAsMined}
+          onCellUntagged={handleCellUntaggedAsMined}
         />
       </div>
     </center>
