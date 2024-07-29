@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './styles/cell.css'
 
-export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, gameStatus, isCovered, onClick }) {
+export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, gameStatus, isCovered, onClick, setTheGameStatus, aCellHasBeenTagged }) {
   const [isTagged, setIsTagged] = useState('')
 
   function handleClick (e) {
@@ -13,6 +13,9 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
 
   function handleContextMenu (e) {
     e.preventDefault()
+    if (gameStatus === 'waiting') {
+      setTheGameStatus('playing')
+    }
     if (gameStatus === 'playing' || gameStatus === 'waiting') {
       let newState = ''
       if (isTagged === '') {
@@ -23,6 +26,7 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         newState = ''
       }
       setIsTagged(newState)
+      aCellHasBeenTagged(newState)
     }
   }
 

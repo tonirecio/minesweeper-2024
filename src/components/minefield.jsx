@@ -4,7 +4,7 @@ import './styles/minefield.css'
 
 import Cell from './cell'
 
-export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData, setNumberOfMinesOnBoard, gameStatus, setGameStatus }) {
+export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData, setNumberOfMinesOnBoard, numberOfMinesOnBoard, gameStatus, setGameStatus }) {
   const [minefieldData, setMinefieldData] = useState([])
   const [cellsToUncover, setCellsToUncover] = useState(-1)
 
@@ -63,6 +63,18 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
     setMinefieldData(newMinefieldData)
   }
 
+  function setTheGameStatus (status) {
+    setGameStatus(status)
+  }
+
+  function aCellHasBeenTagged (tag) {
+    if (tag === 'mined') {
+      setNumberOfMinesOnBoard(numberOfMinesOnBoard - 1)
+    } else if (tag === 'inconclusive') {
+      setNumberOfMinesOnBoard(numberOfMinesOnBoard + 1)
+    }
+  }
+
   useEffect(() => {
     let preData
     if (mockData.includes('|')) {
@@ -97,6 +109,8 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
               onClick={onClick}
               gameStatus={gameStatus}
               isCovered={cell.isCovered}
+              setTheGameStatus={setTheGameStatus}
+              aCellHasBeenTagged={aCellHasBeenTagged}
             />
           ))}
         </div>

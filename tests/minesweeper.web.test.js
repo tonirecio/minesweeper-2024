@@ -155,7 +155,7 @@ defineFeature(feature, test => {
     })
   })
 
-  test('the user clicks on the button status, the game is waiting', ({ given, when, then, pending }) => {
+  test('the user clicks on the button status, the game is waiting', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -169,21 +169,21 @@ defineFeature(feature, test => {
     })
   })
 
-  test('Tagging a cell as mine, the remaining mines counter decrease', ({ given, when, then, pending }) => {
+  test('Tagging a cell as mine, the remaining mines counter decrease', ({ given, when, then }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
-    given('the player loads the following mock data', (docString) => {
-
+    given('the player loads the following mock data', (mockData) => {
+      setMockData(mockData)
     })
 
-    when(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-
+    when(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      tagCellAsMined(rowPosition, colPosition)
     })
 
-    then(/^the remaining mines counter should be "(.*)"$/, (arg0) => {
-      pending()
+    then(/^the remaining mines counter should be "(.*)"$/, (mines) => {
+      expect(steps.isRemainingMinesCounterShowing(mines)).toBe(true)
     })
   })
 

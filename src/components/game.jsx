@@ -45,7 +45,7 @@ export default function Game () {
         <StatusImg gameStatus={gameStatus} />
         <Timer gameStatus={gameStatus} />
       </div>
-      <Minefield mockData={mockData} setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange} gameStatus={gameStatus} setGameStatus={setGameStatus} />
+      <Minefield mockData={mockData} setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange} numberOfMinesOnBoard={numberOfMinesOnBoard} gameStatus={gameStatus} setGameStatus={setGameStatus} />
     </div>
   )
 }
