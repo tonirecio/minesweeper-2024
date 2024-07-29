@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import Game from '../../src/components/game'
+import { getMinefieldCell, isTaggedAsInconclusive, isTaggedAsMined } from './minesweeper.steps'
 
 export function openTheGame () {
   render(<Game />)
@@ -25,7 +26,7 @@ export function isRemainingMinesCounterShowing (mines) {
     return false
   }
 
-  const minesString = mines.toString().padStart(3, '0')
+  const minesString = mines.padStart(3, '0')
 
   for (let i = 0; i < divsWithNumbers.length; i++) {
     const classList = divsWithNumbers[i].classList
@@ -36,7 +37,6 @@ export function isRemainingMinesCounterShowing (mines) {
         number = className.split('-')[1]
       }
     })
-
     if (number !== minesString[i]) {
       return false
     }
@@ -51,11 +51,19 @@ export function isTimerShowingANumberGreaterThan (numberOfSeconds) {
   const timerValue = Array.from(divsWithNumbers)
     .map(div => Number(div.className.split('-')[1]))
     .join('')
-  console.log(`Parsed timer value: ${timerValue}`)
   return Number(timerValue) > numberOfSeconds
 }
 
 export function clickTheButtonStatus () {
   const faceImg = screen.getByTestId('face-img', { exact: true })
   fireEvent.click(faceImg)
+}
+
+export function untagCell (rowPosition, colPosition) {
+  if (isTaggedAsMined(rowPosition, colPosition)) {
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
+  } else if (isTaggedAsInconclusive(rowPosition, colPosition)) {
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
+  }
 }

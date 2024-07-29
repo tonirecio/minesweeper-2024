@@ -25,7 +25,7 @@ function getMinefieldCells () {
   return screen.getAllByTestId('minefield-cell', { exact: false })
 }
 
-function getMinefieldCell (rowPosition, colPosition) {
+export function getMinefieldCell (rowPosition, colPosition) {
   return (screen.getByTestId('minefield-cell cell-row' + rowPosition + '-col' + colPosition, { exact: true }))
 }
 
