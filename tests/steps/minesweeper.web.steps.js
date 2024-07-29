@@ -54,3 +54,8 @@ export function isTimerShowingANumberGreaterThan (numberOfSeconds) {
   console.log(`Parsed timer value: ${timerValue}`)
   return Number(timerValue) > numberOfSeconds
 }
+
+export function clickTheButtonStatus () {
+  const faceImg = screen.getByTestId('face-img', { exact: true })
+  fireEvent.click(faceImg)
+}

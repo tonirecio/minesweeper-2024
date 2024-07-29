@@ -77,7 +77,7 @@ defineFeature(feature, test => {
     })
   })
 
-  test('Playing status, the remaining mines counter show the number of hidden mines', ({ given, when, then, pending }) => {
+  test('Playing status, the remaining mines counter show the number of hidden mines', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -137,7 +137,7 @@ defineFeature(feature, test => {
     })
   })
 
-  test('The user loses the game, the button status show a sad face', ({ given, when, then, pending }) => {
+  test('The user loses the game, the button status show a sad face', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -157,15 +157,15 @@ defineFeature(feature, test => {
 
   test('the user clicks on the button status, the game is waiting', ({ given, when, then, pending }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
     when('the player clicks on the button status', () => {
-
+      steps.clickTheButtonStatus()
     })
 
     then('the button status should show a happy face', () => {
-      pending()
+      expect(steps.isStatusButtonShowing('happy-face')).toBe(true)
     })
   })
 
