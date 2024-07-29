@@ -139,19 +139,19 @@ defineFeature(feature, test => {
 
   test('The user loses the game, the button status show a sad face', ({ given, when, then, pending }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
-    given('the player loads the following mock data', (docString) => {
-
+    given('the player loads the following mock data', (mockData) => {
+      setMockData(mockData)
     })
 
-    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      uncoverCell(rowPosition, colPosition)
     })
 
     then('the button status should show a sad face', () => {
-      pending()
+      expect(steps.isStatusButtonShowing('deadFace')).toBe(true)
     })
   })
 
