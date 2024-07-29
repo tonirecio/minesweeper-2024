@@ -1,6 +1,6 @@
 import { loadFeature, defineFeature } from 'jest-cucumber'
 import * as steps from './steps/minesweeper.web.steps'
-import { areAllCellsCovered, setMockData, uncoverCell, tagCellAsMined } from './steps/minesweeper.steps'
+import { areAllCellsCovered, setMockData, uncoverCell, tagCellAsMined, tagCellAsInconclusive } from './steps/minesweeper.steps'
 
 const feature = loadFeature('./tests/features/minesweeper.web.feature')
 
@@ -231,21 +231,21 @@ defineFeature(feature, test => {
     })
   })
 
-  test('Tagging a cell as inconclusive, the remaining mines counter remains equal', ({ given, when, then, pending }) => {
+  test('Tagging a cell as inconclusive, the remaining mines counter remains equal', ({ given, when, then }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
-    given('the player loads the following mock data', (docString) => {
-
+    given('the player loads the following mock data', (mockData) => {
+      setMockData(mockData)
     })
 
-    when(/^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-
+    when(/^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      tagCellAsInconclusive(rowPosition, colPosition)
     })
 
-    then(/^the remaining mines counter should be "(.*)"$/, (arg0) => {
-      pending()
+    then(/^the remaining mines counter should be "(.*)"$/, (mines) => {
+      expect(steps.isRemainingMinesCounterShowing(mines)).toBe(true)
     })
   })
 
