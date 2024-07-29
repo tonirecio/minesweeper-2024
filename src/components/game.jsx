@@ -42,7 +42,7 @@ export default function Game () {
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
       <div className='header'>
         <MinesCounter numberOfMinesOnBoard={numberOfMinesOnBoard} />
-        <StatusImg />
+        <StatusImg gameStatus={gameStatus} />
         <Timer gameStatus={gameStatus} />
       </div>
       <Minefield mockData={mockData} setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange} gameStatus={gameStatus} setGameStatus={setGameStatus} />
