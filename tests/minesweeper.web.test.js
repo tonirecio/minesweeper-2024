@@ -1,6 +1,6 @@
 import { loadFeature, defineFeature } from 'jest-cucumber'
 import * as steps from './steps/minesweeper.web.steps'
-import { areAllCellsCovered, setMockData, uncoverCell } from './steps/minesweeper.steps'
+import { areAllCellsCovered, setMockData, uncoverCell, tagCellAsMined } from './steps/minesweeper.steps'
 
 const feature = loadFeature('./tests/features/minesweeper.web.feature')
 
@@ -63,17 +63,17 @@ defineFeature(feature, test => {
     })
   })
 
-  test('Waiting status, right clicking a cell, the game status should be playing', ({ given, when, then, pending }) => {
+  test('Waiting status, right clicking a cell, the game status should be playing', ({ given, when, then }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
-    when(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-
+    when(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      tagCellAsMined(rowPosition, colPosition)
     })
 
     then('the button status should show a happy face', () => {
-      pending()
+      expect(steps.isStatusButtonShowing('happy-face')).toBe(true)
     })
   })
 
