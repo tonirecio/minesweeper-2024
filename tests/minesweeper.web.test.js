@@ -94,16 +94,16 @@ defineFeature(feature, (test) => {
   })
   test('The user wins the game, the button status show a happy face with sunglasses', ({ given, when, then, pending }) => {
     given('the player opens the game', () => {
-      pending()
+      coreSteps.openTheGame()
     })
     given('the player loads the following mock data', (docString) => {
-      pending()
+      coreSteps.setMockData(docString)
     })
-    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      coreSteps.uncoverCell(rowPosition, colPosition)
     })
     then('the button status should show a happy face with sunglasses', () => {
-      pending()
+      expect(steps.checkStatusButton('sunglasses face')).toBe(true)
     })
   })
   test('The user loses the game, the button status show a sad face', ({ given, when, then, pending }) => {
