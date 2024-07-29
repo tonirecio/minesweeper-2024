@@ -271,25 +271,25 @@ defineFeature(feature, test => {
     })
   })
 
-  test('Change tag from inconclusive to mined, the remaining mines counter decrease', ({ given, and, when, then, pending }) => {
+  test('Change tag from inconclusive to mined, the remaining mines counter decrease', ({ given, and, when, then }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
-    given('the player loads the following mock data', (docString) => {
-
+    given('the player loads the following mock data', (mockData) => {
+      setMockData(mockData)
     })
 
-    and(/^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-
+    and(/^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      tagCellAsInconclusive(rowPosition, colPosition)
     })
 
-    when(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-
+    when(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      tagCellAsMined(rowPosition, colPosition)
     })
 
-    then(/^the remaining mines counter should be "(.*)"$/, (arg0) => {
-      pending()
+    then(/^the remaining mines counter should be "(.*)"$/, (mines) => {
+      expect(steps.isRemainingMinesCounterShowing(mines)).toBe(true)
     })
   })
 })
