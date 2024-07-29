@@ -4,6 +4,8 @@ export default function StatusImg ({ gameStatus }) {
   function getFace (gameStatus) {
     if (gameStatus === 'won') {
       return 'winFace'
+    } else if (gameStatus === 'lost') {
+      return 'deadFace'
     } else {
       return 'happy-face'
     }
