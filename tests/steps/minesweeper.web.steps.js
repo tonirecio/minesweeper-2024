@@ -33,7 +33,9 @@ export function isRemainingMinesCounterShowing (mines) {
     let number = null
 
     classList.forEach(className => {
-      if (className.startsWith('number-')) {
+      if (className === 'number--') {
+        number = '-'
+      } else if (className.startsWith('number-')) {
         number = className.split('-')[1]
       }
     })
