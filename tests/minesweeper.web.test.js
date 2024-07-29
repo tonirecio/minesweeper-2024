@@ -147,19 +147,19 @@ defineFeature(feature, (test) => {
   })
   test('Untagging a cell as mine, the remaining mines counter increase', ({ given, and, when, then, pending }) => {
     given('the player opens the game', () => {
-      pending()
+      coreSteps.openTheGame()
     })
     given('the player loads the following mock data', (docString) => {
-      pending()
+      coreSteps.setMockData(docString)
     })
-    and(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    and(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      coreSteps.tagCellAsMined(rowPosition, colPosition)
     })
-    when(/^the player untags the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    when(/^the player untags the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      coreSteps.untagCell(rowPosition, colPosition)
     })
-    then(/^the remaining mines counter should be "(.*)"$/, (arg0) => {
-      pending()
+    then(/^the remaining mines counter should be "(.*)"$/, (minesNum) => {
+      expect(steps.checkMinesCounterValue(minesNum)).toBe(true)
     })
   })
   test('Tagging as mined more cells than the number of mines, the remaining mines counter is negative', ({ given, and, when, then, pending }) => {

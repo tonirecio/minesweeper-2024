@@ -81,6 +81,15 @@ export function tagCellAsMined (rowPosition, colPosition) {
   }
 }
 
+export function untagCell (rowPosition, colPosition) {
+  if (isTaggedAsMined(rowPosition, colPosition)) {
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
+  } else if (isTaggedAsInconclusive(rowPosition, colPosition)) {
+    fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
+  }
+}
+
 export function tagCellAsInconclusive (rowPosition, colPosition) {
   if (isNotTagged(rowPosition, colPosition)) {
     fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
