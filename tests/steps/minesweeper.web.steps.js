@@ -18,7 +18,7 @@ export function isTimerShowing (number) {
 }
 
 export function isRemainingMinesCounterShowing (mines) {
-  const minesCounter = screen.getByTestId('mines-minesCounter', { exact: true })
+  const minesCounter = screen.getByTestId('minesCounter', { exact: true })
   const divsWithNumbers = minesCounter.children
 
   if (divsWithNumbers.length !== 3) {
@@ -28,13 +28,15 @@ export function isRemainingMinesCounterShowing (mines) {
   const minesString = mines.toString().padStart(3, '0')
 
   for (let i = 0; i < divsWithNumbers.length; i++) {
-    // Obtener el estilo del div actual
-    const backgroundImage = window.getComputedStyle(divsWithNumbers[i]).backgroundImage
+    const classList = divsWithNumbers[i].classList
+    let number = null
 
-    // Extraer el número de la imagen de fondo
-    const number = backgroundImage.match(/d(\d+)\.png/)[1]
+    classList.forEach(className => {
+      if (className.startsWith('number-')) {
+        number = className.split('-')[1]
+      }
+    })
 
-    // Comparar con el dígito correspondiente en minesString
     if (number !== minesString[i]) {
       return false
     }

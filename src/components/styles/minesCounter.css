@@ -1,0 +1,22 @@
+.mines-counter{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.number-0{
+  background-image: url('/scores/d0.png');
+}
+
+.number-1{
+  background-image: url('/scores/d1.png');
+}
+
+.number {
+  width: 13px;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+}
