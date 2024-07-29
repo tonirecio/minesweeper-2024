@@ -8,7 +8,7 @@ export default function Game () {
   const [mockData, setMockData] = useState('')
 
   useEffect(() => {
-    console.log('useEffect')
+    console.log('useEffect') //TODO Is the best way to do in React?
     document.addEventListener('keydown', handleKeyPress)
 
     return () => {
@@ -27,10 +27,10 @@ export default function Game () {
     }
   }
   return (
-    <>
+    <div>
       <h1>Minesweeper</h1>
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
       <Minefield mockData={mockData} />
-    </>
+    </div>
   )
 }
