@@ -73,6 +73,8 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
     if (dataHelper.validateMockData(mockData)) {
       preData = dataHelper.getMinefieldFromMockData(mockData)
       setCellsToUncover(dataHelper.getNumberOfCellsToUncover(preData))
+      const minesNumber = (dataHelper.getNumberOfMines(preData))
+      setMinesLeft(minesNumber)
     } else {
       preData = dataHelper.getMinefield(numberOfRows, numberOfColumns)
       dataHelper.minefieldMining(preData, numberOfMines)

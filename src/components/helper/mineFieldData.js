@@ -125,3 +125,15 @@ export function minefieldNumbering (board) {
     }
   }
 }
+
+export function getNumberOfMines (preData) {
+  let minesNum = 0
+  preData.forEach((row) => {
+    row.forEach((cell) => {
+      if (cell.isMine) {
+        minesNum++
+      }
+    })
+  })
+  return minesNum
+}
