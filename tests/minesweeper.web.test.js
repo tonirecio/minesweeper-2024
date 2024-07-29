@@ -1,6 +1,6 @@
 import { loadFeature, defineFeature } from 'jest-cucumber'
 import * as steps from './steps/minesweeper.web.steps'
-import { areAllCellsCovered } from './steps/minesweeper.steps'
+import { areAllCellsCovered, setMockData, uncoverCell } from './steps/minesweeper.steps'
 
 const feature = loadFeature('./tests/features/minesweeper.web.feature')
 
@@ -45,21 +45,21 @@ defineFeature(feature, test => {
     })
   })
 
-  test('Waiting status, remaining clicking a cell, the game status should be playing, the button status show a happy face', ({ given, when, then, pending }) => {
+  test('Waiting status, remaining clicking a cell, the game status should be playing, the button status show a happy face', ({ given, when, then }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
-    given('the player loads the following mock data', (docString) => {
-
+    given('the player loads the following mock data', (mockData) => {
+      setMockData(mockData)
     })
 
-    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      uncoverCell(rowPosition, colPosition)
     })
 
     then('the button status should show a happy face', () => {
-      pending()
+      expect(steps.isStatusButtonShowing('happy-face')).toBe(true)
     })
   })
 
