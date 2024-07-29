@@ -95,7 +95,7 @@ defineFeature(feature, test => {
     })
   })
 
-  test('Playing status, the timer starts', ({ given, when, and, then, pending }) => {
+  test('Playing status, the timer starts', ({ given, when, and, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
@@ -119,21 +119,21 @@ defineFeature(feature, test => {
     })
   })
 
-  test('The user wins the game, the button status show a happy face with sunglasses', ({ given, when, then, pending }) => {
+  test('The user wins the game, the button status show a happy face with sunglasses', ({ given, when, then }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
-    given('the player loads the following mock data', (docString) => {
-
+    given('the player loads the following mock data', (mockData) => {
+      setMockData(mockData)
     })
 
-    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      uncoverCell(rowPosition, colPosition)
     })
 
     then('the button status should show a happy face with sunglasses', () => {
-      pending()
+      expect(steps.isStatusButtonShowing('winFace')).toBe(true)
     })
   })
 
