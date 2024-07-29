@@ -79,19 +79,19 @@ defineFeature(feature, test => {
 
   test('Playing status, the remaining mines counter show the number of hidden mines', ({ given, when, then, pending }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
-    given('the player loads the following mock data', (docString) => {
-
+    given('the player loads the following mock data', (mockData) => {
+      setMockData(mockData)
     })
 
-    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      uncoverCell(rowPosition, colPosition)
     })
 
-    then(/^the remaining mines counter should show "(.*)"$/, (arg0) => {
-      pending()
+    then(/^the remaining mines counter should show "(.*)"$/, (mines) => {
+      expect(steps.isRemainingMinesCounterShowing(mines)).toBe(true)
     })
   })
 

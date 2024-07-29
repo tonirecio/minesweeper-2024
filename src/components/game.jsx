@@ -3,7 +3,9 @@ import { useState, useEffect } from 'react'
 import '@/components/styles/game.css'
 import Minefield from './minefield'
 import MockDataForm from './mockDataForm'
-import Header from './header'
+import StatusImg from './statusImg'
+import Timer from './timer'
+import MinesCounter from './minesCounter'
 
 export default function Game () {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
@@ -31,7 +33,11 @@ export default function Game () {
     <div className='game'>
       <h1>Minesweeper</h1>
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
-      <Header className='header' />
+      <div className='header'>
+        <MinesCounter />
+        <StatusImg />
+        <Timer />
+      </div>
       <Minefield mockData={mockData} />
     </div>
   )
