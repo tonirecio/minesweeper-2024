@@ -52,13 +52,13 @@ defineFeature(feature, (test) => {
   })
   test('Waiting status, right clicking a cell, the game status should be playing', ({ given, when, then, pending }) => {
     given('the player opens the game', () => {
-      pending()
+      coreSteps.openTheGame()
     })
-    when(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    when(/^the player tags as mined the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      coreSteps.tagCell(rowPosition, colPosition)
     })
     then('the button status should show a happy face', () => {
-      pending()
+      expect(steps.checkStatusButton('happy face')).toBe(true)
     })
   })
   test('Playing status, the remaining mines counter show the number of hidden mines', ({ given, when, then, pending }) => {
