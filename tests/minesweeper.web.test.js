@@ -41,13 +41,13 @@ defineFeature(feature, (test) => {
       coreSteps.openTheGame()
     })
     given('the player loads the following mock data', (docString) => {
-      pending()
+      coreSteps.setMockData(docString)
     })
-    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-      pending()
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      coreSteps.uncoverCell(rowPosition, colPosition)
     })
     then('the button status should show a happy face', () => {
-      pending()
+      expect(steps.checkStatusButton('happy face')).toBe(true)
     })
   })
   test('Waiting status, right clicking a cell, the game status should be playing', ({ given, when, then, pending }) => {
