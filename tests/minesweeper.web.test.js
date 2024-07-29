@@ -1,5 +1,6 @@
 import { loadFeature, defineFeature } from 'jest-cucumber'
 import * as steps from './steps/minesweeper.web.steps'
+import { areAllCellsCovered } from './steps/minesweeper.steps'
 
 const feature = loadFeature('./tests/features/minesweeper.web.feature')
 
@@ -34,13 +35,13 @@ defineFeature(feature, test => {
     })
   })
 
-  test('Waiting status, the minefield has all the cells covered', ({ given, then, pending }) => {
+  test('Waiting status, the minefield has all the cells covered', ({ given, then }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
     then('all the minefield cells should be covered', () => {
-      pending()
+      expect(areAllCellsCovered()).toBe(true)
     })
   })
 
