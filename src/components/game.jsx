@@ -10,6 +10,7 @@ import MinesCounter from './minesCounter'
 export default function Game () {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
   const [mockData, setMockData] = useState('')
+  const [numberOfMinesOnBoard, setNumberOfMinesOnBoard] = useState(10)
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)
@@ -29,16 +30,21 @@ export default function Game () {
       setMockDataFormVisible(!mockDataFormVisible)
     }
   }
+
+  function handleNumberofMinesOnBoardChange (numberOfMines) {
+    setNumberOfMinesOnBoard(numberOfMines)
+  }
+
   return (
     <div className='game'>
       <h1>Minesweeper</h1>
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
       <div className='header'>
-        <MinesCounter />
+        <MinesCounter numberOfMinesOnBoard={numberOfMinesOnBoard} />
         <StatusImg />
         <Timer />
       </div>
-      <Minefield mockData={mockData} />
+      <Minefield mockData={mockData} setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange} />
     </div>
   )
 }

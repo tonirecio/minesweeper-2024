@@ -74,6 +74,16 @@ export function getNumberOfCellsToUncover (data) {
   return cells
 }
 
+export function getNumberOfMinesOnBoard (data) {
+  let mines = 0
+  for (let row = 0; row < data.length; row += 1) {
+    for (let column = 0; column < data[0].length; column += 1) {
+      if (data[row][column].isMine) mines += 1
+    }
+  }
+  return mines
+}
+
 export function getMinefield (numberOfRows, numberOfColumns) {
   const minefieldData = []
   for (let row = 0; row < numberOfRows; row += 1) {

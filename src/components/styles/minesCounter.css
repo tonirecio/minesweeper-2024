@@ -11,6 +11,33 @@
 .number-1{
   background-image: url('/scores/d1.png');
 }
+.number-2{
+  background-image: url('/scores/d2.png');
+}
+.number-3{
+  background-image: url('/scores/d3.png');
+}
+.number-4{
+  background-image: url('/scores/d4.png');
+}
+.number-5{
+  background-image: url('/scores/d5.png');
+}
+.number-6{
+  background-image: url('/scores/d6.png');
+}
+.number-7{
+  background-image: url('/scores/d7.png');
+}
+.number-8{
+  background-image: url('/scores/d8.png');
+}
+.number-9{
+  background-image: url('/scores/d9.png');
+}
+.number--{
+  background-image: url('/scores/d-.png');
+}
 
 .number {
   width: 13px;
