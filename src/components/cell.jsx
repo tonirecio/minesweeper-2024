@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './styles/cell.css'
 
 export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, gameStatus, isCovered, onClick }) {
@@ -7,13 +7,13 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
   function handleClick (e) {
     e.preventDefault()
     if (!isTagged) {
-      onClick(rowPosition, colPosition)
+      onClick(rowPosition, colPosition, gameStatus)
     }
   }
 
   function handleContextMenu (e) {
     e.preventDefault()
-    if (gameStatus === 'playing') {
+    if (gameStatus === 'playing' || gameStatus === 'waiting') {
       let newState = ''
       if (isTagged === '') {
         newState = 'mined'
@@ -75,9 +75,9 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         onContextMenu={handleContextMenu}
         data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
         className='minefield-cell covered'
-        disabled={gameStatus !== 'playing'}
+        disabled={gameStatus !== 'playing' && gameStatus !== 'waiting'}
       >
-        {((hasMine && gameStatus === 'won') || (isTagged === 'mined' && gameStatus === 'playing')) && <img src='/tiles/flagCell.png' alt='Flaged cell' />}
+        {((hasMine && gameStatus === 'won') || (isTagged === 'mined' && (gameStatus === 'playing' || gameStatus === 'waiting'))) && <img src='/tiles/flagCell.png' alt='Flaged cell' />}
         {(isTagged === 'mined' && !hasMine && gameStatus === 'lost') && <img src='/tiles/notBombCell.png' alt='Wrongly tagged mine' />}
         {isTagged === 'inconclusive' && <img src='/tiles/inconclusiveCell.png' alt='Inconclusive cell' />}
       </button>

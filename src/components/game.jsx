@@ -11,6 +11,7 @@ export default function Game () {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
   const [mockData, setMockData] = useState('')
   const [numberOfMinesOnBoard, setNumberOfMinesOnBoard] = useState(10)
+  const [gameStatus, setGameStatus] = useState('waiting')
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)
@@ -42,9 +43,9 @@ export default function Game () {
       <div className='header'>
         <MinesCounter numberOfMinesOnBoard={numberOfMinesOnBoard} />
         <StatusImg />
-        <Timer />
+        <Timer gameStatus={gameStatus} />
       </div>
-      <Minefield mockData={mockData} setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange} />
+      <Minefield mockData={mockData} setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange} gameStatus={gameStatus} setGameStatus={setGameStatus} />
     </div>
   )
 }

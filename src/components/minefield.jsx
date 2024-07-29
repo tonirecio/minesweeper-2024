@@ -4,10 +4,9 @@ import './styles/minefield.css'
 
 import Cell from './cell'
 
-export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData, setNumberOfMinesOnBoard }) {
+export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData, setNumberOfMinesOnBoard, gameStatus, setGameStatus }) {
   const [minefieldData, setMinefieldData] = useState([])
   const [cellsToUncover, setCellsToUncover] = useState(-1)
-  const [gameStatus, setGameStatus] = useState('playing')
 
   const directions = [
     { offsetX: 0, offsetY: -1 },
@@ -42,6 +41,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
   }
 
   function onClick (row, column) {
+    if (gameStatus === 'waiting') setGameStatus('playing')
     const newMinefieldData = [...minefieldData]
     let uncoveredCells
     if (newMinefieldData[row - 1][column - 1].isCovered === true) {
@@ -77,7 +77,6 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
       setCellsToUncover(numberOfColumns * numberOfRows - numberOfMines)
     }
     setNumberOfMinesOnBoard(dataHelper.getNumberOfMinesOnBoard(preData))
-    console.log('Number of mines: ', dataHelper.getNumberOfMinesOnBoard(preData))
     dataHelper.minefieldNumbering(preData)
     setMinefieldData(preData)
   }, [mockData])

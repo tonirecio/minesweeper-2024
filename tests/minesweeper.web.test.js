@@ -97,23 +97,25 @@ defineFeature(feature, test => {
 
   test('Playing status, the timer starts', ({ given, when, and, then, pending }) => {
     given('the player opens the game', () => {
-
+      steps.openTheGame()
     })
 
-    given('the player loads the following mock data', (docString) => {
-
+    given('the player loads the following mock data', (mockData) => {
+      setMockData(mockData)
     })
 
-    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (arg0, arg1) => {
-
+    when(/^the player uncovers the cell \("(.*)","(.*)"\)$/, (rowPosition, colPosition) => {
+      uncoverCell(rowPosition, colPosition)
     })
 
-    and(/^the user waits "(.*)" second$/, (arg0) => {
-
+    and(/^the user waits "(.*)" second$/, (seconds, done) => {
+      setTimeout(() => {
+        done()
+      }, seconds * 1000)
     })
 
-    then(/^the timer should show a number greater than "(.*)"$/, (arg0) => {
-      pending()
+    then(/^the timer should show a number greater than "(.*)"$/, (numberOfSeconds) => {
+      expect(steps.isTimerShowingANumberGreaterThan(numberOfSeconds)).toBe(true)
     })
   })
 

@@ -44,3 +44,13 @@ export function isRemainingMinesCounterShowing (mines) {
 
   return true
 }
+
+export function isTimerShowingANumberGreaterThan (numberOfSeconds) {
+  const timer = screen.getByTestId('timer', { exact: true })
+  const divsWithNumbers = timer.children
+  const timerValue = Array.from(divsWithNumbers)
+    .map(div => Number(div.className.split('-')[1]))
+    .join('')
+  console.log(`Parsed timer value: ${timerValue}`)
+  return Number(timerValue) > numberOfSeconds
+}
