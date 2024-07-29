@@ -29,10 +29,10 @@ defineFeature(feature, (test) => {
   })
   test('Waiting status, the minefield has all the cells covered', ({ given, then, pending }) => {
     given('the player opens the game', () => {
-      pending()
+      steps.openTheGame()
     })
     then('all the minefield cells should be covered', () => {
-      pending()
+      expect(steps.checkAllCellsCovered()).toBe(true)
     })
   })
   test('Waiting status, remaining clicking a cell, the game status should be playing, the button status show a happy face', ({ given, when, then, pending }) => {

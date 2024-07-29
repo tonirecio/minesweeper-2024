@@ -25,3 +25,14 @@ export function checkMinesCounterValue (value) {
   const timer = screen.getByTestId('mines-counter')
   return Number(timer.innerHTML) === Number(value)
 }
+
+export function checkAllCellsCovered () {
+  let result = true
+  const cells = screen.getAllByTestId('minefield-cell', { exact: false })
+  cells.forEach((cell) => {
+    if (!cell.classList.contains('covered')) {
+      result = false
+    }
+  })
+  return result
+}
