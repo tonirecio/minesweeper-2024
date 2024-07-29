@@ -65,11 +65,7 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
     )
   }
 
-  if (!isCovered || (gameStatus === 'lost' && hasMine)) {
-    return (
-      getUncoveredCell()
-    )
-  } else {
+  function getCoveredCell () {
     return (
       <button
         onClick={handleClick}
@@ -83,5 +79,11 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
         {isTagged === 'inconclusive' && <img src='/tiles/inconclusiveCell.png' alt='Inconclusive cell' />}
       </button>
     )
+  }
+
+  if (!isCovered || (gameStatus === 'lost' && hasMine)) {
+    return getUncoveredCell()
+  } else {
+    return getCoveredCell()
   }
 }

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { screen, fireEvent } from '@testing-library/react'
 
 export function checkStatusButton (status) {
   const statusButton = screen.getByTestId('status-button')
@@ -30,4 +30,9 @@ export function checkAllCellsCovered () {
     }
   })
   return result
+}
+
+export function clickOnStatusButton () {
+  const statusButton = screen.getByTestId('status-button')
+  fireEvent.click(statusButton)
 }

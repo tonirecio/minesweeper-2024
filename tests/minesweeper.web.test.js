@@ -122,13 +122,13 @@ defineFeature(feature, (test) => {
   })
   test('the user clicks on the button status, the game is waiting', ({ given, when, then, pending }) => {
     given('the player opens the game', () => {
-      pending()
+      coreSteps.openTheGame()
     })
     when('the player clicks on the button status', () => {
-      pending()
+      steps.clickOnStatusButton()
     })
     then('the button status should show a happy face', () => {
-      pending()
+      expect(steps.checkStatusButton('happy face')).toBe(true)
     })
   })
   test('Tagging a cell as mine, the remaining mines counter decrease', ({ given, when, then, pending }) => {

@@ -1,5 +1,5 @@
 'use client' // TO-DO Why do we need this here?
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer } from 'react'
 import Minefield from './minefield'
 import StatusButton from './statusButton'
 import Timer from './timer'
@@ -24,6 +24,7 @@ export default function Game () {
   function setMockDataForm (data) {
     setMockData(data)
     setMockDataFormVisible(false)
+    setGameStatus('waiting')
   }
 
   function handleKeyPress (e) {
@@ -37,7 +38,9 @@ export default function Game () {
   }
 
   function onGameStatusButtonPressed () {
-
+    setGameStatus('playing')
+    window.location.reload()
+    // setMockData(() => mockData + ' ')
   }
 
   function setMinesLeftToFlag (mines) {
@@ -45,11 +48,11 @@ export default function Game () {
   }
 
   return (
-    <>
+    <center>
       <h1>Minesweeper</h1>
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
-      <div className='gameBoard'>
-        <header>
+      <div className='game-board'>
+        <header className='game-header'>
           <MinesCounter minesLeft={minesLeft} />
           <StatusButton gameStatus={gameStatus} onButtonPressed={onGameStatusButtonPressed} />
           <Timer gameStatus={gameStatus} />
@@ -61,6 +64,6 @@ export default function Game () {
           setMinesLeft={setMinesLeftToFlag}
         />
       </div>
-    </>
+    </center>
   )
 }
