@@ -16,6 +16,12 @@ export function checkTimerValueIsZero () {
   return Number(timer.innerHTML) === 0
 }
 
+export function checkTimerValueGreaterThanNumber (value) {
+  const timer = screen.getByTestId('minesweeper-timer')
+  console.log('TIMER VALUE:', timer.innerHTML)
+  return Number(timer.innerHTML) > Number(value)
+}
+
 export function checkMinesCounterValue (value) {
   const timer = screen.getByTestId('mines-counter')
   return Number(timer.innerHTML) === Number(value)

@@ -71,7 +71,6 @@ export default function Minefield ({
 
   useEffect(() => {
     if (gameStatus === 'waiting'/* || mockData !== '' */) {
-      console.log('GENERATING BOARD')
       let preData
       if (mockData.includes('|')) {
         mockData = dataHelper.parseMockDataToString(mockData)
