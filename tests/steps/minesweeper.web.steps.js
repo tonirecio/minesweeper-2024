@@ -13,18 +13,25 @@ export function checkStatusButton (status) {
 
 export function checkTimerValueIsZero () {
   const timer = screen.getByTestId('minesweeper-timer')
-  return Number(timer.innerHTML) === 0
+  return Number(timer.getAttribute('value')) === 0
 }
 
 export function checkTimerValueGreaterThanNumber (value) {
   const timer = screen.getByTestId('minesweeper-timer')
-  console.log('TIMER VALUE:', timer.innerHTML)
-  return Number(timer.innerHTML) > Number(value)
+  return Number(timer.getAttribute('value')) > Number(value)
 }
 
 export function checkMinesCounterValue (value) {
-  const timer = screen.getByTestId('mines-counter')
-  return Number(timer.innerHTML) === Number(value)
+  const minesCounter = screen.getByTestId('mines-counter')
+  let displayNumber = minesCounter.getAttribute('value')
+  if (displayNumber[0] === '0') {
+    displayNumber = displayNumber.slice(1, 3)
+  }
+  if (Number(displayNumber) !== Number(value)) {
+    console.log('VALUE TO COMPARE:', value)
+    console.log('NUMBER:', Number(displayNumber))
+  }
+  return Number(displayNumber) === Number(value)
 }
 
 export function checkAllCellsCovered () {

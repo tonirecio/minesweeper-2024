@@ -3,15 +3,13 @@
     align-items: center;
 }
 
-.digital-screen {
-
-}
-
 .game-header {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    width: 99%;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    width: 95%;
     background-color: lightgrey;
     border-style: inset;
 }

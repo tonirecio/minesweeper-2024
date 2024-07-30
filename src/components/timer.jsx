@@ -1,5 +1,6 @@
 'useClient'
 import { useState, useEffect } from 'react'
+import NumberDisplay from './numberDisplay'
 
 export default function Timer ({ gameStatus }) {
   const [timePassed, setTimePassed] = useState(0)
@@ -17,11 +18,6 @@ export default function Timer ({ gameStatus }) {
   })
 
   return (
-    <div
-      data-testid='minesweeper-timer'
-      className='digital-screen'
-    >
-      {timePassed}
-    </div>
+    <NumberDisplay value={timePassed} testId='minesweeper-timer' />
   )
 }
