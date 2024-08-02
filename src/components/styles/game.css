@@ -1,3 +1,7 @@
+* {
+  font-family: 'Bernard MT', monospace;
+}
+
 .game {
   display: flex;
   flex-direction: column;
@@ -7,10 +11,10 @@
 }
 
 .header, .minefield {
-  width: 100%; 
-  max-width: 154px; 
+  width: 100%;
+  max-width: 154px;
   border: 1px solid red;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   background-color: #c0c0c0;
 }
 
