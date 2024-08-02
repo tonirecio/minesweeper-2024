@@ -1,5 +1,5 @@
 'use client' // TO-DO Why do we need this here?
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import '@/components/styles/game.css'
 import Minefield from './minefield'
 import MockDataForm from './mockDataForm'
@@ -12,6 +12,7 @@ export default function Game () {
   const [mockData, setMockData] = useState('')
   const [numberOfMinesOnBoard, setNumberOfMinesOnBoard] = useState(10)
   const [gameStatus, setGameStatus] = useState('waiting')
+  const [resetGame, setResetGame] = useState(false)
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)
@@ -36,16 +37,21 @@ export default function Game () {
     setNumberOfMinesOnBoard(numberOfMines)
   }
 
+  const handleResetGame = useCallback(() => {
+    setGameStatus('waiting')
+    setResetGame(prev => !prev)
+  }, [])
+
   return (
     <div className='game'>
       <h1>Minesweeper</h1>
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
       <div className='header'>
         <MinesCounter numberOfMinesOnBoard={numberOfMinesOnBoard} />
-        <StatusImg gameStatus={gameStatus} />
+        <StatusImg gameStatus={gameStatus} handleResetGame={handleResetGame} />
         <Timer gameStatus={gameStatus} />
       </div>
-      <Minefield mockData={mockData} setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange} numberOfMinesOnBoard={numberOfMinesOnBoard} gameStatus={gameStatus} setGameStatus={setGameStatus} />
+      <Minefield key={resetGame} mockData={mockData} setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange} numberOfMinesOnBoard={numberOfMinesOnBoard} gameStatus={gameStatus} setGameStatus={setGameStatus} />
     </div>
   )
 }
