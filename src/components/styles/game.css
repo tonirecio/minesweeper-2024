@@ -1,6 +1,8 @@
 .game-board {
     display: inline-block;
     align-items: center;
+    border-style: outset;
+    border-width: 3px;
 }
 
 .game-header {
