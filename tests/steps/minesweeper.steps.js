@@ -52,7 +52,6 @@ export function areAllCellsEnabled () {
 
 export function setMockData (data) {
   data = data.trim()
-  // userEvent.keyboard('ctrl+m') TO-DO try to explain why userEvent doesn't work
   fireEvent.keyDown(screen.getByTestId('minefield'), {
     key: 'm',
     ctrlKey: true,

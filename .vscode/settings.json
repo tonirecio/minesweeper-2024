@@ -26,4 +26,5 @@
   "cucumberautocomplete.steps": [
     "tests/**/*.js"
   ],
+  "editor.formatOnSave": false,
 }
