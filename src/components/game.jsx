@@ -1,18 +1,28 @@
-'use client' // TO-DO Why do we need this here?
-import { useState, useEffect, useCallback } from 'react'
+'use client'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import '@/components/styles/game.css'
 import Minefield from './minefield'
 import MockDataForm from './mockDataForm'
 import StatusImg from './statusImg'
 import Timer from './timer'
 import MinesCounter from './minesCounter'
+import { useAppSelector, useAppDispatch, useAppStore } from '@/store/hooks'
+import { setGameStatus } from '@/store/slices/gameStatusSlice'
 
 export default function Game () {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
   const [mockData, setMockData] = useState('')
   const [numberOfMinesOnBoard, setNumberOfMinesOnBoard] = useState(10)
-  const [gameStatus, setGameStatus] = useState('waiting')
+  // const [gameStatus, setGameStatus] = useState('waiting')
   const [resetGame, setResetGame] = useState(false)
+  const store = useAppStore()
+  const initialized = useRef(false)
+  if (!initialized.current) {
+    store.dispatch(setGameStatus('waiting'))
+    initialized.current = true
+  }
+  const gameStatus = useAppSelector(state => state.gameStatus.currentState)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)
@@ -38,7 +48,8 @@ export default function Game () {
   }
 
   const handleResetGame = useCallback(() => {
-    setGameStatus('waiting')
+    // setGameStatus('waiting')
+    dispatch(setGameStatus('waiting'))
     setResetGame(prev => !prev)
   }, [])
 
@@ -51,7 +62,7 @@ export default function Game () {
         <StatusImg gameStatus={gameStatus} handleResetGame={handleResetGame} />
         <Timer gameStatus={gameStatus} />
       </div>
-      <Minefield key={resetGame} mockData={mockData} setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange} numberOfMinesOnBoard={numberOfMinesOnBoard} gameStatus={gameStatus} setGameStatus={setGameStatus} />
+      <Minefield key={resetGame} mockData={mockData} setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange} numberOfMinesOnBoard={numberOfMinesOnBoard} />
     </div>
   )
 }

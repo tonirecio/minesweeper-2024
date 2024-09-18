@@ -1,9 +1,14 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import Game from '../../src/components/game'
 import { getMinefieldCell, isTaggedAsInconclusive, isTaggedAsMined } from './minesweeper.steps'
+import StoreProvider from '../../src/app/StoreProvider'
 
 export function openTheGame () {
-  render(<Game />)
+  render(
+    <StoreProvider>
+      <Game />
+    </StoreProvider>
+  )
 }
 // TODO refactor to use alt instead of src
 export function isStatusButtonShowing (status) {

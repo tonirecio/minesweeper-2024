@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import Game from '../../src/components/game'
+import StoreProvider from '../../src/app/StoreProvider'
 
 const directions = [
   { offsetX: 0, offsetY: -1 },
@@ -13,7 +14,11 @@ const directions = [
 ]
 
 export function openTheGame () {
-  render(<Game />)
+  render(
+    <StoreProvider>
+      <Game />
+    </StoreProvider>
+  )
 }
 
 export function mineFieldDimensionsValidation (rows, columns) {

@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import './styles/cell.css'
+import { useAppSelector, useAppDispatch } from '@/store/hooks'
+import { setGameStatus } from '@/store/slices/gameStatusSlice'
 
-export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, gameStatus, isCovered, onClick, setTheGameStatus, aCellHasBeenTagged }) {
+export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, isCovered, onClick, aCellHasBeenTagged }) {
   const [isTagged, setIsTagged] = useState('')
+  const gameStatus = useAppSelector(state => state.gameStatus.currentState)
+  const dispatch = useAppDispatch()
 
   function handleClick (e) {
     e.preventDefault()
@@ -14,7 +18,7 @@ export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMines
   function handleContextMenu (e) {
     e.preventDefault()
     if (gameStatus === 'waiting') {
-      setTheGameStatus('playing')
+      dispatch(setGameStatus('playing'))
     }
     if (gameStatus === 'playing' || gameStatus === 'waiting') {
       let newState = ''
