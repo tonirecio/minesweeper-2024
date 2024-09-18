@@ -1,7 +1,10 @@
-import Game from '../components/game'
+import Game from '../components/Game'
+import StoreProvider from '../components/StoreProvider'
 
 export default function Home () {
   return (
-    <Game />
+    <StoreProvider>
+      <Game />
+    </StoreProvider>
   )
 }

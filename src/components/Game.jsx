@@ -1,14 +1,13 @@
 'use client' // TODO Why do we need this here?
 import { useState, useEffect } from 'react'
-import Minefield from './minefield'
-import MockDataForm from './mockDataForm'
+import Minefield from './Minefield'
+import MockDataForm from './MockDataForm'
 
 export default function Game () {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
   const [mockData, setMockData] = useState('')
 
   useEffect(() => {
-    console.log('useEffect') //TODO Is the best way to do in React?
     document.addEventListener('keydown', handleKeyPress)
 
     return () => {

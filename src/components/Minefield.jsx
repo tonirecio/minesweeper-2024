@@ -1,14 +1,24 @@
-import { useState, useEffect } from 'react'
+'use client'
+import { useRef, useState, useEffect } from 'react'
+import { useAppDispatch, useAppStore } from '@/lib/hooks'
 import * as dataHelper from './helper/mineFieldData'
 import './styles/minefield.css'
 
-import Cell from './cell'
+import Cell from './Cell'
+import { loseGame, winGame, playGame } from '@/lib/slices/game/gameSlice'
 
 export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData }) {
   const [minefieldData, setMinefieldData] = useState([])
   const [cellsToUncover, setCellsToUncover] = useState(-1)
-  const [gameStatus, setGameStatus] = useState('playing')
 
+  // const [gameStatus, setGameStatus] = useState('playing')
+  const store = useAppStore()
+  const initialized = useRef(false)
+  if (!initialized.current) {
+    store.dispatch(playGame())
+    initialized.current = true
+  }
+  const dispatch = useAppDispatch()
   const directions = [
     { offsetX: 0, offsetY: -1 },
     { offsetX: 0, offsetY: 1 },
@@ -48,7 +58,8 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
       newMinefieldData[row - 1][column - 1].isCovered = false
     }
     if (newMinefieldData[row - 1][column - 1].isMine) {
-      setGameStatus('lost')
+      // dispatch({ type: 'game/setStatus', payload: 'lost' })
+      dispatch(loseGame())
     } else {
       if (newMinefieldData[row - 1][column - 1].numberOfMinesAround === 0) {
         uncoveredCells = uncoverNeighborCells(row, column, newMinefieldData) + 1
@@ -56,7 +67,8 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
         uncoveredCells = 1
       }
       if (cellsToUncover - uncoveredCells === 0) {
-        setGameStatus('won')
+        dispatch(winGame())
+        // setGameStatus('won')
       }
       setCellsToUncover(cellsToUncover - uncoveredCells)
     }
@@ -94,7 +106,6 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
               hasMine={cell.isMine}
               numberOfMinesAround={cell.numberOfMinesAround}
               onClick={onClick}
-              gameStatus={gameStatus}
               isCovered={cell.isCovered}
             />
           ))}
