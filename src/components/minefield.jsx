@@ -82,8 +82,6 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
 
   return (
     <div data-testid='minefield'>
-      <div data-testid='mockdata-title'>Mock data: {mockData}</div>
-      <div>minefieldData.length:{minefieldData.length}</div>
       {minefieldData.map((row, rowIndex) => (
         <div className='minefield-row' data-testid='minefield-row' key={rowIndex}>
           {row.map((cell, cellIndex) => (

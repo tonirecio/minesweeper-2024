@@ -1,0 +1,41 @@
+.gameTable{
+    width: 162px;
+    height: 210px; 
+    
+    display:flex; 
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    background-color: rgb(189,189,189);
+    border-left: rgb(255,255,255) 4px solid;
+    border-top: rgb(255,255,255) 4px solid;
+    border-right: rgb(123,123,123) 4px solid;
+    border-bottom: rgb(123,123,123) 4px solid;
+}
+
+.scoreTable{
+    width: 89%;
+    height: 19%; 
+
+    display:flex; 
+    justify-content: space-evenly;
+    align-items: center;
+
+    background-color: rgb(189,189,189);
+    border-left: rgb(123,123,123) 4px solid;
+    border-top: rgb(123,123,123) 4px solid;
+    border-right: rgb(255,255,255) 4px solid;
+    border-bottom: rgb(255,255,255) 4px solid;
+}
+
+.cellsTable{
+    width: 89%;
+    height: 69%; 
+    
+    background-color: rgb(189,189,189);
+    border-left: rgb(123,123,123) 4px solid;
+    border-top: rgb(123,123,123) 4px solid;
+    border-right: rgb(255,255,255) 4px solid;
+    border-bottom: rgb(255,255,255) 4px solid;
+}

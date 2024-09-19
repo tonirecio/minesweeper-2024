@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import Minefield from './minefield'
 import MockDataForm from './mockDataForm'
+import './styles/game.css'
 
 export default function Game () {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
@@ -30,7 +31,14 @@ export default function Game () {
     <div>
       <h1>Minesweeper</h1>
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
-      <Minefield mockData={mockData} />
+      <div className='gameTable'>
+        <div className='scoreTable'>
+
+        </div>
+        <div className='cellsTable'>
+          <Minefield mockData={mockData} />
+        </div>
+      </div>
     </div>
   )
 }
