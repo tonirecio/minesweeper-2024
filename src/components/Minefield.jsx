@@ -1,24 +1,16 @@
 'use client'
-import { useRef, useState, useEffect } from 'react'
-import { useAppDispatch, useAppStore } from '@/lib/hooks'
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import * as dataHelper from './helper/mineFieldData'
 import './styles/minefield.css'
 
 import Cell from './Cell'
-import { loseGame, winGame, playGame } from '@/lib/slices/game/gameSlice'
+import { loseGame, winGame } from '@/lib/slices/game/gameSlice'
 
 export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData }) {
   const [minefieldData, setMinefieldData] = useState([])
   const [cellsToUncover, setCellsToUncover] = useState(-1)
-
-  // const [gameStatus, setGameStatus] = useState('playing')
-  const store = useAppStore()
-  const initialized = useRef(false)
-  if (!initialized.current) {
-    store.dispatch(playGame())
-    initialized.current = true
-  }
-  const dispatch = useAppDispatch()
+  const dispatcher = useDispatch()
   const directions = [
     { offsetX: 0, offsetY: -1 },
     { offsetX: 0, offsetY: 1 },
@@ -59,7 +51,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
     }
     if (newMinefieldData[row - 1][column - 1].isMine) {
       // dispatch({ type: 'game/setStatus', payload: 'lost' })
-      dispatch(loseGame())
+      dispatcher(loseGame())
     } else {
       if (newMinefieldData[row - 1][column - 1].numberOfMinesAround === 0) {
         uncoveredCells = uncoverNeighborCells(row, column, newMinefieldData) + 1
@@ -67,7 +59,7 @@ export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numb
         uncoveredCells = 1
       }
       if (cellsToUncover - uncoveredCells === 0) {
-        dispatch(winGame())
+        dispatcher(winGame())
         // setGameStatus('won')
       }
       setCellsToUncover(cellsToUncover - uncoveredCells)
