@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import '@/components/styles/timer.css'
+import { useSelector } from 'react-redux'
 
-export default function Timer ({ gameStatus }) {
+export default function Timer () {
   const [time, setTime] = useState(0)
+  const gameStatus = useSelector(state => state.gameStatus.currentState)
 
   useEffect(() => {
     let timer

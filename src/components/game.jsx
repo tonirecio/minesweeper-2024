@@ -6,7 +6,7 @@ import MockDataForm from './mockDataForm'
 import StatusImg from './statusImg'
 import Timer from './timer'
 import MinesCounter from './minesCounter'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setGameStatus } from '@/store/slices/gameStatusSlice'
 
 export default function Game () {
@@ -16,7 +16,6 @@ export default function Game () {
   // const [gameStatus, setGameStatus] = useState('waiting')
   const [resetGame, setResetGame] = useState(false)
 
-  const gameStatus = useSelector(state => state.gameStatus.currentState)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -54,8 +53,8 @@ export default function Game () {
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
       <div className='header'>
         <MinesCounter numberOfMinesOnBoard={numberOfMinesOnBoard} />
-        <StatusImg gameStatus={gameStatus} handleResetGame={handleResetGame} />
-        <Timer gameStatus={gameStatus} />
+        <StatusImg handleResetGame={handleResetGame} />
+        <Timer />
       </div>
       <Minefield key={resetGame} mockData={mockData} setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange} numberOfMinesOnBoard={numberOfMinesOnBoard} />
     </div>
