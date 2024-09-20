@@ -1,12 +1,12 @@
 'use client'
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import '@/components/styles/game.css'
 import Minefield from './minefield'
 import MockDataForm from './mockDataForm'
 import StatusImg from './statusImg'
 import Timer from './timer'
 import MinesCounter from './minesCounter'
-import { useAppSelector, useAppDispatch, useAppStore } from '@/store/hooks'
+import { useSelector, useDispatch } from 'react-redux'
 import { setGameStatus } from '@/store/slices/gameStatusSlice'
 
 export default function Game () {
@@ -15,14 +15,9 @@ export default function Game () {
   const [numberOfMinesOnBoard, setNumberOfMinesOnBoard] = useState(10)
   // const [gameStatus, setGameStatus] = useState('waiting')
   const [resetGame, setResetGame] = useState(false)
-  const store = useAppStore()
-  const initialized = useRef(false)
-  if (!initialized.current) {
-    store.dispatch(setGameStatus('waiting'))
-    initialized.current = true
-  }
-  const gameStatus = useAppSelector(state => state.gameStatus.currentState)
-  const dispatch = useAppDispatch()
+
+  const gameStatus = useSelector(state => state.gameStatus.currentState)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress)

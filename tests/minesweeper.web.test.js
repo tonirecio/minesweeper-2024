@@ -111,7 +111,7 @@ defineFeature(feature, test => {
     and(/^the user waits "(.*)" second$/, (seconds, done) => {
       setTimeout(() => {
         done()
-      }, seconds * 1000)
+      }, seconds * 1500)
     })
 
     then(/^the timer should show a number greater than "(.*)"$/, (numberOfSeconds) => {

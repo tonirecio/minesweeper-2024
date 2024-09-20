@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react'
 import * as dataHelper from './helper/mineFieldData'
 import './styles/minefield.css'
 import Cell from './cell'
-import { useAppSelector, useAppDispatch } from '@/store/hooks'
+import { useSelector, useDispatch } from 'react-redux'
 import { setGameStatus } from '@/store/slices/gameStatusSlice'
 
 export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData, setNumberOfMinesOnBoard, numberOfMinesOnBoard }) {
   const [minefieldData, setMinefieldData] = useState([])
   const [cellsToUncover, setCellsToUncover] = useState(-1)
-  const gameStatus = useAppSelector(state => state.gameStatus.currentState)
-  const dispatch = useAppDispatch()
+  const gameStatus = useSelector(state => state.gameStatus.currentState)
+  const dispatch = useDispatch()
 
   const directions = [
     { offsetX: 0, offsetY: -1 },

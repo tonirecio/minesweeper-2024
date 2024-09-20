@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import './styles/cell.css'
-import { useAppSelector, useAppDispatch } from '@/store/hooks'
+import { useSelector, useDispatch } from 'react-redux'
 import { setGameStatus } from '@/store/slices/gameStatusSlice'
 
 export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, isCovered, onClick, aCellHasBeenTagged }) {
   const [isTagged, setIsTagged] = useState('')
-  const gameStatus = useAppSelector(state => state.gameStatus.currentState)
-  const dispatch = useAppDispatch()
+  const gameStatus = useSelector(state => state.gameStatus.currentState)
+  const dispatch = useDispatch()
 
   function handleClick (e) {
     e.preventDefault()

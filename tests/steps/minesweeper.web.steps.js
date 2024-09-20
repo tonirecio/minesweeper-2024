@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import Game from '../../src/components/game'
 import { getMinefieldCell, isTaggedAsInconclusive, isTaggedAsMined } from './minesweeper.steps'
-import StoreProvider from '../../src/app/StoreProvider'
+import StoreProvider from '../../src/components/StoreProvider'
 
 export function openTheGame () {
   render(
