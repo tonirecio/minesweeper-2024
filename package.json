@@ -26,5 +26,6 @@
     "jest-cucumber": "^4.4.0",
     "jest-environment-jsdom": "^29.7.0",
     "standard": "^17.1.0"
-  }
+  },
+  "packageManager": "yarn@4.5.0"
 }
