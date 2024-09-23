@@ -1,6 +1,6 @@
 'use client' // TODO Why do we need this here?
 import { useState, useEffect } from 'react'
-import Minefield from './minefield'
+import Minefield from './Minefield'
 import MockDataForm from './mockDataForm'
 import './styles/game.css'
 

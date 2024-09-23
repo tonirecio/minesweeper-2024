@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import './styles/cell.css'
 
-export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, gameStatus, isCovered, onClick }) {
+export default function Cell ({ rowPosition, colPosition, hasMine, numberOfMinesAround, isCovered, onClick }) {
   const [isTagged, setIsTagged] = useState('')
+  const gameStatus = useSelector((state) => state.game.status)
 
   function handleClick (e) {
     e.preventDefault()
