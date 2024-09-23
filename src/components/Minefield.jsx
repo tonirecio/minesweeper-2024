@@ -5,7 +5,7 @@ import * as dataHelper from './helper/mineFieldData'
 import './styles/minefield.css'
 
 import Cell from './Cell'
-import { loseGame, winGame } from '@/lib/slices/game/gameSlice'
+import { loseGame, winGame } from '../lib/slices/game/gameSlice'
 
 export default function Minefield ({ numberOfRows = 9, numberOfColumns = 9, numberOfMines = 10, mockData }) {
   const [minefieldData, setMinefieldData] = useState([])
