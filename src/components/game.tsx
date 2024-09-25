@@ -1,57 +1,57 @@
-"use client";
-import "@/components/styles/game.css";
-import { setGameStatus } from "@/store/slices/gameStatusSlice";
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Minefield from "./minefield";
-import MinesCounter from "./minesCounter";
-import MockDataForm from "./mockDataForm";
-import StatusImg from "./statusImg";
-import Timer from "./timer";
+"use client"
+import "@/components/styles/game.css"
+import { setGameStatus } from "@/store/slices/gameStatusSlice"
+import { useCallback, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import Minefield from "./minefield"
+import MinesCounter from "./minesCounter"
+import MockDataForm from "./mockDataForm"
+import StatusImg from "./statusImg"
+import Timer from "./timer"
+import { RootState } from "@/store"
 
 export default function Game() {
-  const [mockDataFormVisible, setMockDataFormVisible] = useState(false);
-  const [mockData, setMockData] = useState("");
-  const [numberOfMinesOnBoard, setNumberOfMinesOnBoard] = useState(10);
+  const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
+  const [mockData, setMockData] = useState("")
+  const [numberOfMinesOnBoard, setNumberOfMinesOnBoard] = useState(10)
   // const [gameStatus, setGameStatus] = useState('waiting')
-  const [resetGame, setResetGame] = useState(false);
-  const gameStatus = useSelector((state) => state.gameStatus.value);
-  const dispatch = useDispatch();
+  const [resetGame, setResetGame] = useState(false)
+  const dispatch = useDispatch()
+
+  const handleKeyPress = useCallback((e: KeyboardEvent) => {
+    if (e.ctrlKey && e.key.toUpperCase() === "M") {
+      setMockDataFormVisible((prev: boolean) => !prev)
+    }
+  }, [])
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyPress);
+    document.addEventListener("keydown", handleKeyPress)
 
     return () => {
-      document.removeEventListener("keydown", handleKeyPress);
-    };
-  }, [handleKeyPress]); // TO-DO: Find an explanation for this
-
-  function setMockDataForm(data) {
-    setMockData(data);
-    setMockDataFormVisible(false);
-  }
-
-  function handleKeyPress(e) {
-    if (e.ctrlKey && e.key.toUpperCase() === "M") {
-      setMockDataFormVisible(!mockDataFormVisible);
+      document.removeEventListener("keydown", handleKeyPress)
     }
+  }, [handleKeyPress]) // TO-DO: Find an explanation for this
+
+  function setMockDataForm(data: string) {
+    setMockData(data)
+    setMockDataFormVisible(false)
   }
 
-  function handleNumberofMinesOnBoardChange(numberOfMines) {
-    setNumberOfMinesOnBoard(numberOfMines);
+  function handleNumberofMinesOnBoardChange(numberOfMines: number) {
+    setNumberOfMinesOnBoard(numberOfMines)
   }
 
   const handleResetGame = useCallback(() => {
     // setGameStatus('waiting')
-    dispatch(setGameStatus("waiting"));
-    setResetGame((prev) => !prev);
-  }, [gameStatus]);
+    dispatch(setGameStatus("waiting"))
+    setResetGame((prev: boolean) => !prev)
+  }, [dispatch])
 
   return (
-    <div className='game'>
+    <div className="game">
       <h1>Minesweeper</h1>
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
-      <div className='header'>
+      <div className="header">
         <MinesCounter numberOfMinesOnBoard={numberOfMinesOnBoard} />
         <StatusImg handleResetGame={handleResetGame} />
         <Timer />
@@ -63,5 +63,5 @@ export default function Game() {
         numberOfMinesOnBoard={numberOfMinesOnBoard}
       />
     </div>
-  );
+  )
 }

@@ -155,7 +155,7 @@ export function isMine(rowPosition, colPosition) {
 }
 
 export function isTaggedAsMined(rowPosition, colPosition) {
-  return isAltTextInCell(rowPosition, colPosition, "Flaged cell");
+  return isAltTextInCell(rowPosition, colPosition, "Flagged cell");
 }
 
 export function isTaggedAsInconclusive(rowPosition, colPosition) {
@@ -167,7 +167,7 @@ export function isWronglyTaggedMine(rowPosition, colPosition) {
 }
 export function isNotTagged(rowPosition, colPosition) {
   return (
-    !isAltTextInCell(rowPosition, colPosition, "Flaged cell") &&
+    !isAltTextInCell(rowPosition, colPosition, "Flagged cell") &&
     !isAltTextInCell(rowPosition, colPosition, "Inconclusive cell")
   );
 }
