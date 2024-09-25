@@ -1,18 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currentState: 'waiting'
-}
+  currentState: "waiting",
+};
 
 export const gameStatusSlice = createSlice({
-  name: 'gameStatus',
+  name: "gameStatus",
   initialState,
   reducers: {
     setGameStatus: (state, action) => {
-      state.currentState = action.payload
-    }
-  }
-})
+      state.currentState = action.payload;
+    },
+  },
+});
 
-export const { setGameStatus } = gameStatusSlice.actions
-export default gameStatusSlice.reducer
+export const { setGameStatus } = gameStatusSlice.actions;
+export default gameStatusSlice.reducer;

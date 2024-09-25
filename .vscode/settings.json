@@ -20,10 +20,16 @@
   },
   "peacock.color": "#182435",
   "standard.options": {
-    "env" : ["jest"]
+    "env": ["jest"]
   },
   "cucumberautocomplete.syncfeatures": "tests/**/*.feature",
-  "cucumberautocomplete.steps": [
-    "tests/**/*.js"
-  ],
+  "cucumberautocomplete.steps": ["tests/**/*.js"],
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "eslint.nodePath": ".yarn/sdks",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

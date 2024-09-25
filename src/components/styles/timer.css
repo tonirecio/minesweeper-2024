@@ -1,11 +1,11 @@
-.timer{
+.timer {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
 }
-.number-0{
-  background-image: url('/scores/d0.png');
+.number-0 {
+  background-image: url("/scores/d0.png");
 }
 
 .number {
