@@ -1,24 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const gameSlice = createSlice({
-  name: 'game',
+  name: "game",
   initialState: {
-    status: 'playing'
+    status: "playing",
   },
   reducers: {
     playGame: (state) => {
-      state.status = 'playing'
+      state.status = "playing";
     },
     winGame: (state) => {
-      state.status = 'won'
+      state.status = "won";
     },
     loseGame: (state) => {
-      state.status = 'lost'
+      state.status = "lost";
     },
     waitGame: (state) => {
-      state.status = 'waiting'
-    }
-  }
-})
+      state.status = "waiting";
+    },
+  },
+});
 
-export const { playGame, winGame, loseGame, waitGame } = gameSlice.actions
+export const { playGame, winGame, loseGame, waitGame } = gameSlice.actions;
