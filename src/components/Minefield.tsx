@@ -131,7 +131,7 @@ export default function Minefield({
         >
           {row.map((cell, cellIndex) => (
             <Cell
-              key={cellIndex}
+              key={`${rowIndex}-${cellIndex}`}
               rowPosition={rowIndex + 1}
               colPosition={cellIndex + 1}
               hasMine={cell.isMine}

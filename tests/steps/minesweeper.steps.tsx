@@ -38,16 +38,13 @@ function getMinefieldCell(
   colPosition: number
 ): HTMLElement {
   return screen.getByTestId(
-    "minefield-cell cell-row" +
-      rowPosition.toString() +
-      "-col" +
-      colPosition.toString(),
+    `minefield-cell cell-row${rowPosition}-col${colPosition}`,
     { exact: true }
   );
 }
 
 export function areAllCellsCovered(): boolean {
-  let result: boolean = true;
+  let result = true;
   const cells: HTMLElement[] = getMinefieldCells();
   cells.forEach((cell: HTMLElement) => {
     if (!cell.classList.contains("covered")) {
@@ -136,7 +133,7 @@ export function isCellDisabled(
 }
 
 export function hasHighlightedMine(): boolean {
-  let result: boolean = false;
+  let result = false;
   const cells: HTMLElement[] = getMinefieldCells();
   cells.forEach((cell: HTMLElement) => {
     if (cell.classList.contains("highlighted")) {
@@ -178,7 +175,7 @@ export function isNumber(
   return isAltTextInCell(
     rowPosition,
     colPosition,
-    "Number of adjacent mines: " + number.toString()
+    `Number of adjacent mines: ${number}`
   );
 }
 
@@ -218,9 +215,9 @@ export function isNotTagged(rowPosition: number, colPosition: number): boolean {
 }
 
 export function areCellsInARowUncovered(rowNumber: number): boolean {
-  let result: boolean = true;
+  let result = true;
   const cells: HTMLElement[] = screen.getAllByTestId(
-    "minefield-cell cell-row" + rowNumber + "-col",
+    `minefield-cell cell-row${rowNumber}-col`,
     { exact: false }
   );
   cells.forEach((cell) => {
@@ -232,9 +229,9 @@ export function areCellsInARowUncovered(rowNumber: number): boolean {
 }
 
 export function areCellsInARowCovered(rowNumber: number): boolean {
-  let result: boolean = true;
+  let result = true;
   const cells: HTMLElement[] = screen.getAllByTestId(
-    "minefield-cell cell-row" + rowNumber + "-col",
+    `minefield-cell cell-row${rowNumber}-col`,
     { exact: false }
   );
   cells.forEach((cell) => {
@@ -249,12 +246,12 @@ export function areCellsAroundACellUncovered(
   rowPosition: number,
   colPosition: number
 ): boolean {
-  let result: boolean = true;
+  let result = true;
   for (const direction of directions) {
     const newRowPosition: number = Number(rowPosition) + direction.offsetY;
     const newColPosition: number = Number(colPosition) + direction.offsetX;
     const cell: HTMLElement = screen.getByTestId(
-      "minefield-cell cell-row" + newRowPosition + "-col" + newColPosition,
+      `minefield-cell cell-row${newRowPosition}-col${newColPosition}`,
       { exact: true }
     );
     if (cell) {
