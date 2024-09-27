@@ -1,10 +1,12 @@
 import "@/components/styles/statusImg.css";
+import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
+import { type GameStatus } from "types/types";
 
-export default function StatusImg({ handleResetGame }) {
-  const gameStatus = useSelector((state) => state.gameStatus.currentState);
+export default function StatusImg({ handleResetGame }: { handleResetGame: () => void }) {
+  const gameStatus = useSelector((state: RootState) => state.gameStatus.currentState);
 
-  function getFace(gameStatus) {
+  function getFace(gameStatus: GameStatus) {
     if (gameStatus === "won") {
       return "winFace";
     } else if (gameStatus === "lost") {

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { type GameStatus } from "types/types"
-import { RootState } from "@/store"
+import { RootState } from "@/store/store"
 
 interface GameState {
   currentState: GameStatus;

@@ -1,13 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function MockDataForm({ setData }) {
+export default function MockDataForm({ setData }: { setData: (data: string) => void }) {
   const [mockData, setMockData] = useState("| * | o |");
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setData(mockData);
   }
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.FormEvent) => {
     setMockData(e.target.value);
   };
 

@@ -4,10 +4,10 @@ import "./styles/minefield.css"
 import Cell from "./cell"
 import { useSelector, useDispatch } from "react-redux"
 import { setGameStatus } from "@/store/slices/gameStatusSlice"
-import { type MinefieldProps, type Cell as CellType, type GameStatus, type Direction, type TagType } from "types/types"
-import { RootState } from "@/store"
+import { type MinefieldProps, type Cell as CellType, type Direction, type TagType } from "types/types"
+import { RootState } from "@/store/store"
 
-export default function Minefield(props: MinefieldProps) {
+export default function Minefield(props: MinefieldProps): React.FC {
   const {
     numberOfRows = 9,
     numberOfColumns = 9,
@@ -117,13 +117,13 @@ export default function Minefield(props: MinefieldProps) {
     <div data-testid="minefield" className="minefield">
       {/* <div data-testid='mockdata-title'>Mock data: {mockData}</div> */}
       {/* <div>minefieldData.length:{minefieldData.length}</div> */}
-      {minefieldData.map((row, rowIndex) => (
+      {minefieldData.map((row: CellType[], rowIndex: number) => (
         <div
           className="minefield-row"
           data-testid="minefield-row"
           key={rowIndex}
         >
-          {row.map((cell, cellIndex) => (
+          {row.map((cell: CellType, cellIndex: number) => (
             <Cell
               key={cellIndex}
               rowPosition={rowIndex + 1}

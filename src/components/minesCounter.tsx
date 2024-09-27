@@ -1,6 +1,6 @@
 import "@/components/styles/minesCounter.css";
 
-export default function MinesCounter({ numberOfMinesOnBoard }) {
+export default function MinesCounter({ numberOfMinesOnBoard }: { numberOfMinesOnBoard: number }) {
   // Convertir el número de minas a una cadena de 3 caracteres, rellenando con ceros a la izquierda si es necesario
   const minesString = numberOfMinesOnBoard.toString().padStart(3, "0");
 

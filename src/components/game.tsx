@@ -1,16 +1,15 @@
 "use client"
 import "@/components/styles/game.css"
 import { setGameStatus } from "@/store/slices/gameStatusSlice"
-import { useCallback, useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import React, { useCallback, useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 import Minefield from "./minefield"
 import MinesCounter from "./minesCounter"
 import MockDataForm from "./mockDataForm"
 import StatusImg from "./statusImg"
 import Timer from "./timer"
-import { RootState } from "@/store"
 
-export default function Game() {
+export default function Game(): React.FC {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
   const [mockData, setMockData] = useState("")
   const [numberOfMinesOnBoard, setNumberOfMinesOnBoard] = useState(10)

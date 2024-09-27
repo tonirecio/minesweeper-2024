@@ -8,7 +8,8 @@ export interface Cell {
 
 export type GameStatus = "waiting" | "playing" | "won" | "lost"
 
-interface MinefieldProps {
+export interface MinefieldProps {
+  key: number
   numberOfRows?: number
   numberOfColumns?: number
   numberOfMines?: number
@@ -17,7 +18,8 @@ interface MinefieldProps {
   numberOfMinesOnBoard: number
 }
 
-interface CellProps {
+export interface CellProps {
+  key: number
   rowPosition: number
   colPosition: number
   hasMine: boolean
@@ -27,6 +29,9 @@ interface CellProps {
   aCellHasBeenTagged: (tag: TagType) => void
 }
 
-type Direction = { offsetX: number; offsetY: number }
+export type Direction = { offsetX: number; offsetY: number }
 
-type TagType = "" | "mined" | "inconclusive"
+export type TagType = "" | "mined" | "inconclusive"
+
+export type TimerType = ReturnType<typeof setInterval>
+

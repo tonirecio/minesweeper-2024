@@ -2,8 +2,8 @@ import React, { useState } from "react"
 import "./styles/cell.css"
 import { useSelector, useDispatch } from "react-redux"
 import { setGameStatus } from "@/store/slices/gameStatusSlice"
-import { type CellProps, type GameStatus, type TagType } from "types/types"
-import { RootState } from "@/store"
+import { type CellProps, type TagType } from "types/types"
+import { RootState } from "@/store/store"
 
 export default function Cell(props: CellProps) {
   const {
@@ -23,7 +23,7 @@ export default function Cell(props: CellProps) {
   const dispatch = useDispatch()
 
   function handleClick(e: React.MouseEvent) {
-    if (e.button !== 0) return // Ignorar si no es clic izquierdo
+    if (e.button !== 0) return
     e.preventDefault()
     if (!isTagged) {
       onClick(rowPosition, colPosition, gameStatus)
