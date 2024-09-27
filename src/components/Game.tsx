@@ -15,12 +15,12 @@ export default function Game(): ReactElement {
     };
   });
 
-  function setMockDataForm(data: string) {
+  function setMockDataForm(data: string): void {
     setMockData(data);
     setMockDataFormVisible(false);
   }
 
-  function handleKeyPress(e: KeyboardEvent) {
+  function handleKeyPress(e: KeyboardEvent): void {
     if (e.ctrlKey && e.key.toUpperCase() === "M") {
       setMockDataFormVisible(!mockDataFormVisible);
     }

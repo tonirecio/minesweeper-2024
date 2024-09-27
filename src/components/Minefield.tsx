@@ -46,7 +46,7 @@ export default function Minefield({
     row: number,
     column: number,
     newMinefieldData: MinefieldData
-  ) {
+  ): number {
     let counter = 0;
     const newNumberOfRows = newMinefieldData.length;
     const newNumberOfColumns = newMinefieldData[0].length;
@@ -76,7 +76,7 @@ export default function Minefield({
     return counter;
   }
 
-  function onClick(row: number, column: number) {
+  function onClick(row: number, column: number): void {
     const newMinefieldData: MinefieldData = [...minefieldData];
     let uncoveredCells;
     if (newMinefieldData[row - 1][column - 1].isCovered === true) {
