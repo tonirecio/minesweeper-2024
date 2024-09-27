@@ -123,13 +123,13 @@ export default function Minefield({
     <StyledMinefield data-testid="minefield">
       <div data-testid="mockdata-title">Mock data: {mockData}</div>
       <div>minefieldData.length:{minefieldData.length}</div>
-      {minefieldData.map((row, rowIndex) => (
+      {minefieldData.map((row: Cell[], rowIndex: number) => (
         <StyledMinefieldRow
           className="minefield-row"
           data-testid="minefield-row"
           key={rowIndex}
         >
-          {row.map((cell, cellIndex) => (
+          {row.map((cell: Cell, cellIndex: number) => (
             <Cell
               key={`${rowIndex}-${cellIndex}`}
               rowPosition={rowIndex + 1}
