@@ -9,7 +9,7 @@ export interface Cell {
 export type GameStatus = "waiting" | "playing" | "won" | "lost"
 
 export interface MinefieldProps {
-  key: number
+  key: boolean
   numberOfRows?: number
   numberOfColumns?: number
   numberOfMines?: number
@@ -34,4 +34,3 @@ export type Direction = { offsetX: number; offsetY: number }
 export type TagType = "" | "mined" | "inconclusive"
 
 export type TimerType = ReturnType<typeof setInterval>
-

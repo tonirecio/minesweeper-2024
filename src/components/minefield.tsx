@@ -4,10 +4,15 @@ import "./styles/minefield.css"
 import Cell from "./cell"
 import { useSelector, useDispatch } from "react-redux"
 import { setGameStatus } from "@/store/slices/gameStatusSlice"
-import { type MinefieldProps, type Cell as CellType, type Direction, type TagType } from "types/types"
+import {
+  type MinefieldProps,
+  type Cell as CellType,
+  type Direction,
+  type TagType,
+} from "types/types"
 import { RootState } from "@/store/store"
 
-export default function Minefield(props: MinefieldProps): React.FC {
+export default function Minefield(props: MinefieldProps) {
   const {
     numberOfRows = 9,
     numberOfColumns = 9,
@@ -19,7 +24,9 @@ export default function Minefield(props: MinefieldProps): React.FC {
 
   const [minefieldData, setMinefieldData] = useState<CellType[][]>([])
   const [cellsToUncover, setCellsToUncover] = useState<number>(-1)
-  const gameStatus = useSelector((state: RootState) => state.gameStatus.currentState)
+  const gameStatus = useSelector(
+    (state: RootState) => state.gameStatus.currentState,
+  )
   const dispatch = useDispatch()
 
   const directions: Direction[] = [
@@ -36,7 +43,7 @@ export default function Minefield(props: MinefieldProps): React.FC {
   function uncoverNeighborCells(
     row: number,
     column: number,
-    newMinefieldData: CellType[][]
+    newMinefieldData: CellType[][],
   ): number {
     let counter = 0
     const newNumberOfRows = newMinefieldData.length
@@ -114,29 +121,29 @@ export default function Minefield(props: MinefieldProps): React.FC {
   }, [mockData])
 
   return (
-    <div data-testid="minefield" className="minefield">
-      {/* <div data-testid='mockdata-title'>Mock data: {mockData}</div> */}
-      {/* <div>minefieldData.length:{minefieldData.length}</div> */}
-      {minefieldData.map((row: CellType[], rowIndex: number) => (
-        <div
-          className="minefield-row"
-          data-testid="minefield-row"
-          key={rowIndex}
-        >
-          {row.map((cell: CellType, cellIndex: number) => (
-            <Cell
-              key={cellIndex}
-              rowPosition={rowIndex + 1}
-              colPosition={cellIndex + 1}
-              hasMine={cell.isMine}
-              numberOfMinesAround={cell.numberOfMinesAround}
-              onClick={onClick}
-              isCovered={cell.isCovered}
-              aCellHasBeenTagged={aCellHasBeenTagged}
-            />
-          ))}
-        </div>
-      ))}
-    </div>
+      <div data-testid="minefield" className="minefield">
+        {/* <div data-testid='mockdata-title'>Mock data: {mockData}</div> */}
+        {/* <div>minefieldData.length:{minefieldData.length}</div> */}
+        {minefieldData.map((row: CellType[], rowIndex: number) => (
+          <div
+            className="minefield-row"
+            data-testid="minefield-row"
+            key={rowIndex}
+          >
+            {row.map((cell: CellType, cellIndex: number) => (
+              <Cell
+                key={cellIndex}
+                rowPosition={rowIndex + 1}
+                colPosition={cellIndex + 1}
+                hasMine={cell.isMine}
+                numberOfMinesAround={cell.numberOfMinesAround}
+                onClick={onClick}
+                isCovered={cell.isCovered}
+                aCellHasBeenTagged={aCellHasBeenTagged}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
   )
 }

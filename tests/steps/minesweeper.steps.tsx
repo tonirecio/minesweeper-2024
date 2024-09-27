@@ -72,7 +72,7 @@ export function setMockData(data) {
   fireEvent.click(submitButton)
 }
 
-export function uncoverCell(rowPosition, colPosition) {
+export function uncoverCell(rowPosition: number, colPosition: number) {
   fireEvent.click(getMinefieldCell(rowPosition, colPosition))
 }
 

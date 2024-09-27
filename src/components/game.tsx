@@ -9,7 +9,7 @@ import MockDataForm from "./mockDataForm"
 import StatusImg from "./statusImg"
 import Timer from "./timer"
 
-export default function Game(): React.FC {
+export default function Game() {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
   const [mockData, setMockData] = useState("")
   const [numberOfMinesOnBoard, setNumberOfMinesOnBoard] = useState(10)

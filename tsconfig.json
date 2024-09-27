@@ -113,11 +113,11 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/layout.tsx",
+    "**/**/*.tsx",
     "tests/minesweeper.core.test.js",
     "tests/minesweeper.web.test.js",
-    "tests/steps/minesweeper.steps.js",
-    "tests/steps/minesweeper.web.steps.js"
+    "**/**/*.steps.tsx",
+    "**/**/*.web.steps.tsx"
   ],
   "exclude": [
     "node_modules"
