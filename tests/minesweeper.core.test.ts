@@ -1,5 +1,5 @@
 import { loadFeature, defineFeature } from "jest-cucumber"
-import * as steps from "./steps/minesweeper.steps.tsx"
+import * as steps from "./steps/minesweeper.steps"
 
 const feature = loadFeature("./tests/features/minesweeper.core.feature")
 

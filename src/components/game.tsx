@@ -1,33 +1,33 @@
-"use client"
-import "@/components/styles/game.css"
-import { setGameStatus } from "@/store/slices/gameStatusSlice"
-import React, { useCallback, useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import Minefield from "./minefield"
-import MinesCounter from "./minesCounter"
-import MockDataForm from "./mockDataForm"
-import StatusImg from "./statusImg"
-import Timer from "./timer"
+'use client'
+import '@/components/styles/game.css'
+import { setGameStatus } from '@/store/slices/gameStatusSlice'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import Minefield from './minefield'
+import MinesCounter from './minesCounter'
+import MockDataForm from './mockDataForm'
+import StatusImg from './statusImg'
+import Timer from './timer'
 
 export default function Game() {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
-  const [mockData, setMockData] = useState("")
+  const [mockData, setMockData] = useState('')
   const [numberOfMinesOnBoard, setNumberOfMinesOnBoard] = useState(10)
   // const [gameStatus, setGameStatus] = useState('waiting')
   const [resetGame, setResetGame] = useState(false)
   const dispatch = useDispatch()
 
   const handleKeyPress = useCallback((e: KeyboardEvent) => {
-    if (e.ctrlKey && e.key.toUpperCase() === "M") {
+    if (e.ctrlKey && e.key.toUpperCase() === 'M') {
       setMockDataFormVisible((prev: boolean) => !prev)
     }
   }, [])
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyPress)
+    document.addEventListener('keydown', handleKeyPress)
 
     return () => {
-      document.removeEventListener("keydown", handleKeyPress)
+      document.removeEventListener('keydown', handleKeyPress)
     }
   }, [handleKeyPress]) // TO-DO: Find an explanation for this
 
@@ -42,21 +42,21 @@ export default function Game() {
 
   const handleResetGame = useCallback(() => {
     // setGameStatus('waiting')
-    dispatch(setGameStatus("waiting"))
+    dispatch(setGameStatus('waiting'))
     setResetGame((prev: boolean) => !prev)
   }, [dispatch])
 
   return (
-    <div className="game">
+    <div className='game'>
       <h1>Minesweeper</h1>
       {mockDataFormVisible && <MockDataForm setData={setMockDataForm} />}
-      <div className="header">
+      <div className='header'>
         <MinesCounter numberOfMinesOnBoard={numberOfMinesOnBoard} />
         <StatusImg handleResetGame={handleResetGame} />
         <Timer />
       </div>
       <Minefield
-        key={resetGame}
+        key={resetGame.toString()}
         mockData={mockData}
         setNumberOfMinesOnBoard={handleNumberofMinesOnBoardChange}
         numberOfMinesOnBoard={numberOfMinesOnBoard}

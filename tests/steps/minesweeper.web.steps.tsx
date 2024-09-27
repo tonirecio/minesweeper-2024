@@ -15,13 +15,13 @@ export function openTheGame() {
   )
 }
 // TODO refactor to use alt instead of src
-export function isStatusButtonShowing(status) {
-  const faceImg = screen.getByTestId("face-img", { exact: true })
+export function isStatusButtonShowing(status: string) {
+  const faceImg = screen.getByTestId("face-img", { exact: true }) as HTMLImageElement
   const imgSource = faceImg.src
   return imgSource.includes(status + ".png")
 }
 
-export function isTimerShowing(number) {
+export function isTimerShowing(number: number) {
   const timer = screen.getByTestId("timer", { exact: true })
   const divsWithNumbers = timer.children
   return Array.from(divsWithNumbers).every((div) =>
@@ -29,7 +29,7 @@ export function isTimerShowing(number) {
   )
 }
 
-export function isRemainingMinesCounterShowing(mines) {
+export function isRemainingMinesCounterShowing(mines: number) {
   const minesCounter = screen.getByTestId("minesCounter", { exact: true })
   const divsWithNumbers = minesCounter.children
 
@@ -37,7 +37,7 @@ export function isRemainingMinesCounterShowing(mines) {
     return false
   }
 
-  const minesString = mines.padStart(3, "0")
+  const minesString = mines.toString().padStart(3, "0")
 
   for (let i = 0; i < divsWithNumbers.length; i++) {
     const classList = divsWithNumbers[i].classList
@@ -58,7 +58,7 @@ export function isRemainingMinesCounterShowing(mines) {
   return true
 }
 
-export function isTimerShowingANumberGreaterThan(numberOfSeconds) {
+export function isTimerShowingANumberGreaterThan(numberOfSeconds: number) {
   const timer = screen.getByTestId("timer", { exact: true })
   const divsWithNumbers = timer.children
   const timerValue = Array.from(divsWithNumbers)
@@ -72,7 +72,7 @@ export function clickTheButtonStatus() {
   fireEvent.click(faceImg)
 }
 
-export function untagCell(rowPosition, colPosition) {
+export function untagCell(rowPosition: number, colPosition: number) {
   if (isTaggedAsMined(rowPosition, colPosition)) {
     fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
     fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))

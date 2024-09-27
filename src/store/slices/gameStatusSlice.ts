@@ -1,20 +1,20 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { type GameStatus } from "types/types"
-import { RootState } from "@/store/store"
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { type GameStatus } from 'types/types'
+// import { RootState } from "@/store/store"
 
 interface GameState {
-  currentState: GameStatus;
+  currentState: GameStatus
 }
 
 const initialState: GameState = {
-  currentState: "waiting",
+  currentState: 'waiting',
 }
 
 export const gameStatusSlice = createSlice({
-  name: "gameStatus",
+  name: 'gameStatus',
   initialState,
   reducers: {
-    setGameStatus: (state: RootState, action: PayloadAction<GameStatus>) => {
+    setGameStatus: (state, action: PayloadAction<GameStatus>) => {
       state.currentState = action.payload
     },
   },

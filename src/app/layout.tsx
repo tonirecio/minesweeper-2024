@@ -1,7 +1,7 @@
-import React from "react"
+import React from 'react'
 export const metadata = {
-  title: "Minesweeper",
-  description: "The classic Minesweeper game made in React.Js",
+  title: 'Minesweeper',
+  description: 'The classic Minesweeper game made in React.Js',
 }
 
 export default function RootLayout({
@@ -10,7 +10,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <body>{children}</body>
     </html>
   )

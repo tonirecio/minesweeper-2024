@@ -9,7 +9,6 @@ export interface Cell {
 export type GameStatus = "waiting" | "playing" | "won" | "lost"
 
 export interface MinefieldProps {
-  key: boolean
   numberOfRows?: number
   numberOfColumns?: number
   numberOfMines?: number

@@ -1,15 +1,15 @@
-import { type Cell } from "types/types.d"
+import { type Cell } from 'types/types.d'
 
 export function validateMockData(mockData: string) {
-  if (mockData === "") {
+  if (mockData === '') {
     return false
   } else {
     let isValidData
     if (mockData === undefined) {
       isValidData = false
     } else {
-      if (mockData.includes("-")) {
-        isValidData = validateMockDataRows(mockData.split("-"))
+      if (mockData.includes('-')) {
+        isValidData = validateMockDataRows(mockData.split('-'))
       } else {
         isValidData = validateMockDataRow(mockData)
       }
@@ -19,7 +19,7 @@ export function validateMockData(mockData: string) {
 }
 
 function validateMockDataRow(data: string) {
-  const newLocal = "^[*o]*$"
+  const newLocal = '^[*o]*$'
   const regex = new RegExp(newLocal)
   return regex.test(data)
 }
@@ -38,10 +38,10 @@ function validateMockDataRows(dataRows: string[]) {
 }
 
 export function parseMockDataToString(data: string) {
-  let strData = data.split(/\r?\n/).join("-")
-  strData = strData.replaceAll(" ", "")
-  strData = strData.replaceAll("|", "")
-  while (strData[strData.length - 1] === "-") {
+  let strData = data.split(/\r?\n/).join('-')
+  strData = strData.replaceAll(' ', '')
+  strData = strData.replaceAll('|', '')
+  while (strData[strData.length - 1] === '-') {
     strData = strData.slice(0, -1)
   }
   return strData
@@ -49,14 +49,14 @@ export function parseMockDataToString(data: string) {
 
 export function getMinefieldFromMockData(mockData: string) {
   const board: Cell[][] = []
-  const mockBoard: string[][] = mockData.split("-").map((row) => row.split(""));
+  const mockBoard: string[][] = mockData.split('-').map((row) => row.split(''))
   for (let row = 0; row < mockBoard.length; row += 1) {
     board.push([])
     for (let column = 0; column < mockBoard[0].length; column += 1) {
       board[row].push({
         y: row,
         x: column,
-        isMine: mockBoard[row][column] === "*",
+        isMine: mockBoard[row][column] === '*',
         isCovered: true,
         numberOfMinesAround: 0,
       })

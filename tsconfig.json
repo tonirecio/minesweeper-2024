@@ -111,15 +111,21 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
+    "**/**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     "**/**/*.tsx",
-    "tests/minesweeper.core.test.js",
-    "tests/minesweeper.web.test.js",
+    "**/**/*.test.ts",
+    "**/**/*.test.ts",
     "**/**/*.steps.tsx",
     "**/**/*.web.steps.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".next",
+    "dist",
+    "build",
+    "out",
+    "coverage",
   ]
 }

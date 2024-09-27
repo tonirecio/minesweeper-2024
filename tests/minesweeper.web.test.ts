@@ -1,12 +1,12 @@
 import { loadFeature, defineFeature } from "jest-cucumber"
-import * as steps from "./steps/minesweeper.web.steps.tsx"
+import * as steps from "./steps/minesweeper.web.steps"
 import {
   areAllCellsCovered,
   setMockData,
   uncoverCell,
   tagCellAsMined,
   tagCellAsInconclusive,
-} from "./steps/minesweeper.steps.tsx"
+} from "./steps/minesweeper.steps"
 
 const feature = loadFeature("./tests/features/minesweeper.web.feature")
 
