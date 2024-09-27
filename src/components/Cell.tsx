@@ -1,6 +1,16 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import "./styles/cell.css";
+
+interface CellProps {
+  rowPosition: number;
+  colPosition: number;
+  hasMine: boolean;
+  numberOfMinesAround: number;
+  isCovered: boolean;
+  onClick: (row: number, col: number) => void;
+}
 
 export default function Cell({
   rowPosition,
@@ -9,18 +19,18 @@ export default function Cell({
   numberOfMinesAround,
   isCovered,
   onClick,
-}) {
+}: CellProps) {
   const [isTagged, setIsTagged] = useState("");
-  const gameStatus = useSelector((state) => state.game.status);
+  const gameStatus = useSelector((state: { game: { status: string } }) => state.game.status);
 
-  function handleClick(e) {
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (!isTagged) {
       onClick(rowPosition, colPosition);
     }
   }
 
-  function handleContextMenu(e) {
+  function handleContextMenu(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (gameStatus === "playing") {
       let newState = "";
