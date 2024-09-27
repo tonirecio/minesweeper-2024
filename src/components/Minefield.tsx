@@ -27,7 +27,7 @@ export default function Minefield({
     { offsetX: 1, offsetY: 1 },
   ];
 
-  function uncoverNeighborCells(row, column, newMinefieldData) {
+  function uncoverNeighborCells(row : any, column, newMinefieldData) {
     let counter = 0;
     const newNumberOfRows = newMinefieldData.length;
     const newNumberOfColumns = newMinefieldData[0].length;
