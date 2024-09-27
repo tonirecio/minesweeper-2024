@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import * as dataHelper from "./helper/mineFieldData";
-import "./styles/minefield.css";
+import * as dataHelper from "./helper/minefieldData";
+import { StyledMinefield, StyledMinefieldRow } from "./StyledMinefield";
 
 import Cell from "./Cell";
 import { loseGame, winGame } from "../lib/slices/game/gameSlice";
@@ -48,7 +48,7 @@ export default function Minefield({
             counter += uncoverNeighborCells(
               newRow,
               newColumn,
-              newMinefieldData,
+              newMinefieldData
             );
           }
         }
@@ -100,11 +100,11 @@ export default function Minefield({
   }, [mockData]);
 
   return (
-    <div data-testid="minefield">
+    <StyledMinefield data-testid="minefield">
       <div data-testid="mockdata-title">Mock data: {mockData}</div>
       <div>minefieldData.length:{minefieldData.length}</div>
       {minefieldData.map((row, rowIndex) => (
-        <div
+        <StyledMinefieldRow
           className="minefield-row"
           data-testid="minefield-row"
           key={rowIndex}
@@ -120,8 +120,8 @@ export default function Minefield({
               isCovered={cell.isCovered}
             />
           ))}
-        </div>
+        </StyledMinefieldRow>
       ))}
-    </div>
+    </StyledMinefield>
   );
 }
