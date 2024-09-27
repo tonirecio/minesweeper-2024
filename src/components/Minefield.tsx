@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import * as dataHelper from "./helper/minefieldData";
 import { StyledMinefield, StyledMinefieldRow } from "./StyledMinefield";
 
-import Cell from "./Cell";
+import Cell, { MinefieldCell } from "./Cell";
 import { loseGame, winGame } from "../lib/slices/game/gameSlice";
 
 interface Cell {
@@ -102,21 +102,22 @@ export default function Minefield({
   }
 
   useEffect(() => {
-    let preData;
+    let preData: string = mockData;
+    let data: MinefieldCell[][] = [];
     if (mockData.includes("|")) {
-      mockData = dataHelper.parseMockDataToString(mockData);
+      preData = dataHelper.parseMockDataToString(mockData);
     }
-    if (dataHelper.validateMockData(mockData)) {
-      preData = dataHelper.getMinefieldFromMockData(mockData);
-      setCellsToUncover(dataHelper.getNumberOfCellsToUncover(preData));
+    if (dataHelper.validateMockData(preData)) {
+      data = dataHelper.getMinefieldFromMockData(preData);
+      setCellsToUncover(dataHelper.getNumberOfCellsToUncover(data));
     } else {
-      preData = dataHelper.getMinefield(numberOfRows, numberOfColumns);
-      dataHelper.minefieldMining(preData, numberOfMines);
+      data = dataHelper.getMinefield(numberOfRows, numberOfColumns);
+      dataHelper.minefieldMining(data, numberOfMines);
       setCellsToUncover(numberOfColumns * numberOfRows - numberOfMines);
     }
-    dataHelper.minefieldNumbering(preData);
-    setMinefieldData(preData);
-  }, [mockData]);
+    dataHelper.minefieldNumbering(data);
+    setMinefieldData(data);
+  }, [mockData, numberOfRows, numberOfColumns, numberOfMines]);
 
   return (
     <StyledMinefield data-testid="minefield">
