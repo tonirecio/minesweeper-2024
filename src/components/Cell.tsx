@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { GameStatus } from "../lib/slices/game/gameSlice";
 import "./styles/cell.css";
 
 interface CellProps {
@@ -21,7 +22,9 @@ export default function Cell({
   onClick,
 }: CellProps) {
   const [isTagged, setIsTagged] = useState("");
-  const gameStatus = useSelector((state: { game: { status: string } }) => state.game.status);
+  const gameStatus = useSelector(
+    (state: { game: { status: GameStatus } }) => state.game.status
+  );
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -32,7 +35,7 @@ export default function Cell({
 
   function handleContextMenu(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (gameStatus === "playing") {
+    if (gameStatus === GameStatus.Playing) {
       let newState = "";
       if (isTagged === "") {
         newState = "mined";
@@ -78,7 +81,7 @@ export default function Cell({
     return <img src={imgSource} alt={altText} />;
   }
 
-  if (!isCovered || (gameStatus === "lost" && hasMine)) {
+  if (!isCovered || (gameStatus === GameStatus.Lost && hasMine)) {
     return getUncoveredCell();
   } else {
     return (
@@ -87,13 +90,13 @@ export default function Cell({
         onContextMenu={handleContextMenu}
         data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
         className="minefield-cell covered"
-        disabled={gameStatus !== "playing"}
+        disabled={gameStatus !== GameStatus.Playing}
       >
-        {((hasMine && gameStatus === "won") ||
-          (isTagged === "mined" && gameStatus === "playing")) && (
+        {((hasMine && gameStatus === GameStatus.Won) ||
+          (isTagged === "mined" && gameStatus === GameStatus.Playing)) && (
           <img src="/tiles/flagCell.png" alt="Flaged cell" />
         )}
-        {isTagged === "mined" && !hasMine && gameStatus === "lost" && (
+        {isTagged === "mined" && !hasMine && gameStatus === GameStatus.Lost && (
           <img src="/tiles/notBombCell.png" alt="Wrongly tagged mine" />
         )}
         {isTagged === "inconclusive" && (

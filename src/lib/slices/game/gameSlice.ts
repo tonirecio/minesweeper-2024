@@ -1,22 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export enum GameStatus {
+  Playing,
+  Won,
+  Lost,
+  Waiting,
+}
+
 export const gameSlice = createSlice({
   name: "game",
   initialState: {
-    status: "playing",
+    status: GameStatus.Playing,
   },
   reducers: {
     playGame: (state) => {
-      state.status = "playing";
+      state.status = GameStatus.Playing;
     },
     winGame: (state) => {
-      state.status = "won";
+      state.status = GameStatus.Won;
     },
     loseGame: (state) => {
-      state.status = "lost";
+      state.status = GameStatus.Lost;
     },
     waitGame: (state) => {
-      state.status = "waiting";
+      state.status = GameStatus.Waiting;
     },
   },
 });

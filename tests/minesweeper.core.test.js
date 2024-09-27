@@ -12,9 +12,9 @@ defineFeature(feature, (test) => {
       /^the minefield should have "(.*)" rows and "(.*)" columns$/,
       (numberOfRows, numberOfCols) => {
         expect(
-          steps.mineFieldDimensionsValidation(numberOfRows, numberOfCols),
+          steps.mineFieldDimensionsValidation(numberOfRows, numberOfCols)
         ).toBe(true);
-      },
+      }
     );
   });
 
@@ -51,13 +51,13 @@ defineFeature(feature, (test) => {
       /^the player left clicks on the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be uncovered$/,
       (rowPosition, colPosition) => {
         expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
   });
 
@@ -72,13 +72,13 @@ defineFeature(feature, (test) => {
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be disabled$/,
       (rowPosition, colPosition) => {
         expect(steps.isCellDisabled(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
   });
 
@@ -97,7 +97,7 @@ defineFeature(feature, (test) => {
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then("the player should lose the game", () => {
       expect(steps.hasHighlightedMine()).toBe(true);
@@ -119,13 +119,13 @@ defineFeature(feature, (test) => {
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show a highlighted mine$/,
       (rowPosition, colPosition) => {
         expect(steps.isHighlightedMine(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
   });
 
@@ -144,13 +144,13 @@ defineFeature(feature, (test) => {
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show the number (.*)$/,
       (rowPosition, colPosition, number) => {
         expect(steps.isNumber(rowPosition, colPosition, number)).toBe(true);
-      },
+      }
     );
   });
 
@@ -169,13 +169,13 @@ defineFeature(feature, (test) => {
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be empty$/,
       (rowPosition, colPosition) => {
         expect(steps.isCellEmpty(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
   });
 
@@ -190,7 +190,7 @@ defineFeature(feature, (test) => {
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then("all the cells should be disabled", () => {
       expect(steps.areAllCellsDisabled()).toBe(true);
@@ -209,13 +209,13 @@ defineFeature(feature, (test) => {
       /^the player right clicks on the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.tagCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show mined$/,
       (rowPosition, colPosition) => {
         expect(steps.isTaggedAsMined(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
   });
 
@@ -231,21 +231,21 @@ defineFeature(feature, (test) => {
       /^the player tags as mined the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.tagCellAsMined(rowPosition, colPosition);
-      },
+      }
     );
     when(
       /^the player right clicks on the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.tagCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show inconclusive$/,
       (rowPosition, colPosition) => {
         expect(steps.isTaggedAsInconclusive(rowPosition, colPosition)).toBe(
-          true,
+          true
         );
-      },
+      }
     );
   });
 
@@ -253,7 +253,6 @@ defineFeature(feature, (test) => {
     given,
     when,
     then,
-    and,
   }) => {
     given("the player opens the game", () => {
       steps.openTheGame();
@@ -262,19 +261,19 @@ defineFeature(feature, (test) => {
       /^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.tagCellAsInconclusive(rowPosition, colPosition);
-      },
+      }
     );
     when(
       /^the player right clicks on the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.tagCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should not be tagged$/,
       (rowPosition, colPosition) => {
         expect(steps.isNotTagged(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
   });
 
@@ -290,19 +289,19 @@ defineFeature(feature, (test) => {
       /^the player tags as mined the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.tagCellAsMined(rowPosition, colPosition);
-      },
+      }
     );
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be covered$/,
       (rowPosition, colPosition) => {
         expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(false);
-      },
+      }
     );
   });
 
@@ -318,19 +317,19 @@ defineFeature(feature, (test) => {
       /^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.tagCellAsInconclusive(rowPosition, colPosition);
-      },
+      }
     );
     when(
       /^the player uncovers the cell \("(.*)", "(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be covered$/,
       (rowPosition, colPosition) => {
         expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(false);
-      },
+      }
     );
   });
 
@@ -349,13 +348,13 @@ defineFeature(feature, (test) => {
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show mined$/,
       (rowPosition, colPosition) => {
         expect(steps.isTaggedAsMined(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
   });
 
@@ -375,19 +374,19 @@ defineFeature(feature, (test) => {
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show a mine$/,
       (rowPosition, colPosition) => {
         expect(steps.isMine(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
     and(
       /^the cell \("(.*)","(.*)"\) should show a mine$/,
       (rowPosition, colPosition) => {
         expect(steps.isMine(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
   });
 
@@ -407,31 +406,31 @@ defineFeature(feature, (test) => {
       /^the player tags as mined the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.tagCellAsMined(rowPosition, colPosition);
-      },
+      }
     );
     and(
       /^the player tags as mined the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.tagCellAsMined(rowPosition, colPosition);
-      },
+      }
     );
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show a wrongly tagged cell$/,
       (rowPosition, colPosition) => {
         expect(steps.isWronglyTaggedMine(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
     and(
       /^the cell \("(.*)","(.*)"\) should show a mine$/,
       (rowPosition, colPosition) => {
         expect(steps.isMine(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
   });
 
@@ -451,25 +450,25 @@ defineFeature(feature, (test) => {
       /^the player tags as mined the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.tagCellAsMined(rowPosition, colPosition);
-      },
+      }
     );
     and(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     and(
       /^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.tagCellAsInconclusive(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show mined$/,
       (rowPosition, colPosition) => {
         expect(steps.isTaggedAsMined(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
   });
 
@@ -489,15 +488,15 @@ defineFeature(feature, (test) => {
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cells around the cell \("(.*)","(.*)"\) should be uncovered$/,
       (rowPosition, colPosition) => {
         expect(
-          steps.areCellsAroundACellUncovered(rowPosition, colPosition),
+          steps.areCellsAroundACellUncovered(rowPosition, colPosition)
         ).toBe(true);
-      },
+      }
     );
     and("the fourth row should be covered", () => {
       expect(steps.areCellsInARowCovered(4)).toBe(true);
@@ -509,7 +508,6 @@ defineFeature(feature, (test) => {
     when,
     then,
     and,
-    pending,
   }) => {
     given("the player opens the game", () => {
       steps.openTheGame();
@@ -521,19 +519,19 @@ defineFeature(feature, (test) => {
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be uncovered$/,
       (rowPosition, colPosition) => {
         expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(true);
-      },
+      }
     );
     and(
       /^the cell \("(.*)","(.*)"\) should be covered$/,
       (rowPosition, colPosition) => {
         expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(false);
-      },
+      }
     );
   });
 
@@ -542,7 +540,6 @@ defineFeature(feature, (test) => {
     when,
     then,
     and,
-    pending,
   }) => {
     given("the player opens the game", () => {
       steps.openTheGame();
@@ -554,7 +551,7 @@ defineFeature(feature, (test) => {
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
         steps.uncoverCell(rowPosition, colPosition);
-      },
+      }
     );
     then("the first three rows should be uncovered", () => {
       let result = true;
