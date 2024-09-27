@@ -13,6 +13,14 @@ interface CellProps {
   onClick: (row: number, col: number) => void;
 }
 
+export interface MinefieldCell {
+  y: number;
+  x: number;
+  isMine: boolean;
+  isCovered: boolean;
+  numberOfMinesAround: number;
+}
+
 export default function Cell({
   rowPosition,
   colPosition,
@@ -26,14 +34,14 @@ export default function Cell({
     (state: { game: { status: GameStatus } }) => state.game.status
   );
 
-  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>): void {
     e.preventDefault();
     if (!isTagged) {
       onClick(rowPosition, colPosition);
     }
   }
 
-  function handleContextMenu(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleContextMenu(e: React.MouseEvent<HTMLButtonElement>): void {
     e.preventDefault();
     if (gameStatus === GameStatus.Playing) {
       let newState = "";
@@ -48,7 +56,7 @@ export default function Cell({
     }
   }
 
-  function getUncoveredCell() {
+  function getUncoveredCell(): ReactElement {
     return (
       <div
         data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
@@ -59,7 +67,7 @@ export default function Cell({
     );
   }
 
-  function getUncoveredCellImage() {
+  function getUncoveredCellImage(): ReactElement {
     let imgSource;
     let altText;
     if (hasMine) {

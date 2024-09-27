@@ -1,8 +1,10 @@
-export function validateMockData(mockData) {
+import { MinefieldCell } from "../Cell";
+
+export function validateMockData(mockData: string): boolean {
   if (mockData === "") {
     return false;
   } else {
-    let isValidData;
+    let isValidData: boolean;
     if (mockData === undefined) {
       isValidData = false;
     } else {
@@ -16,15 +18,15 @@ export function validateMockData(mockData) {
   }
 }
 
-function validateMockDataRow(data) {
-  const newLocal = "^[*o]*$";
-  const regex = new RegExp(newLocal);
+function validateMockDataRow(data: string): boolean {
+  const newLocal: string = "^[*o]*$";
+  const regex: RegExp = new RegExp(newLocal);
   return regex.test(data);
 }
 
-function validateMockDataRows(dataRows) {
-  const currentLenght = dataRows[0].length;
-  let isValidData;
+function validateMockDataRows(dataRows: string[]): boolean {
+  const currentLenght: number = dataRows[0].length;
+  let isValidData: boolean = false;
   for (let i = 0; i < dataRows.length; i += 1) {
     if (dataRows[i].length !== currentLenght) {
       isValidData = false;
@@ -35,8 +37,8 @@ function validateMockDataRows(dataRows) {
   return isValidData;
 }
 
-export function parseMockDataToString(data) {
-  let strData = data.split(/\r?\n/).join("-");
+export function parseMockDataToString(data: string): string {
+  let strData: string = data.split(/\r?\n/).join("-");
   strData = strData.replaceAll(" ", "");
   strData = strData.replaceAll("|", "");
   while (strData[strData.length - 1] === "-") {
@@ -45,10 +47,10 @@ export function parseMockDataToString(data) {
   return strData;
 }
 
-export function getMinefieldFromMockData(mockData) {
-  const board = [];
-  let mockBoard = mockData.split("-");
-  mockBoard = mockBoard.map((row) => {
+export function getMinefieldFromMockData(mockData: string): MinefieldCell[][] {
+  const board: MinefieldCell[][] = [];
+  const mockBoardRows: string[] = mockData.split("-");
+  const mockBoard: string[][] = mockBoardRows.map((row) => {
     return row.split("");
   });
   for (let row = 0; row < mockBoard.length; row += 1) {
@@ -66,7 +68,7 @@ export function getMinefieldFromMockData(mockData) {
   return board;
 }
 
-export function getNumberOfCellsToUncover(data) {
+export function getNumberOfCellsToUncover(data: MinefieldCell[][]): number {
   let cells = 0;
   for (let row = 0; row < data.length; row += 1) {
     for (let column = 0; column < data[0].length; column += 1) {
@@ -76,8 +78,11 @@ export function getNumberOfCellsToUncover(data) {
   return cells;
 }
 
-export function getMinefield(numberOfRows, numberOfColumns) {
-  const minefieldData = [];
+export function getMinefield(
+  numberOfRows: number,
+  numberOfColumns: number
+): MinefieldCell[][] {
+  const minefieldData: MinefieldCell[][] = [];
   for (let row = 0; row < numberOfRows; row += 1) {
     minefieldData.push([]);
     for (let column = 0; column < numberOfColumns; column += 1) {
@@ -93,11 +98,14 @@ export function getMinefield(numberOfRows, numberOfColumns) {
   return minefieldData;
 }
 
-export function minefieldMining(board, amount) {
+export function minefieldMining(
+  board: MinefieldCell[][],
+  amountOfMines: number
+): void {
   const NUMBER_OF_ROWS = board.length;
   const NUMBER_OF_COLUMNS = board[0].length;
   let mines = 0;
-  while (mines < amount && mines < NUMBER_OF_ROWS * NUMBER_OF_COLUMNS) {
+  while (mines < amountOfMines && mines < NUMBER_OF_ROWS * NUMBER_OF_COLUMNS) {
     const randomRow = Math.floor(Math.random() * NUMBER_OF_ROWS);
     const randomColumn = Math.floor(Math.random() * NUMBER_OF_COLUMNS);
     if (!board[randomRow][randomColumn].isMine) {
@@ -107,7 +115,7 @@ export function minefieldMining(board, amount) {
   }
 }
 
-export function minefieldNumbering(board) {
+export function minefieldNumbering(board: MinefieldCell[][]): void {
   const NUMBER_OF_ROWS = board.length;
   const NUMBER_OF_COLUMNS = board[0].length;
   for (let row = 0; row < NUMBER_OF_ROWS; row += 1) {
