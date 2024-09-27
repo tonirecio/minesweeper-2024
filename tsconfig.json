@@ -112,7 +112,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/Game.jsx"
+    "src/components/Game.tsx"
   ],
   "exclude": ["node_modules"]
 }

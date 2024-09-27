@@ -13,14 +13,14 @@ export default function Game() {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, []);
+  } );
 
-  function setMockDataForm(data) {
+  function setMockDataForm(data: string) {
     setMockData(data);
     setMockDataFormVisible(false);
   }
 
-  function handleKeyPress(e) {
+  function handleKeyPress(e: KeyboardEvent) {
     if (e.ctrlKey && e.key.toUpperCase() === "M") {
       setMockDataFormVisible(!mockDataFormVisible);
     }
