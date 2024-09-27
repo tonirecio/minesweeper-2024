@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, ReactElement } from "react";
 
 interface MockDataFormProps {
   setData: (data: string) => void;
 }
 
-export default function MockDataForm({ setData }: MockDataFormProps) {
+export default function MockDataForm({ setData }: MockDataFormProps): ReactElement {
   const [mockData, setMockData] = useState("| * | o |");
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
+import { useState, ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { GameStatus } from "../lib/slices/game/gameSlice";
 import "./styles/cell.css";
@@ -20,7 +20,7 @@ export default function Cell({
   numberOfMinesAround,
   isCovered,
   onClick,
-}: CellProps) {
+}: CellProps): ReactElement {
   const [isTagged, setIsTagged] = useState("");
   const gameStatus = useSelector(
     (state: { game: { status: GameStatus } }) => state.game.status

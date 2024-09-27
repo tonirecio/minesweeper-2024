@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactElement } from "react";
 import { useDispatch } from "react-redux";
 import * as dataHelper from "./helper/minefieldData";
 import { StyledMinefield, StyledMinefieldRow } from "./StyledMinefield";
@@ -27,7 +27,7 @@ export default function Minefield({
   numberOfColumns = 9,
   numberOfMines = 10,
   mockData,
-}: MinefieldProps) {
+}: MinefieldProps): ReactElement {
   const [minefieldData, setMinefieldData] = useState<MinefieldData>([]);
   const [cellsToUncover, setCellsToUncover] = useState(-1);
   const dispatcher = useDispatch();

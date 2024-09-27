@@ -1,9 +1,9 @@
 "use client"; // TODO Why do we need this here?
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactElement } from "react";
 import Minefield from "./Minefield";
 import MockDataForm from "./MockDataForm";
 
-export default function Game() {
+export default function Game(): ReactElement {
   const [mockDataFormVisible, setMockDataFormVisible] = useState(false);
   const [mockData, setMockData] = useState("");
 
@@ -13,7 +13,7 @@ export default function Game() {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  } );
+  });
 
   function setMockDataForm(data: string) {
     setMockData(data);
