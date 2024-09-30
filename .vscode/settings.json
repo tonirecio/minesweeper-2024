@@ -23,5 +23,6 @@
     "env": ["jest"]
   },
   "cucumberautocomplete.syncfeatures": "tests/**/*.feature",
-  "cucumberautocomplete.steps": ["tests/**/*.js"]
+  "cucumberautocomplete.steps": ["tests/**/*.js"],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
