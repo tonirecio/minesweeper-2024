@@ -380,6 +380,15 @@ export function isWronglyTaggedMine(
 ): boolean {
   return isAltTextInCell(rowPosition, colPosition, "Wrongly tagged mine");
 }
+
+/**
+ * Checks if a cell at the given row and column positions is not tagged.
+ * A cell is considered tagged if it has an alt text of "Flaged cell" or "Inconclusive cell".
+ *
+ * @param rowPosition - The row position of the cell.
+ * @param colPosition - The column position of the cell.
+ * @returns `true` if the cell is not tagged, `false` otherwise.
+ */
 export function isNotTagged(rowPosition: number, colPosition: number): boolean {
   return (
     !isAltTextInCell(rowPosition, colPosition, "Flaged cell") &&
