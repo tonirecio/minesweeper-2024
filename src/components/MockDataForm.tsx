@@ -1,4 +1,4 @@
-import { useState, ReactElement } from "react";
+import { useState, useCallback, ReactElement } from "react";
 
 interface MockDataFormProps {
   setData: (data: string) => void;
@@ -15,7 +15,9 @@ interface MockDataFormProps {
  * @example
  * <MockDataForm setData={setDataFunction} />
  */
-export default function MockDataForm({ setData }: MockDataFormProps): ReactElement {
+export default function MockDataForm({
+  setData,
+}: MockDataFormProps): ReactElement {
   const [mockData, setMockData] = useState("| * | o |");
 
   /**
@@ -24,10 +26,13 @@ export default function MockDataForm({ setData }: MockDataFormProps): ReactEleme
    * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
    * @returns {void}
    */
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setData(mockData);
-  }
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setData(mockData);
+    },
+    [mockData, setData]
+  );
 
   /**
    * Handles the change event for a textarea input.

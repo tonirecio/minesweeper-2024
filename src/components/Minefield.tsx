@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect, useCallback, ReactElement } from "react";
 import { useDispatch } from "react-redux";
 import * as dataHelper from "./helper/minefieldData";
 import { StyledMinefield, StyledMinefieldRow } from "./StyledMinefield";
@@ -51,89 +51,88 @@ export default function Minefield({
   const [minefieldData, setMinefieldData] = useState<MinefieldData>([]);
   const [cellsToUncover, setCellsToUncover] = useState(-1);
   const dispatcher = useDispatch();
-  const directions: Direction[] = [
-    { offsetX: 0, offsetY: -1 },
-    { offsetX: 0, offsetY: 1 },
-    { offsetX: -1, offsetY: 0 },
-    { offsetX: 1, offsetY: 0 },
-    { offsetX: -1, offsetY: -1 },
-    { offsetX: -1, offsetY: 1 },
-    { offsetX: 1, offsetY: -1 },
-    { offsetX: 1, offsetY: 1 },
-  ];
-
-  /**
-   * Uncovers neighboring cells recursively in a minefield.
-   *
-   * @param row - The row index of the current cell.
-   * @param column - The column index of the current cell.
-   * @param newMinefieldData - The minefield data array.
-   * @returns The number of cells uncovered.
-   */
-  function uncoverNeighborCells(
-    row: number,
-    column: number,
-    newMinefieldData: MinefieldData
-  ): number {
-    let counter = 0;
-    const newNumberOfRows = newMinefieldData.length;
-    const newNumberOfColumns = newMinefieldData[0].length;
-    for (const direction of directions) {
-      const newRow = row + direction.offsetY;
-      const newColumn = column + direction.offsetX;
-      if (
-        newRow >= 1 &&
-        newRow <= newNumberOfRows &&
-        newColumn >= 1 &&
-        newColumn <= newNumberOfColumns
-      ) {
-        const cell = newMinefieldData[newRow - 1][newColumn - 1];
-        if (cell.isCovered) {
-          cell.isCovered = false;
-          counter++;
-          if (cell.numberOfMinesAround === 0) {
-            counter += uncoverNeighborCells(
-              newRow,
-              newColumn,
-              newMinefieldData
-            );
-          }
-        }
-      }
-    }
-    return counter;
-  }
-
   /**
    * Handles the click event on a cell in the minefield.
-   * 
+   *
    * @param row - The row index of the clicked cell.
    * @param column - The column index of the clicked cell.
    */
-  function onClick(row: number, column: number): void {
-    const newMinefieldData: MinefieldData = [...minefieldData];
-    let uncoveredCells;
-    if (newMinefieldData[row - 1][column - 1].isCovered === true) {
-      newMinefieldData[row - 1][column - 1].isCovered = false;
-    }
-    if (newMinefieldData[row - 1][column - 1].isMine) {
-      // dispatch({ type: 'game/setStatus', payload: 'lost' })
-      dispatcher(loseGame());
-    } else {
-      if (newMinefieldData[row - 1][column - 1].numberOfMinesAround === 0) {
-        uncoveredCells =
-          uncoverNeighborCells(row, column, newMinefieldData) + 1;
+  const onClick = useCallback(
+    (row: number, column: number): void => {
+      const directions: Direction[] = [
+        { offsetX: 0, offsetY: -1 },
+        { offsetX: 0, offsetY: 1 },
+        { offsetX: -1, offsetY: 0 },
+        { offsetX: 1, offsetY: 0 },
+        { offsetX: -1, offsetY: -1 },
+        { offsetX: -1, offsetY: 1 },
+        { offsetX: 1, offsetY: -1 },
+        { offsetX: 1, offsetY: 1 },
+      ];
+      /**
+       * Uncovers neighboring cells recursively in a minefield.
+       *
+       * @param row - The row index of the current cell.
+       * @param column - The column index of the current cell.
+       * @param newMinefieldData - The minefield data array.
+       * @returns The number of cells uncovered.
+       */
+      function uncoverNeighborCells(
+        row: number,
+        column: number,
+        newMinefieldData: MinefieldData
+      ): number {
+        let counter = 0;
+        const newNumberOfRows = newMinefieldData.length;
+        const newNumberOfColumns = newMinefieldData[0].length;
+        for (const direction of directions) {
+          const newRow = row + direction.offsetY;
+          const newColumn = column + direction.offsetX;
+          if (
+            newRow >= 1 &&
+            newRow <= newNumberOfRows &&
+            newColumn >= 1 &&
+            newColumn <= newNumberOfColumns
+          ) {
+            const cell = newMinefieldData[newRow - 1][newColumn - 1];
+            if (cell.isCovered) {
+              cell.isCovered = false;
+              counter++;
+              if (cell.numberOfMinesAround === 0) {
+                counter += uncoverNeighborCells(
+                  newRow,
+                  newColumn,
+                  newMinefieldData
+                );
+              }
+            }
+          }
+        }
+        return counter;
+      }
+      const newMinefieldData: MinefieldData = [...minefieldData];
+      let uncoveredCells;
+      if (newMinefieldData[row - 1][column - 1].isCovered === true) {
+        newMinefieldData[row - 1][column - 1].isCovered = false;
+      }
+      if (newMinefieldData[row - 1][column - 1].isMine) {
+        dispatcher(loseGame());
       } else {
-        uncoveredCells = 1;
+        if (newMinefieldData[row - 1][column - 1].numberOfMinesAround === 0) {
+          uncoveredCells =
+            uncoverNeighborCells(row, column, newMinefieldData) + 1;
+        } else {
+          uncoveredCells = 1;
+        }
+        if (cellsToUncover - uncoveredCells === 0) {
+          dispatcher(winGame());
+        }
+        setCellsToUncover(cellsToUncover - uncoveredCells);
       }
-      if (cellsToUncover - uncoveredCells === 0) {
-        dispatcher(winGame());
-        // setGameStatus('won')
-      }
-      setCellsToUncover(cellsToUncover - uncoveredCells);
-    }
-    setMinefieldData(newMinefieldData);
-  }
+      setMinefieldData(newMinefieldData);
+    },
+    [minefieldData, cellsToUncover, dispatcher]
+  );
 
   useEffect(() => {
     let preData: string = mockData;
