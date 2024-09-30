@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState, ReactElement } from "react";
+import { useState, useCallback, ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { GameStatus } from "../lib/slices/game/gameSlice";
 import "./styles/cell.css";
@@ -34,27 +34,34 @@ export default function Cell({
     (state: { game: { status: GameStatus } }) => state.game.status
   );
 
-  function handleClick(e: React.MouseEvent<HTMLButtonElement>): void {
-    e.preventDefault();
-    if (!isTagged) {
-      onClick(rowPosition, colPosition);
-    }
-  }
-
-  function handleContextMenu(e: React.MouseEvent<HTMLButtonElement>): void {
-    e.preventDefault();
-    if (gameStatus === GameStatus.Playing) {
-      let newState = "";
-      if (isTagged === "") {
-        newState = "mined";
-      } else if (isTagged === "mined") {
-        newState = "inconclusive";
-      } else {
-        newState = "";
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>): void => {
+      e.preventDefault();
+      if (!isTagged) {
+        onClick(rowPosition, colPosition);
       }
-      setIsTagged(newState);
-    }
-  }
+    },
+    [isTagged, onClick, rowPosition, colPosition]
+  );
+
+  const handleContextMenu = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>): void => {
+      e.preventDefault();
+      if (gameStatus === GameStatus.Playing) {
+        let newState = "";
+        if (isTagged === "") {
+          newState = "mined";
+        } else if (isTagged === "mined") {
+          newState = "inconclusive";
+        } else {
+          newState = "";
+        }
+        setIsTagged(newState);
+      }
+    },
+    [gameStatus, isTagged]
+  );
 
   function getUncoveredCell(): ReactElement {
     return (
@@ -83,7 +90,7 @@ export default function Cell({
       if (numberOfMinesAround === 0) {
         altText = "Empty cell";
       } else {
-        altText = "Number of adjacent mines: " + numberOfMinesAround;
+        altText = `Number of adjacent mines: ${numberOfMinesAround}`;
       }
     }
     return <img src={imgSource} alt={altText} />;
