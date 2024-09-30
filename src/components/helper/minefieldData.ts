@@ -19,14 +19,14 @@ export function validateMockData(mockData: string): boolean {
 }
 
 function validateMockDataRow(data: string): boolean {
-  const newLocal: string = "^[*o]*$";
-  const regex: RegExp = new RegExp(newLocal);
+  const newLocal = "^[*o]*$";
+  const regex = new RegExp(newLocal);
   return regex.test(data);
 }
 
 function validateMockDataRows(dataRows: string[]): boolean {
   const currentLenght: number = dataRows[0].length;
-  let isValidData: boolean = false;
+  let isValidData = false;
   for (let i = 0; i < dataRows.length; i += 1) {
     if (dataRows[i].length !== currentLenght) {
       isValidData = false;

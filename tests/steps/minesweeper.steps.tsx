@@ -118,10 +118,7 @@ export function isCellUncovered(
   colPosition: number
 ): boolean {
   const cell: HTMLElement = getMinefieldCell(rowPosition, colPosition);
-  if (cell.classList.contains("covered")) {
-    return false;
-  }
-  return true;
+  return !cell.classList.contains("covered");
 }
 
 export function isCellDisabled(
