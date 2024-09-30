@@ -40,9 +40,12 @@ export default function MockDataForm({
    *
    * @param {React.ChangeEvent<HTMLTextAreaElement>} e - The change event triggered by the textarea.
    */
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMockData(e.target.value);
-  };
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setMockData(e.target.value);
+    },
+    []
+  );
 
   return (
     <form onSubmit={handleSubmit}>
