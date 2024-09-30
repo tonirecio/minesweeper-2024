@@ -17,6 +17,13 @@ interface MockDataFormProps {
  */
 export default function MockDataForm({ setData }: MockDataFormProps): ReactElement {
   const [mockData, setMockData] = useState("| * | o |");
+
+  /**
+   * Handles the form submission event.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
+   * @returns {void}
+   */
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setData(mockData);
