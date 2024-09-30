@@ -1,18 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import Game from '../../src/components/game'
 import StoreProvider from '../../src/components/StoreProvider'
-import { type Direction } from 'types/types'
-
-const directions: Direction[] = [
-  { offsetX: 0, offsetY: -1 },
-  { offsetX: 0, offsetY: 1 },
-  { offsetX: -1, offsetY: 0 },
-  { offsetX: 1, offsetY: 0 },
-  { offsetX: -1, offsetY: -1 },
-  { offsetX: -1, offsetY: +1 },
-  { offsetX: +1, offsetY: -1 },
-  { offsetX: +1, offsetY: +1 },
-]
+import { directions } from '@/components/const/constants'
 
 export function openTheGame() {
   render(
@@ -90,7 +79,10 @@ export function tagCellAsMined(rowPosition: number, colPosition: number) {
   }
 }
 
-export function tagCellAsInconclusive(rowPosition: number, colPosition: number) {
+export function tagCellAsInconclusive(
+  rowPosition: number,
+  colPosition: number,
+) {
   if (isNotTagged(rowPosition, colPosition)) {
     fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
     fireEvent.contextMenu(getMinefieldCell(rowPosition, colPosition))
@@ -128,7 +120,11 @@ export function isHighlightedMine(rowPosition: number, colPosition: number) {
   return cell.classList.contains('highlighted')
 }
 
-function isAltTextInCell(rowPosition: number, colPosition: number, altText: string) {
+function isAltTextInCell(
+  rowPosition: number,
+  colPosition: number,
+  altText: string,
+) {
   const cell = getMinefieldCell(rowPosition, colPosition)
   const images = cell.getElementsByTagName('img')
   if (images.length !== 1) {
@@ -139,7 +135,11 @@ function isAltTextInCell(rowPosition: number, colPosition: number, altText: stri
   }
 }
 
-export function isNumber(rowPosition: number, colPosition: number, number: number) {
+export function isNumber(
+  rowPosition: number,
+  colPosition: number,
+  number: number,
+) {
   return isAltTextInCell(
     rowPosition,
     colPosition,
@@ -159,7 +159,10 @@ export function isTaggedAsMined(rowPosition: number, colPosition: number) {
   return isAltTextInCell(rowPosition, colPosition, 'Flagged cell')
 }
 
-export function isTaggedAsInconclusive(rowPosition: number, colPosition: number) {
+export function isTaggedAsInconclusive(
+  rowPosition: number,
+  colPosition: number,
+) {
   return isAltTextInCell(rowPosition, colPosition, 'Inconclusive cell')
 }
 
@@ -201,7 +204,10 @@ export function areCellsInARowCovered(rowNumber: number) {
   return result
 }
 
-export function areCellsAroundACellUncovered(rowPosition: number, colPosition: number) {
+export function areCellsAroundACellUncovered(
+  rowPosition: number,
+  colPosition: number,
+) {
   let result = true
   for (const direction of directions) {
     const newRowPosition = Number(rowPosition) + direction.offsetY

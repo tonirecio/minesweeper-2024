@@ -7,10 +7,10 @@ import { setGameStatus } from '@/store/slices/gameStatusSlice'
 import {
   type MinefieldProps,
   type Cell as CellType,
-  type Direction,
   type TagType,
 } from 'types/types'
 import { RootState } from '@/store/store'
+import { uncoverNeighborCells } from '@/utils/functions'
 
 export default function Minefield(props: MinefieldProps) {
   const {
@@ -28,47 +28,6 @@ export default function Minefield(props: MinefieldProps) {
     (state: RootState) => state.gameStatus.currentState,
   )
   const dispatch = useDispatch()
-
-  const directions: Direction[] = [
-    { offsetX: 0, offsetY: -1 },
-    { offsetX: 0, offsetY: 1 },
-    { offsetX: -1, offsetY: 0 },
-    { offsetX: 1, offsetY: 0 },
-    { offsetX: -1, offsetY: -1 },
-    { offsetX: -1, offsetY: 1 },
-    { offsetX: 1, offsetY: -1 },
-    { offsetX: 1, offsetY: 1 },
-  ]
-
-  function uncoverNeighborCells(
-    row: number,
-    column: number,
-    newMinefieldData: CellType[][],
-  ): number {
-    let counter = 0
-    const newNumberOfRows = newMinefieldData.length
-    const newNumberOfColumns = newMinefieldData[0].length
-    for (let i = 0; i < directions.length; i += 1) {
-      const newRow = row + directions[i].offsetY
-      const newColumn = column + directions[i].offsetX
-      if (
-        newRow >= 1 &&
-        newRow <= newNumberOfRows &&
-        newColumn >= 1 &&
-        newColumn <= newNumberOfColumns
-      ) {
-        const cell = newMinefieldData[newRow - 1][newColumn - 1]
-        if (cell.isCovered) {
-          cell.isCovered = false
-          counter++
-          if (cell.numberOfMinesAround === 0) {
-            counter += uncoverNeighborCells(newRow, newColumn, newMinefieldData)
-          }
-        }
-      }
-    }
-    return counter
-  }
 
   function onClick(row: number, column: number) {
     if (gameStatus === 'waiting') dispatch(setGameStatus('playing'))
