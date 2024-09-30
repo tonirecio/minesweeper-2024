@@ -30,10 +30,10 @@ export function validateMockData(mockData: string): boolean {
 
 /**
  * Validates a row of mock data for the minefield.
- * 
+ *
  * This function checks if the provided string contains only the characters
  * '*' and 'o'. It uses a regular expression to perform the validation.
- * 
+ *
  * @param data - The string representing a row of mock data to be validated.
  * @returns `true` if the string contains only '*' and 'o' characters, otherwise `false`.
  */
@@ -53,12 +53,12 @@ function validateMockDataRow(data: string): boolean {
 function validateMockDataRows(dataRows: string[]): boolean {
   const currentLenght: number = dataRows[0].length;
   let isValidData = false;
-  for (let i = 0; i < dataRows.length; i += 1) {
-    if (dataRows[i].length !== currentLenght) {
+  for (const row of dataRows) {
+    if (row.length !== currentLenght) {
       isValidData = false;
       break;
     }
-    isValidData = validateMockDataRow(dataRows[i]);
+    isValidData = validateMockDataRow(dataRows[0]);
   }
   return isValidData;
 }
@@ -117,15 +117,15 @@ export function getMinefieldFromMockData(mockData: string): MinefieldCell[][] {
 
 /**
  * Calculates the number of cells that need to be uncovered, to win, in a minefield.
- * 
+ *
  * @param data - A 2D array representing the minefield, where each element is a MinefieldCell object.
  * @returns The number of cells that are not mines and need to be uncovered.
  */
 export function getNumberOfCellsToUncover(data: MinefieldCell[][]): number {
   let cells = 0;
-  for (let row = 0; row < data.length; row += 1) {
-    for (let column = 0; column < data[0].length; column += 1) {
-      if (!data[row][column].isMine) cells += 1;
+  for (const row of data) {
+    for (const column of row) {
+      if (!column.isMine) cells += 1;
     }
   }
   return cells;
@@ -190,11 +190,11 @@ export function minefieldMining(
 
 /**
  * Updates the minefield board with the number of mines surrounding each cell.
- * 
+ *
  * This function iterates through each cell in the provided minefield board. For each cell that is not a mine,
- * it counts the number of mines in the adjacent cells (including diagonals) and updates the cell's 
+ * it counts the number of mines in the adjacent cells (including diagonals) and updates the cell's
  * `numberOfMinesAround` property with this count.
- * 
+ *
  * @param board - A 2D array representing the minefield, where each cell is an object of type `MinefieldCell`.
  *                Each `MinefieldCell` object should have an `isMine` boolean property indicating if the cell
  *                contains a mine, and a `numberOfMinesAround` property to store the count of adjacent mines.

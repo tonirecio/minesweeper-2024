@@ -7,6 +7,10 @@ import { StyledMinefield, StyledMinefieldRow } from "./StyledMinefield";
 import Cell, { MinefieldCell } from "./Cell";
 import { loseGame, winGame } from "../lib/slices/game/gameSlice";
 
+interface Direction {
+  offsetX: number;
+  offsetY: number;
+}
 interface Cell {
   isCovered: boolean;
   isMine: boolean;
@@ -47,7 +51,7 @@ export default function Minefield({
   const [minefieldData, setMinefieldData] = useState<MinefieldData>([]);
   const [cellsToUncover, setCellsToUncover] = useState(-1);
   const dispatcher = useDispatch();
-  const directions = [
+  const directions: Direction[] = [
     { offsetX: 0, offsetY: -1 },
     { offsetX: 0, offsetY: 1 },
     { offsetX: -1, offsetY: 0 },
@@ -74,9 +78,9 @@ export default function Minefield({
     let counter = 0;
     const newNumberOfRows = newMinefieldData.length;
     const newNumberOfColumns = newMinefieldData[0].length;
-    for (let i = 0; i < directions.length; i += 1) {
-      const newRow = row + directions[i].offsetY;
-      const newColumn = column + directions[i].offsetX;
+    for (const direction of directions) {
+      const newRow = row + direction.offsetY;
+      const newColumn = column + direction.offsetX;
       if (
         newRow >= 1 &&
         newRow <= newNumberOfRows &&
