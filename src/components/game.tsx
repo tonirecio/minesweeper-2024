@@ -1,8 +1,9 @@
 'use client'
 import '@/components/styles/game.css'
 import { setGameStatus } from '@/store/slices/gameStatusSlice'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import useMockData from './hooks/useMockData'
 import Minefield from './minefield'
 import MinesCounter from './minesCounter'
 import MockDataForm from './mockDataForm'
@@ -10,38 +11,16 @@ import StatusImg from './statusImg'
 import Timer from './timer'
 
 export default function Game() {
-  const [mockDataFormVisible, setMockDataFormVisible] = useState(false)
-  const [mockData, setMockData] = useState('')
+  const { mockDataFormVisible, setMockDataForm, mockData } = useMockData()
   const [numberOfMinesOnBoard, setNumberOfMinesOnBoard] = useState(10)
-  // const [gameStatus, setGameStatus] = useState('waiting')
   const [resetGame, setResetGame] = useState(false)
   const dispatch = useDispatch()
-
-  const handleKeyPress = useCallback((e: KeyboardEvent) => {
-    if (e.ctrlKey && e.key.toUpperCase() === 'M') {
-      setMockDataFormVisible((prev: boolean) => !prev)
-    }
-  }, [])
-
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyPress)
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyPress)
-    }
-  }, [handleKeyPress]) // TO-DO: Find an explanation for this
-
-  function setMockDataForm(data: string) {
-    setMockData(data)
-    setMockDataFormVisible(false)
-  }
 
   function handleNumberofMinesOnBoardChange(numberOfMines: number) {
     setNumberOfMinesOnBoard(numberOfMines)
   }
 
   const handleResetGame = useCallback(() => {
-    // setGameStatus('waiting')
     dispatch(setGameStatus('waiting'))
     setResetGame((prev: boolean) => !prev)
   }, [dispatch])
