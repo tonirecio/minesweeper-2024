@@ -21,6 +21,19 @@ export interface MinefieldCell {
   numberOfMinesAround: number;
 }
 
+/**
+ * Represents a cell in the Minesweeper game.
+ *
+ * @component
+ * @param {Object} props - The properties object.
+ * @param {number} props.rowPosition - The row position of the cell.
+ * @param {number} props.colPosition - The column position of the cell.
+ * @param {boolean} props.hasMine - Indicates whether the cell contains a mine.
+ * @param {number} props.numberOfMinesAround - The number of mines around the cell.
+ * @param {boolean} props.isCovered - Indicates whether the cell is covered.
+ * @param {function} props.onClick - The function to call when the cell is clicked.
+ * @returns {ReactElement} The rendered cell component.
+ */
 export default function Cell({
   rowPosition,
   colPosition,
@@ -63,6 +76,13 @@ export default function Cell({
     [gameStatus, isTagged]
   );
 
+  /**
+   * Returns a React element representing an uncovered cell in the minefield.
+   *
+   * @returns {ReactElement} A div element with a data-testid attribute and a class name
+   *                         indicating whether the cell contains a mine. The cell also
+   *                         includes an image representing its uncovered state.
+   */
   function getUncoveredCell(): ReactElement {
     return (
       <div
@@ -74,6 +94,11 @@ export default function Cell({
     );
   }
 
+  /**
+   * Returns a React element representing the image of an uncovered cell in the Minesweeper game.
+   *    
+   * @returns {ReactElement} The image element representing the uncovered cell.
+   */
   function getUncoveredCellImage(): ReactElement {
     let imgSource;
     let altText;

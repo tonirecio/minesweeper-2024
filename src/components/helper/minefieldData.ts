@@ -1,5 +1,15 @@
 import { MinefieldCell } from "../Cell";
 
+/**
+ * Validates the provided mock data string for the minefield.
+ *
+ * The function checks if the mock data string is empty or undefined.
+ * If the string contains a hyphen ("-"), it splits the string into rows
+ * and validates each row. Otherwise, it validates the single row.
+ *
+ * @param mockData - The mock data string to be validated.
+ * @returns `true` if the mock data is valid, `false` otherwise.
+ */
 export function validateMockData(mockData: string): boolean {
   if (mockData === "") {
     return false;
@@ -18,12 +28,28 @@ export function validateMockData(mockData: string): boolean {
   }
 }
 
+/**
+ * Validates a row of mock data for the minefield.
+ * 
+ * This function checks if the provided string contains only the characters
+ * '*' and 'o'. It uses a regular expression to perform the validation.
+ * 
+ * @param data - The string representing a row of mock data to be validated.
+ * @returns `true` if the string contains only '*' and 'o' characters, otherwise `false`.
+ */
 function validateMockDataRow(data: string): boolean {
   const newLocal = "^[*o]*$";
   const regex = new RegExp(newLocal);
   return regex.test(data);
 }
 
+/**
+ * Validates an array of string data rows to ensure they all have the same length
+ * and that each row passes the `validateMockDataRow` check.
+ *
+ * @param dataRows - An array of strings representing the data rows to be validated.
+ * @returns A boolean indicating whether all rows are valid.
+ */
 function validateMockDataRows(dataRows: string[]): boolean {
   const currentLenght: number = dataRows[0].length;
   let isValidData = false;
@@ -37,6 +63,13 @@ function validateMockDataRows(dataRows: string[]): boolean {
   return isValidData;
 }
 
+/**
+ * Parses the given mock data string by removing spaces, pipe characters, and replacing newlines with hyphens.
+ * Also trims trailing hyphens from the resulting string.
+ *
+ * @param data - The mock data string to be parsed.
+ * @returns The parsed string with specified characters removed and formatted.
+ */
 export function parseMockDataToString(data: string): string {
   let strData: string = data.split(/\r?\n/).join("-");
   strData = strData.replaceAll(" ", "");
@@ -47,6 +80,20 @@ export function parseMockDataToString(data: string): string {
   return strData;
 }
 
+/**
+ * Generates a minefield grid from a mock data string.
+ *
+ * @param mockData - A string representing the minefield, where rows are separated by hyphens (`-`)
+ *                   and each cell is represented by a character (e.g., `*` for mines).
+ * @returns A 2D array of `MinefieldCell` objects representing the minefield.
+ *
+ * The `MinefieldCell` object contains the following properties:
+ * - `y`: The row index of the cell.
+ * - `x`: The column index of the cell.
+ * - `isMine`: A boolean indicating whether the cell is a mine.
+ * - `isCovered`: A boolean indicating whether the cell is covered.
+ * - `numberOfMinesAround`: The number of mines around the cell (initially set to 0).
+ */
 export function getMinefieldFromMockData(mockData: string): MinefieldCell[][] {
   const board: MinefieldCell[][] = [];
   const mockBoardRows: string[] = mockData.split("-");
@@ -68,6 +115,12 @@ export function getMinefieldFromMockData(mockData: string): MinefieldCell[][] {
   return board;
 }
 
+/**
+ * Calculates the number of cells that need to be uncovered, to win, in a minefield.
+ * 
+ * @param data - A 2D array representing the minefield, where each element is a MinefieldCell object.
+ * @returns The number of cells that are not mines and need to be uncovered.
+ */
 export function getNumberOfCellsToUncover(data: MinefieldCell[][]): number {
   let cells = 0;
   for (let row = 0; row < data.length; row += 1) {
@@ -78,6 +131,16 @@ export function getNumberOfCellsToUncover(data: MinefieldCell[][]): number {
   return cells;
 }
 
+/**
+ * Generates a minefield grid with the specified number of rows and columns.
+ * Each cell in the grid is initialized with default properties.
+ *
+ * @param numberOfRows - The number of rows in the minefield.
+ * @param numberOfColumns - The number of columns in the minefield.
+ * @returns A 2D array representing the minefield, where each cell contains
+ *          properties such as coordinates, mine status, cover status, and the
+ *          number of surrounding mines.
+ */
 export function getMinefield(
   numberOfRows: number,
   numberOfColumns: number
@@ -98,6 +161,16 @@ export function getMinefield(
   return minefieldData;
 }
 
+/**
+ * Populates a minefield with a specified number of mines.
+ *
+ * @param board - A 2D array representing the minefield, where each cell is an object of type `MinefieldCell`.
+ * @param amountOfMines - The number of mines to be placed in the minefield.
+ *
+ * The function randomly places mines in the minefield until the specified number of mines is reached
+ * or the minefield is fully populated with mines. Each cell in the minefield is checked to ensure
+ * it does not already contain a mine before placing a new one.
+ */
 export function minefieldMining(
   board: MinefieldCell[][],
   amountOfMines: number
@@ -115,6 +188,17 @@ export function minefieldMining(
   }
 }
 
+/**
+ * Updates the minefield board with the number of mines surrounding each cell.
+ * 
+ * This function iterates through each cell in the provided minefield board. For each cell that is not a mine,
+ * it counts the number of mines in the adjacent cells (including diagonals) and updates the cell's 
+ * `numberOfMinesAround` property with this count.
+ * 
+ * @param board - A 2D array representing the minefield, where each cell is an object of type `MinefieldCell`.
+ *                Each `MinefieldCell` object should have an `isMine` boolean property indicating if the cell
+ *                contains a mine, and a `numberOfMinesAround` property to store the count of adjacent mines.
+ */
 export function minefieldNumbering(board: MinefieldCell[][]): void {
   const NUMBER_OF_ROWS = board.length;
   const NUMBER_OF_COLUMNS = board[0].length;
