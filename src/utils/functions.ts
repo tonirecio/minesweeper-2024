@@ -30,3 +30,4 @@ export function uncoverNeighborCells(
   }
   return counter
 }
+
