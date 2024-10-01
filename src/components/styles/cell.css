@@ -9,6 +9,9 @@
 }
 
 .covered {
-  background-image: url("../../../public/tiles/hiddenCell.png");
+  background-image: url('../../../public/tiles/hiddenCell.png');
   border: none;
 }
+
+
+

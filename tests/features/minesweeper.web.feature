@@ -75,7 +75,7 @@ Scenario: Playing status, the timer starts
     | o | * | o |
     """
   When the player uncovers the cell ("1","1")
-  And the user waits "2" second
+  And the user waits "2" seconds
   Then the timer should show a number greater than "0"
 
 Scenario: The user wins the game, the button status show a happy face with sunglasses

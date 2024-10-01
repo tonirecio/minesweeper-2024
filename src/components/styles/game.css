@@ -1,0 +1,17 @@
+.game-board {
+    display: inline-block;
+    align-items: center;
+    border-style: outset;
+    border-width: 3px;
+}
+
+.game-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    width: 95%;
+    background-color: lightgrey;
+    border-style: inset;
+}
