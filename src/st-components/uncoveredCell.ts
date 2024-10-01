@@ -1,4 +1,6 @@
-/* .minefield-cell {
+import styled from 'styled-components'
+
+export const UncoveredCell = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -6,9 +8,4 @@
   height: 16px;
   margin: 0px;
   padding: 0px;
-} */
-
-/* .covered {
-  background-image: url("../../../public/tiles/hiddenCell.png");
-  border: none;
-} */
+`

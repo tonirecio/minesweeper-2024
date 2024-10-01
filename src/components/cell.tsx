@@ -1,9 +1,12 @@
+'use client'
 import React, { useState } from 'react'
 import './styles/cell.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { setGameStatus } from '@/store/slices/gameStatusSlice'
 import { type CellProps, type TagType } from 'types/types'
 import { RootState } from '@/store/store'
+import { UncoveredCell } from '@/st-components/uncoveredCell'
+import { CoveredCell } from '@/st-components/coveredCell'
 
 export default function Cell(props: CellProps) {
   const {
@@ -51,12 +54,12 @@ export default function Cell(props: CellProps) {
 
   function getUncoveredCell() {
     return (
-      <div
+      <UncoveredCell
         data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
         className={`minefield-cell ${hasMine ? 'highlighted' : ''}`}
       >
         {getUncoveredCellImage()}
-      </div>
+      </UncoveredCell>
     )
   }
 
@@ -86,7 +89,7 @@ export default function Cell(props: CellProps) {
     return getUncoveredCell()
   } else {
     return (
-      <button
+      <CoveredCell
         onClick={handleClick}
         onContextMenu={handleContextMenu}
         data-testid={`minefield-cell cell-row${rowPosition}-col${colPosition}`}
@@ -104,7 +107,7 @@ export default function Cell(props: CellProps) {
         {isTagged === 'inconclusive' && (
           <img src='/tiles/inconclusiveCell.png' alt='Inconclusive cell' />
         )}
-      </button>
+      </CoveredCell>
     )
   }
 }

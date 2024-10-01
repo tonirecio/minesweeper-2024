@@ -29,7 +29,7 @@ export default function Minefield(props: MinefieldProps) {
   )
   const dispatch = useDispatch()
 
-  function onClick(row: number, column: number) {
+  function onClick(row: number, column: number) { // TODO -> useCallback [minefieldData, cellsToUncover, dispatcher] meter todo lo relacionado con el click
     if (gameStatus === 'waiting') dispatch(setGameStatus('playing'))
     const newMinefieldData = [...minefieldData]
     let uncoveredCells

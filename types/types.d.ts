@@ -6,7 +6,7 @@ export interface Cell {
   numberOfMinesAround: number
 }
 
-export type GameStatus = "waiting" | "playing" | "won" | "lost"
+export type GameStatus = 'waiting' | 'playing' | 'won' | 'lost'
 
 export interface MinefieldProps {
   numberOfRows?: number
@@ -30,6 +30,6 @@ export interface CellProps {
 
 export type Direction = { offsetX: number; offsetY: number }
 
-export type TagType = "" | "mined" | "inconclusive"
+export type TagType = '' | 'mined' | 'inconclusive'
 
 export type TimerType = ReturnType<typeof setInterval>
