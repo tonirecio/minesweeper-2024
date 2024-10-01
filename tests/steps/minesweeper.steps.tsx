@@ -191,11 +191,11 @@ export function tagCellAsMined(rowPosition: number, colPosition: number): void {
 
 /**
  * Tags a cell as inconclusive in the Minesweeper game.
- * 
+ *
  * This function simulates right-clicking on a cell to cycle through its tag states.
  * If the cell is not tagged, it will be tagged as inconclusive after two right-clicks.
  * If the cell is tagged as mined, it will be tagged as inconclusive after one right-click.
- * 
+ *
  * @param rowPosition - The row index of the cell to be tagged.
  * @param colPosition - The column index of the cell to be tagged.
  */

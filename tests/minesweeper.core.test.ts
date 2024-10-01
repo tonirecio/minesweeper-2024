@@ -1,38 +1,63 @@
 import { loadFeature, defineFeature } from "jest-cucumber";
-import * as steps from "./steps/minesweeper.steps";
+import {
+  openTheGame,
+  uncoverCell,
+  mineFieldDimensionsValidation,
+  areAllCellsCovered,
+  areAllCellsEnabled,
+  setMockData,
+  isCellUncovered,
+  isCellDisabled,
+  hasHighlightedMine,
+  isHighlightedMine,
+  isNumber,
+  isCellEmpty,
+  areAllCellsDisabled,
+  tagCell,
+  tagCellAsMined,
+  tagCellAsInconclusive,
+  isTaggedAsMined,
+  isTaggedAsInconclusive,
+  isNotTagged,
+  isMine,
+  isWronglyTaggedMine,
+  areCellsAroundACellUncovered,
+  areCellsInARowCovered,
+  areCellsInARowUncovered,
+} from "./steps/minesweeper.steps";
 
 const feature = loadFeature("./tests/features/minesweeper.core.feature");
 
 defineFeature(feature, (test) => {
   test("Starting game - Minefield default sizing 9x9", ({ given, then }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     then(
       /^the minefield should have "(.*)" rows and "(.*)" columns$/,
       (numberOfRows, numberOfCols) => {
-        expect(
-          steps.mineFieldDimensionsValidation(numberOfRows, numberOfCols)
-        ).toBe(true);
+        expect(mineFieldDimensionsValidation(numberOfRows, numberOfCols)).toBe(
+          true
+        );
       }
     );
   });
 
   test("Starting game - All the cells should be covered", ({ given, then }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     then("all the cells should be covered", () => {
-      expect(steps.areAllCellsCovered()).toBe(true);
+      expect(areAllCellsCovered()).toBe(true);
     });
   });
 
   test("Starting game - All the cells should be enabled", ({ given, then }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     then("all the cells should be enabled", () => {
-      expect(steps.areAllCellsEnabled()).toBe(true);
+      expect(areAllCellsEnabled()).toBe(true);
     });
   });
 
@@ -42,42 +67,42 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player left clicks on the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be uncovered$/,
       (rowPosition, colPosition) => {
-        expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(true);
+        expect(isCellUncovered(rowPosition, colPosition)).toBe(true);
       }
     );
   });
 
   test("Uncovering a cell - Disabling the cell", ({ given, when, then }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be disabled$/,
       (rowPosition, colPosition) => {
-        expect(steps.isCellDisabled(rowPosition, colPosition)).toBe(true);
+        expect(isCellDisabled(rowPosition, colPosition)).toBe(true);
       }
     );
   });
@@ -88,19 +113,19 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then("the player should lose the game", () => {
-      expect(steps.hasHighlightedMine()).toBe(true);
+      expect(hasHighlightedMine()).toBe(true);
     });
   });
 
@@ -110,21 +135,21 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show a highlighted mine$/,
       (rowPosition, colPosition) => {
-        expect(steps.isHighlightedMine(rowPosition, colPosition)).toBe(true);
+        expect(isHighlightedMine(rowPosition, colPosition)).toBe(true);
       }
     );
   });
@@ -135,21 +160,21 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given(/^the player loads the following mock data (.*)$/, (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show the number (.*)$/,
       (rowPosition, colPosition, number) => {
-        expect(steps.isNumber(rowPosition, colPosition, number)).toBe(true);
+        expect(isNumber(rowPosition, colPosition, number)).toBe(true);
       }
     );
   });
@@ -160,40 +185,40 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be empty$/,
       (rowPosition, colPosition) => {
-        expect(steps.isCellEmpty(rowPosition, colPosition)).toBe(true);
+        expect(isCellEmpty(rowPosition, colPosition)).toBe(true);
       }
     );
   });
 
   test("Finishing game, disabling all the cells", ({ given, when, then }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then("all the cells should be disabled", () => {
-      expect(steps.areAllCellsDisabled()).toBe(true);
+      expect(areAllCellsDisabled()).toBe(true);
     });
   });
 
@@ -203,18 +228,18 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     when(
       /^the player right clicks on the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.tagCell(rowPosition, colPosition);
+        tagCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show mined$/,
       (rowPosition, colPosition) => {
-        expect(steps.isTaggedAsMined(rowPosition, colPosition)).toBe(true);
+        expect(isTaggedAsMined(rowPosition, colPosition)).toBe(true);
       }
     );
   });
@@ -225,26 +250,24 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given(
       /^the player tags as mined the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.tagCellAsMined(rowPosition, colPosition);
+        tagCellAsMined(rowPosition, colPosition);
       }
     );
     when(
       /^the player right clicks on the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.tagCell(rowPosition, colPosition);
+        tagCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show inconclusive$/,
       (rowPosition, colPosition) => {
-        expect(steps.isTaggedAsInconclusive(rowPosition, colPosition)).toBe(
-          true
-        );
+        expect(isTaggedAsInconclusive(rowPosition, colPosition)).toBe(true);
       }
     );
   });
@@ -255,24 +278,24 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given(
       /^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.tagCellAsInconclusive(rowPosition, colPosition);
+        tagCellAsInconclusive(rowPosition, colPosition);
       }
     );
     when(
       /^the player right clicks on the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.tagCell(rowPosition, colPosition);
+        tagCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should not be tagged$/,
       (rowPosition, colPosition) => {
-        expect(steps.isNotTagged(rowPosition, colPosition)).toBe(true);
+        expect(isNotTagged(rowPosition, colPosition)).toBe(true);
       }
     );
   });
@@ -283,24 +306,24 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given(
       /^the player tags as mined the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.tagCellAsMined(rowPosition, colPosition);
+        tagCellAsMined(rowPosition, colPosition);
       }
     );
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be covered$/,
       (rowPosition, colPosition) => {
-        expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(false);
+        expect(isCellUncovered(rowPosition, colPosition)).toBe(false);
       }
     );
   });
@@ -311,24 +334,24 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given(
       /^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.tagCellAsInconclusive(rowPosition, colPosition);
+        tagCellAsInconclusive(rowPosition, colPosition);
       }
     );
     when(
       /^the player uncovers the cell \("(.*)", "(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be covered$/,
       (rowPosition, colPosition) => {
-        expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(false);
+        expect(isCellUncovered(rowPosition, colPosition)).toBe(false);
       }
     );
   });
@@ -339,21 +362,21 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show mined$/,
       (rowPosition, colPosition) => {
-        expect(steps.isTaggedAsMined(rowPosition, colPosition)).toBe(true);
+        expect(isTaggedAsMined(rowPosition, colPosition)).toBe(true);
       }
     );
   });
@@ -365,27 +388,27 @@ defineFeature(feature, (test) => {
     and,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show a mine$/,
       (rowPosition, colPosition) => {
-        expect(steps.isMine(rowPosition, colPosition)).toBe(true);
+        expect(isMine(rowPosition, colPosition)).toBe(true);
       }
     );
     and(
       /^the cell \("(.*)","(.*)"\) should show a mine$/,
       (rowPosition, colPosition) => {
-        expect(steps.isMine(rowPosition, colPosition)).toBe(true);
+        expect(isMine(rowPosition, colPosition)).toBe(true);
       }
     );
   });
@@ -397,39 +420,39 @@ defineFeature(feature, (test) => {
     then,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     and(
       /^the player tags as mined the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.tagCellAsMined(rowPosition, colPosition);
+        tagCellAsMined(rowPosition, colPosition);
       }
     );
     and(
       /^the player tags as mined the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.tagCellAsMined(rowPosition, colPosition);
+        tagCellAsMined(rowPosition, colPosition);
       }
     );
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show a wrongly tagged cell$/,
       (rowPosition, colPosition) => {
-        expect(steps.isWronglyTaggedMine(rowPosition, colPosition)).toBe(true);
+        expect(isWronglyTaggedMine(rowPosition, colPosition)).toBe(true);
       }
     );
     and(
       /^the cell \("(.*)","(.*)"\) should show a mine$/,
       (rowPosition, colPosition) => {
-        expect(steps.isMine(rowPosition, colPosition)).toBe(true);
+        expect(isMine(rowPosition, colPosition)).toBe(true);
       }
     );
   });
@@ -441,33 +464,33 @@ defineFeature(feature, (test) => {
     and,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player tags as mined the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.tagCellAsMined(rowPosition, colPosition);
+        tagCellAsMined(rowPosition, colPosition);
       }
     );
     and(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     and(
       /^the player tags as inconclusive the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.tagCellAsInconclusive(rowPosition, colPosition);
+        tagCellAsInconclusive(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should show mined$/,
       (rowPosition, colPosition) => {
-        expect(steps.isTaggedAsMined(rowPosition, colPosition)).toBe(true);
+        expect(isTaggedAsMined(rowPosition, colPosition)).toBe(true);
       }
     );
   });
@@ -479,27 +502,27 @@ defineFeature(feature, (test) => {
     and,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cells around the cell \("(.*)","(.*)"\) should be uncovered$/,
       (rowPosition, colPosition) => {
-        expect(
-          steps.areCellsAroundACellUncovered(rowPosition, colPosition)
-        ).toBe(true);
+        expect(areCellsAroundACellUncovered(rowPosition, colPosition)).toBe(
+          true
+        );
       }
     );
     and("the fourth row should be covered", () => {
-      expect(steps.areCellsInARowCovered(4)).toBe(true);
+      expect(areCellsInARowCovered(4)).toBe(true);
     });
   });
 
@@ -510,27 +533,27 @@ defineFeature(feature, (test) => {
     and,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then(
       /^the cell \("(.*)","(.*)"\) should be uncovered$/,
       (rowPosition, colPosition) => {
-        expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(true);
+        expect(isCellUncovered(rowPosition, colPosition)).toBe(true);
       }
     );
     and(
       /^the cell \("(.*)","(.*)"\) should be covered$/,
       (rowPosition, colPosition) => {
-        expect(steps.isCellUncovered(rowPosition, colPosition)).toBe(false);
+        expect(isCellUncovered(rowPosition, colPosition)).toBe(false);
       }
     );
   });
@@ -542,26 +565,26 @@ defineFeature(feature, (test) => {
     and,
   }) => {
     given("the player opens the game", () => {
-      steps.openTheGame();
+      openTheGame();
     });
     given("the player loads the following mock data", (docString) => {
-      steps.setMockData(docString);
+      setMockData(docString);
     });
     when(
       /^the player uncovers the cell \("(.*)","(.*)"\)$/,
       (rowPosition, colPosition) => {
-        steps.uncoverCell(rowPosition, colPosition);
+        uncoverCell(rowPosition, colPosition);
       }
     );
     then("the first three rows should be uncovered", () => {
       let result = true;
-      result = result && steps.areCellsInARowUncovered(1);
-      result = result && steps.areCellsInARowUncovered(2);
-      result = result && steps.areCellsInARowUncovered(3);
+      result = result && areCellsInARowUncovered(1);
+      result = result && areCellsInARowUncovered(2);
+      result = result && areCellsInARowUncovered(3);
       expect(result).toBe(true);
     });
     and("the fourth row should be covered", () => {
-      expect(steps.areCellsInARowCovered(4)).toBe(true);
+      expect(areCellsInARowCovered(4)).toBe(true);
     });
   });
 });
